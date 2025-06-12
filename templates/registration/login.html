@@ -1,3 +1,5 @@
+{% load widget_tweaks %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,56 +8,87 @@
     <title>Cash Tracker</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0&icon_names=verified_user" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'CashTracker/styles.css' %}">
 </head>
-<body>
-    <h1 class="position-static text-primary text-center">CCDO Cash Tracking System</h1>
-    <h3 class="position-static text-dark text-center">Chipembere Community Development Organisation</h3>
+<body class="overflow-hidden">
+    <img src="./../../static/CashTracker/icons/ccdo logo.png" class="mx-auto my-0 d-block logo" alt="CCDO logo">
+    <h3 class="position-static text-primary text-center my-0">CCDO Cash Tracking System</h3>
+    <h5 class="position-static text-dark text-center my-0">Chipembere Community Development Organisation</h5>
 
     <div class="container mt-5">
         <div class="row">
             <div class="col-6">
-                <h3>Streamline Your Financial Operations</h3>
-                <h5>Efficiently manage requisitions, payment vouchers, and cash retirements with comprehensive tracking.</h5>
-                <div class="row shadow rounded mt-3">
+                <h3 class="grad-text">Streamline Your Financial Operations</h3>
+                <h5 class="grad-text">Efficiently manage requisitions, payment vouchers, and cash retirements with comprehensive tracking.</h5>
+                <div class="row shadow rounded mt-3 loginrow">
                     <div class="col-1">
-                        <i class="material-symbols-outlined">verified_user</i>
+                        <div class="icon">
+                            <img src="./../../static/CashTracker/icons/verified_user_44dp_0000F5_FILL0_wght400_GRAD0_opsz48.svg" alt="secure">
+                        </div>
                     </div>
                     <div class="col-11">
-                        <p>Secure and Compliant</p>
-                        <p class="text-secondary">Bank-level security with audit trails</p>
+                        <p class="mx-0 my-0 fw-bold">Secure and Compliant</p>
+                        <p class="text-secondary mx-0 my-0">Bank-level security with audit trails</p>
                     </div>
                 </div>
 
-                <div class="row shadow rounded mt-3">
+                <div class="row shadow rounded mt-3 loginrow">
                     <div class="col-1">
-                        Icon
+                        <div class="icon ms-0">
+                            <img src="./../../static/CashTracker/icons/monitoring_44dp_0000F5_FILL1_wght400_GRAD0_opsz48.svg" alt="tracking">
+                        </div>
                     </div>
                     <div class="col-11">
-                        <p>Real-Time Tracking</p>
-                        <p class="text-secondary">Monitor Transactions in real-time</p>
+                        <p class="mx-0 my-0 fw-bold">Real-Time Tracking</p>
+                        <p class="text-secondary mx-0 my-0">Monitor Transactions in real-time</p>
                     </div>
                 </div>
 
-                <div class="row shadow rounded mt-3">
+                <div class="row shadow rounded mt-3 loginrow">
                     <div class="col-1">
-                        Icon
+                        <div class="icon">
+                            <img src="./../../static/CashTracker/icons/verified_44dp_0000F5_FILL1_wght400_GRAD0_opsz48.svg" alt="secure">
+                        </div>
                     </div>
                     <div class="col-11">
-                        <p>Multi-level Approval</p>
-                        <p class="text-secondary">Strucured approval workflows</p>
+                        <p class="mx-0 my-0 fw-bold">Multi-level Approval</p>
+                        <p class="text-secondary mx-0 my-0">Strucured approval workflows</p>
                     </div>
                 </div>
 
             </div>
-            <div class="col-6 text-center">
-                <form class="shadow p-3 mx-auto w-75 h-100 rounded" action="POST">
+            <div class="col-6 text-center d-block justify-content-end">
+
+                <form class="shadow p-3 mx-auto w-75 h-auto mt-0 rounded" method="POST">
                     <h4 class="text-primary">Welcome Back</h3>
                     <h6 class="text-secondary">Sign in to access your CCDO account</h5>
                     {% csrf_token %}
-                    {{form}}
-                    <div class="row mt-3">
-                        <div class="col-6">
-                             <p class="fs-8 text-start">Remember me </p>
+
+                    {% if form.non_field_errors %}
+                        <div id="error-message" class="alert alert-danger mx-0 my-0 py-0 px-0">
+                            <p>Wrong username or password</p>
+                        </div>
+                    {% endif %}
+
+
+                    
+                    
+                    <div class="mb-3 text-start">
+                        <label for="{{ form.username.id_for_label }}" class="form-label d-block">Username</label>
+                        {{ form.username|add_class:"form-control w-100" }}
+                        {{ form.username.errors }} 
+                    </div>
+
+                    <div class="mb-3 text-start">
+                        <label for="{{ form.password.id_for_label }}" class="form-label d-block">Password</label>
+                        {{ form.password|add_class:"form-control w-100" }}
+                        {{ form.password.errors }} 
+                    </div>
+
+                    <div class="row mt-0">
+                        <div class="col-6 form-check mt-0">
+                             <input class="form-check-input text-start ms-1 me-0" type="checkbox" id="remember" >
+                             <label class="form-check-label text-start text-primary ms-0" for="remember"> Remember me</label>
                         </div>
                         <div class="col-6">
                             <a href="" class="text-end text-decoration-none">Forgot Password</a> 
@@ -63,8 +96,8 @@
                     </div>
                    
                     
-                    <button type="button" class="btn btn-primary w-100 mt-2">Sign In</button>
-                    <p class="fs-8 mt-3">Don't have an account? <a href="" class="text-decoration-none">Create new account</a></p>
+                    <button type="submit" class="btn btn-primary w-100 mt-0">Sign In</button>
+                    <p class="fs-8 mt-3 mb-0">Don't have an account? <a href="" class="text-decoration-none">Create new account</a></p>
                 </form>
             </div>
         </div>

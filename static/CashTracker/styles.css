@@ -1,0 +1,28 @@
+html, body {
+    height: 40%;
+    margin: 0;
+}
+
+form, .loginrow {
+    background: linear-gradient(to bottom right, #e0f7fa, #80deea);
+}
+
+.logo {
+    height: 6rem;
+}
+
+label {
+    gap: 0;
+}
+
+.grad-text {
+    background: linear-gradient(45deg, #037fe6, #390ae4, #adbdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+ul.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
