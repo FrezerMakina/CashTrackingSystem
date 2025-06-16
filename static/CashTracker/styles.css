@@ -1,7 +1,10 @@
-html, body {
-    height: 40%;
+/* html, body {
+    height: 100%;
     margin: 0;
-}
+} */
+ /* * {
+    margin: 0;
+ } */
 
 form, .loginrow {
     background: linear-gradient(to bottom right, #e0f7fa, #80deea);
@@ -11,9 +14,23 @@ form, .loginrow {
     height: 6rem;
 }
 
+/* .logo-small {
+    height: 2rem;
+    width: 50%;
+} */
+ .ch {
+    height: 10%;
+ }
+
+ .bg-white {
+    background-color: rgb(139, 104, 37);
+ }
+
 label {
     gap: 0;
 }
+
+
 
 .grad-text {
     background: linear-gradient(45deg, #037fe6, #390ae4, #adbdc4);
