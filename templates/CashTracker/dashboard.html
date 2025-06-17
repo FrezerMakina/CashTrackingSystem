@@ -13,7 +13,7 @@
 <body class="container-fluid h-100 w-100 m-0 p-0">
 
     <div class="row h-100 w-100 m-0 p-0">
-        <div class="col-2 h-100 m-0 overflow-hidden">
+        <div class="container-fluid col-2 d-flex flex-column h-100 m-0 p-0 overflow-hidden">
             <div class="row ch">
                 <div class="col-4 m-0">
                     <img src="{% static 'CashTracker/icons/logo-small.PNG' %}" class="my-0 w-100 h-100" alt="CCDO logo">
@@ -23,13 +23,61 @@
                     <p class="my-0 fs-6 text-dark">Cash Tracking</p>
                 </div>
             </div>
+
+            <div class="container-fluid w-100  mb-2" style="background-color: rgb(189, 238, 238);">
+                <p class="m-0  fw-bold">Staff Member</p>
+                <p class="m-0 p-0 text-dark">Logged in</p>
+            </div>
+
+            <div class="w-100">
+                <button class="icon btn btn-primary w-100 text-start m-1">
+                    <img src="{% static 'CashTracker/icons/dashboard.svg' %}" alt="dashboard">
+                    <p class="d-inline"> Dashboard </p>
+                </button>
+
+                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
+                    <p class="d-inline"> New Cash Requisition </p>
+                </button>
+
+                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
+                    <p class="d-inline"> New Payment Voucher </p>
+                </button>
+
+                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
+                    <p class="d-inline"> New Cash Retirement </p>
+                </button>
+
+                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                    <img src="{% static 'CashTracker/icons/download.svg' %}" alt="dashboard">
+                    <p class="d-inline"> Download Forms </p>
+                </button>
+            </div>
+
+            <div class="mt-auto shadow">
+                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                    <img src="{% static 'CashTracker/icons/settings.svg' %}" alt="dashboard">
+                    <p class="d-inline"> Settings </p>
+                </button>
+
+                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                    <img src="{% static 'CashTracker/icons/logout.svg' %}" alt="dashboard">
+                    <p class="d-inline"> Logout </p>
+                </button>
+            </div>
             
             
         </div>
 
         <div class="container-fluid col-10 h-100 m-0 p-0" style="background-color: rgba(126, 184, 179, 0.534);">
-            <div class="container-fluid border-bottom border-dark bg-white w-100 mx-0 p-0">
-                <h3 class="m-0 p-0 w-100">CCDO Cash Tracking</h3>
+            <div class="d-flex justify-content-between container-fluid border-bottom border-4 border-primary bg-white w-100 mx-0 p-0">
+                <h3 class="w-100">CCDO Cash Tracking</h3>
+                <div class="border border-dark w-25 d-flex justify-content-center rounded m-1">
+                    <img src="{% static 'CashTracker/icons/person.svg' %}" alt="person">
+                    <p class="d-inline pt-3">Staff Member</p>
+                </div>
             </div>
             <p class="m-0 p-0 w-100">hdhhd</p>
 
