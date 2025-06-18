@@ -131,6 +131,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'register'
 
 AUTH_USER_MODEL = 'CashTracker.Staff'
 PASSWORD_RESET_TIMEOUT = 300

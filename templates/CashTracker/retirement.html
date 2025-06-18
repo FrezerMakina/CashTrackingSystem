@@ -1,4 +1,12 @@
 {% extends "CashTracker/base.html" %}
+{% load static %}
+
+{% block retirement %}
+    <a href="{% url 'retirement' %}" class="icon btn btn-primary w-100 text-start m-1">
+        <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
+        <p class="d-inline"> New Cash Retirement </p>
+    </a>
+{% endblock %}
 
 {% block content %}
     <p>Retirement Area</p>

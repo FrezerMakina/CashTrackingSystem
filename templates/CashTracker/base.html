@@ -30,42 +30,53 @@
             </div>
 
             <div class="w-100">
-                <button class="icon btn btn-primary w-100 text-start m-1">
+                {% block dashboard %}
+                <a href="{% url 'dashboard' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
                     <img src="{% static 'CashTracker/icons/dashboard.svg' %}" alt="dashboard">
                     <p class="d-inline"> Dashboard </p>
-                </button>
+                </a>
+                {% endblock %}
 
-                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                {% block requisition %}
+                <a href="{% url 'requisition' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
                     <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
                     <p class="d-inline"> New Cash Requisition </p>
-                </button>
+                </a>
+                {% endblock %}
 
-                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                {% block voucher %}
+                <a href="{% url 'voucher' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
                     <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
                     <p class="d-inline"> New Payment Voucher </p>
-                </button>
+                </a>
+                {% endblock %}
 
-                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                {% block retirement %}
+                <a href="{% url 'retirement' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
                     <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
                     <p class="d-inline"> New Cash Retirement </p>
-                </button>
+                </a>
+                {% endblock %}
 
-                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                {% block download %}
+                <a href="" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
                     <img src="{% static 'CashTracker/icons/download.svg' %}" alt="dashboard">
                     <p class="d-inline"> Download Forms </p>
-                </button>
+                </a>
+                {% endblock %}
+
             </div>
 
             <div class="mt-auto shadow">
-                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                <a href="" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
                     <img src="{% static 'CashTracker/icons/settings.svg' %}" alt="dashboard">
                     <p class="d-inline"> Settings </p>
-                </button>
+                </a>
 
-                <button class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                <a href="{% url 'logout' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
                     <img src="{% static 'CashTracker/icons/logout.svg' %}" alt="dashboard">
                     <p class="d-inline"> Logout </p>
-                </button>
+                </a>
             </div>
             
             

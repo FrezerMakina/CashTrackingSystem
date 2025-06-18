@@ -1,4 +1,12 @@
 {% extends "CashTracker/base.html" %}
+{% load static %}
+
+{% block dashboard %}
+    <a href="{% url 'dashboard' %}" class="icon btn btn-primary w-100 text-start m-1">
+        <img src="{% static 'CashTracker/icons/dashboard.svg' %}" alt="dashboard">
+        <p class="d-inline"> Dashboard </p>
+    </a>
+{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between container-fluid w-100 mx-0 p-0">

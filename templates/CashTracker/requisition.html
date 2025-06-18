@@ -1,4 +1,12 @@
 {% extends "CashTracker/base.html" %}
+{% load static %}
+
+{% block requisition %}
+<a href="{% url 'requisition' %}" class="icon btn btn-primary w-100 text-start m-1">
+    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
+    <p class="d-inline"> New Cash Requisition </p>
+ </a>
+{% endblock %}
 
 {% block content %}
     <div class="m-3 w-100 border-start border-4 border-primary rounded shadow">
@@ -45,13 +53,12 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between m-3">
+            <div class="d-flex justify-content-between mx-3 my-1 py-0">
                 <div class="fw-bold">Items Required</div>
                 <div class="btn btn-primary me-3">Add Item</div>
             </div>
 
-            <div class="d-flex m-3 bg-white rounded w-100">
-
+            <div class="d-flex m-3 bg-white rounded w-100 my-0 py-0">
                 <table class="table table-striped table-bordered table-hover p-0 w-100">
                     <thead>
                         <tr>
