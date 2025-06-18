@@ -16,3 +16,15 @@ class RegisterView(CreateView):
 class DashboardView(LoginRequiredMixin, TemplateView):
     model = Staff
     template_name = "CashTracker/dashboard.html"
+    
+class RequisitionView(LoginRequiredMixin, TemplateView):
+    model = Requisition
+    template_name = "CashTracker/requisition.html"
+    
+class VoucherView(LoginRequiredMixin, TemplateView):
+    model = Voucher
+    template_name = "CashTracker/voucher.html"
+    
+class RetirementView(LoginRequiredMixin, TemplateView):
+    model = Retirement
+    template_name = "CashTracker/retirement.html"
