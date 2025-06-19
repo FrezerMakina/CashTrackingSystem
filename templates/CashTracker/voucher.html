@@ -9,5 +9,56 @@
 {% endblock %}
 
 {% block content %}
-    <p>Voucher Area</p>
+    <div class="m-3 w-100 border-start border-4 border-primary rounded shadow">
+        <div class="d-flex justify-content-between">
+            <div class="m-3">
+                <p class="m-0 fw-bold text-primary">CCDO CASH PAYMENT VOUCHER</p>
+                <P class="m-0">Chipembere Community Development organisation</P>
+                <p class="m-0">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
+                <P class="m-0">Account Number: 10033647388364</P>
+            </div>
+
+            <div class="text-end text-primary m-4 rounded">
+                <p class="border border-primary p-1 rounded">Payment Voucher</p>
+            </div>
+        </div>
+
+        <form class="bg-white border-primary">
+
+            <div class="mx-3">
+                <p class="text-end me-3 fw-bold">Voucher No: PV-76560</p>
+            </div>
+            
+
+            <div class="d-flex justify-content-between">
+                <div class="w-50 mx-3">
+                    <label for="requisition" class="form-label mb-0">Requisition</label>
+                    <input type="text" id="requisition" class="form-control">
+
+                    <label for="date" class="form-label mb-0">Date</label>
+                    <input type="date" id="date" class="form-control">
+                    
+                </div>
+
+                <div class="w-50 mx-3">
+                    <label for="dpt" class="form-label mb-0">Department</label>
+                    <input type="text" id="dpt" class="form-control">  
+                    
+                    <label for="dpt" class="form-label m-0">Amount (MWK)</label>
+                    <input type="number" id="dpt" step="0.001" class="form-control m-0"> 
+                </div>
+            </div>
+
+           
+            
+            <label for="purpose" class="form-label ms-3 mb-0">Purpose</label>
+            <textarea type="text" id="purpose" class="form-control mx-3" rows="5"></textarea>
+          
+
+            <div class="m-3">
+                <button type="submit" class="d-flex btn btn-primary ms-auto me-3 mb-3">Submit Voucher</button>
+            </div>
+            
+        </form>
+    </div>
 {% endblock %}

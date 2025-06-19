@@ -39,28 +39,28 @@
 
                 {% block requisition %}
                 <a href="{% url 'requisition' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
-                    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
+                    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="requisition">
                     <p class="d-inline"> New Cash Requisition </p>
                 </a>
                 {% endblock %}
 
                 {% block voucher %}
                 <a href="{% url 'voucher' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
-                    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
+                    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="payment voucher">
                     <p class="d-inline"> New Payment Voucher </p>
                 </a>
                 {% endblock %}
 
                 {% block retirement %}
                 <a href="{% url 'retirement' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
-                    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
+                    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="retirement">
                     <p class="d-inline"> New Cash Retirement </p>
                 </a>
                 {% endblock %}
 
                 {% block download %}
-                <a href="" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
-                    <img src="{% static 'CashTracker/icons/download.svg' %}" alt="dashboard">
+                <a href="{% url 'download' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
+                    <img src="{% static 'CashTracker/icons/download.svg' %}" alt="download">
                     <p class="d-inline"> Download Forms </p>
                 </a>
                 {% endblock %}
@@ -69,14 +69,19 @@
 
             <div class="mt-auto shadow">
                 <a href="" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
-                    <img src="{% static 'CashTracker/icons/settings.svg' %}" alt="dashboard">
+                    <img src="{% static 'CashTracker/icons/settings.svg' %}" alt="settings">
                     <p class="d-inline"> Settings </p>
                 </a>
 
-                <a href="{% url 'logout' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
-                    <img src="{% static 'CashTracker/icons/logout.svg' %}" alt="dashboard">
-                    <p class="d-inline"> Logout </p>
-                </a>
+                
+                    
+                    <!-- <p class="d-inline"> Logout </p> -->
+                    <form method="POST", action="{% url 'logout'%}" class="icon btn btn-link text-decoration-none text-dark w-100 text-start m-1">
+                        {% csrf_token %}
+                        <img src="{% static 'CashTracker/icons/logout.svg' %}" alt="logout">
+                        <button class="border-0">Logout</button>
+                    </form>
+                
             </div>
             
             

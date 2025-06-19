@@ -9,5 +9,121 @@
 {% endblock %}
 
 {% block content %}
-    <p>Retirement Area</p>
+    <div class="m-3 w-100 overflow-y-auto overflow-x-hidden h-100  border-start border-4 border-primary rounded shadow">
+        <div class="d-flex justify-content-between">
+            <div class="m-3">
+                <p class="m-0 fw-bold text-primary">CCDO CASH RETIREMENT FORM</p>
+                <P class="m-0">Chipembere Community Development organisation</P>
+                <p class="m-0">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
+                <P class="m-0">Account Number: 10033647388364</P>
+            </div>
+
+            <div class="text-end text-primary m-4 rounded">
+                <p class="border border-primary p-1 rounded">Cash Retirement</p>
+            </div>
+        </div>
+
+        <form class="bg-white border-primary">
+            <div class="mx-3">
+                <p class="text-end me-3 fw-bold">Retirement No: CR-76560</p>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <div class="w-50 mx-3">
+                    <label for="voucher" class="form-label">Voucher</label>
+                    <input type="text" id="voucher" class="form-control">
+
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" id="date" class="form-control">    
+                </div>
+
+                <div class="w-50 mx-3">
+                    <label for="requisition" class="form-label">Requesition</label>
+                    <input type="text" id="requisition" class="form-control">
+
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" id="amount" class="form-control">
+                    
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-between mx-3 my-1 py-0">
+                <div class="fw-bold">Cash Used For</div>
+                <div class="btn btn-primary me-3">Add Expense</div>
+            </div>
+
+            <div class="d-flex m-3 bg-white rounded w-100 my-0 py-0">
+                <table class="table table-striped table-bordered table-hover p-0 w-100">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="form-control"></td>
+                            <td><input type="number" step="0.001" class="form-control"></td>
+                            <td><input type="text" class="form-control"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between m-3">
+                <div class="w-25 bg-success rounded">
+                    <p class="text-center">Total Used</p>
+                    <p class="fw-bold text-center">MWK 0</p>
+                </div>
+
+                <div class="w-25 bg-primary rounded">
+                    <p class="text-center">Amount Requested</p>
+                    <p class="fw-bold text-center">MWK 0</p>
+                </div>
+
+                <div class="w-25 bg-danger rounded">
+                    <p class="text-center">Balance</p>
+                    <p class="fw-bold text-center">MWK 0</p>
+                </div>
+            </div>
+
+            <div class="m-3 fw-bold fs-5">Required Attachments</div>
+
+            <div class="d-flex justify-content-between m-3">
+                <div class="w-50 me-3">
+                    <div class="bg-success w-100 rounded">
+                        <p>Proof of Payment</p>
+                        <p>Not Uploaded</p>
+                    </div>
+
+                    <div class="bg-success w-100 rounded">
+                        <p>Participarts Payment Form</p>
+                        <p>Not Uploaded</p>
+                    </div>
+                </div>
+
+                <div class="w-50">
+                    <div class="bg-success w-100 rounded">
+                        <p>Receipts</p>
+                        <p>Not Uploaded</p>
+                    </div>
+
+                    <div class="bg-success w-100 rounded">
+                        <p>Cash Payment Form</p>
+                        <p>Not Uploaded</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="d-flex ms-auto">Grand Total: K5,000</p>
+
+            <div class="m-3">
+                <button type="submit" class="d-flex btn btn-primary ms-auto me-3">Submit Retirement</button>
+            </div>
+            
+        </form>
+    </div>
 {% endblock %}

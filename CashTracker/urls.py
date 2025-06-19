@@ -7,4 +7,5 @@ urlpatterns = [
     path('requisition/', RequisitionView.as_view(), name='requisition' ),
     path('voucher/', VoucherView.as_view(), name='voucher' ),
     path('retirement/', RetirementView.as_view(), name='retirement' ),
+    path('download/', DownloadView.as_view(), name='download' ),
 ]

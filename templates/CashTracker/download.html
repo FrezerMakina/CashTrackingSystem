@@ -1,0 +1,13 @@
+{% extends "CashTracker/base.html" %}
+{% load static %}
+
+{% block download %}
+    <a href="{% url 'download' %}" class="icon btn btn-primary w-100 text-start m-1">
+        <img src="{% static 'CashTracker/icons/download.svg' %}" alt="download">
+        <p class="d-inline"> Download Forms </p>
+    </a>
+{% endblock %}
+
+{% block content %}
+<p>Download Forms</p>
+{% endblock %}

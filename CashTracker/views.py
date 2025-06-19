@@ -28,3 +28,7 @@ class VoucherView(LoginRequiredMixin, TemplateView):
 class RetirementView(LoginRequiredMixin, TemplateView):
     model = Retirement
     template_name = "CashTracker/retirement.html"
+    
+class DownloadView(LoginRequiredMixin, TemplateView):
+    # model = Retirement
+    template_name = "CashTracker/download.html"

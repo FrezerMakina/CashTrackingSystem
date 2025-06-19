@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="m-3 w-100 border-start border-4 border-primary rounded shadow">
+    <div class="m-3 w-100 overflow-y-auto overflow-x-hidden h-100 border-start border-4 border-primary rounded shadow">
         <div class="d-flex justify-content-between">
             <div class="m-3">
                 <p class="m-0 fw-bold text-primary">CCDO REQUISITION FORM</p>
@@ -82,8 +82,11 @@
                         </tr>
                     </tbody>
                 </table>
+
             </div>
-            <p class="d-flex ms-auto">Grand Total: K5,000</p>
+            <div class="text-end mx-3 pe-5 bg-secondary rounded-bottom">
+                <p class="fw-bold fs-5">Grand Total: K5,000</p>
+            </div>
 
             <div class="m-3">
                 <button type="submit" class="d-flex btn btn-primary ms-auto me-3">Submit Requistion</button>
