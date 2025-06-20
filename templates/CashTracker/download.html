@@ -9,5 +9,129 @@
 {% endblock %}
 
 {% block content %}
-<p>Download Forms</p>
+<div class="m-3 w-100 overflow-y-auto overflow-x-hidden h-100 border-start bg-white border-4 border-primary rounded shadow">
+        <div class="m-3">
+            <img src="{% static 'CashTracker/icons/download.svg' %}" alt="download">
+            <p class="d-inline fw-bold fs-5"> Download Forms </p>
+            <p class="text-secondary">Download completed and authorised forms</p>
+        </div>
+
+    
+        <div class="bg-white">
+            <div class="d-flex justify-content-between">
+                <div class="mx-3">
+                    <label for="search" class="form-label">Search</label>
+                    <input type="search" id="search" class="form-control">
+                </div>
+
+                <div class="mx-3">
+                    <label for="type" class="form-label">Form Type</label>
+                    <input type="text" id="type" class="form-control">
+                </div>
+
+                <div class="mx-3">
+                    <label for="dpt" class="form-label">Department</label>
+                    <input type="text" id="dpt" class="form-control">   
+                </div>
+
+                <div class="mx-3">
+                    <label for="fromdate" class="form-label">From Date</label>
+                    <input type="date" id="fromdate" class="form-control">
+                </div>
+
+                <div class="ms-3 me-4">
+                    <label for="todate" class="form-label">To Date</label>
+                    <input type="date" id="todate" class="form-control">
+                </div>
+            </div>
+
+            <div class="mx-3 mt-3 mb-0 py-0">
+                <p class="text-secondary">Showing 4 of 4 completed forms Next & Previous buttons at the end</p>
+            </div>
+
+            <div class="d-flex mx-3 bg-white rounded w-100 my-0 py-0">
+                <table class="table table-striped table-bordered table-hover m-0 p-0 w-100">
+                    <thead>
+                        <tr>
+                            <th>Form ID</th>
+                            <th>Type</th>
+                            <th>Department</th>
+                            <th>Amount</th>
+                            <th>Purpose</th>
+                            <th>Date Submitted</th>
+                            <th>Date Completed</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>REQ-001</td>
+                            <td>Requisition</td>
+                            <td>Admin</td>
+                            <td>MK 50,000</td>
+                            <td>Office Maintainance</td>
+                            <td>2024-01-12</td>
+                            <td>2024-01-18</td>
+                            <td>Completed</td>
+                            <td>Download</td>
+                        </tr>
+
+                        <tr>
+                            <td>REQ-001</td>
+                            <td>Requisition</td>
+                            <td>Admin</td>
+                            <td>MK 50,000</td>
+                            <td>Office Maintainance</td>
+                            <td>2024-01-12</td>
+                            <td>2024-01-18</td>
+                            <td>Completed</td>
+                            <td>Download</td>
+                        </tr>
+
+                        <tr>
+                            <td>REQ-001</td>
+                            <td>Requisition</td>
+                            <td>Admin</td>
+                            <td>MK 50,000</td>
+                            <td>Office Maintainance</td>
+                            <td>2024-01-12</td>
+                            <td>2024-01-18</td>
+                            <td>Completed</td>
+                            <td>Download</td>
+                        </tr>
+
+                        <tr>
+                            <td>REQ-001</td>
+                            <td>Requisition</td>
+                            <td>Admin</td>
+                            <td>MK 50,000</td>
+                            <td>Office Maintainance</td>
+                            <td>2024-01-12</td>
+                            <td>2024-01-18</td>
+                            <td>Completed</td>
+                            <td>Download</td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="d-flex justify-content-between bg-secondary shadow rounded m-3 p-2">
+                <div>
+                    <p class="m-0 p-0">Bulk Download</p>
+                    <p class="m-0 p-0">Download all 4 filtered forms as a ZIP file</p>
+                </div>
+                
+                <button type="button" class="btn btn-primary fw-bold">
+                    <img src="{% static 'CashTracker/icons/download.svg' %}" alt="download">
+                    <p class="d-inline text-dark m-0 p-0">Download All</p>
+                </button>
+            </div>
+            
+        </div>
+    </div>
 {% endblock %}

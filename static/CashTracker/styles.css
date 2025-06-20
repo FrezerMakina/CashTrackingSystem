@@ -6,7 +6,7 @@
     margin: 0;
  } */
 
-form, .loginrow {
+.loginrow {
     background: linear-gradient(to bottom right, #e0f7fa, #80deea);
 }
 
