@@ -12,3 +12,20 @@ class RequisitionForm(forms.ModelForm):
         model = Requisition
         fields = ['activityname', 'projectname', 'projectcode', 'requestingdept', 'ID' ]
         
+        
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['itemname', 'reason', 'quantity', 'unitprice']
+
+    
+class VoucherForm(forms.ModelForm):
+    class Meta:
+        model = Voucher
+        fields = ['purpose',]
+        
+        
+class RetirementForm(forms.ModelForm):
+    class Meta:
+        model = Retirement
+        fields = []
