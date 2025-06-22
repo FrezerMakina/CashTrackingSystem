@@ -18,13 +18,13 @@ class Staff(AbstractUser):
 class Requisition(models.Model):
     ID = models.CharField(primary_key=True, max_length=10)
     date = models.DateTimeField(auto_now_add=True, null=False)
-    status = models.CharField(null=False, max_length=10)
-    staffid = models.CharField(models.ForeignKey(Staff, on_delete=models.DO_NOTHING))
+    status = models.CharField(null=False, max_length=10, default="SUBMITTED")
+    staffid = models.CharField(models.ForeignKey(Staff, on_delete=models.DO_NOTHING), null=True, default="frezer")
     activityname = models.CharField(max_length=50, null=False)
     projectname = models.CharField(max_length=50, null=False)
     projectcode = models.CharField(max_length=10)
     requestingdept = models.CharField(max_length=40)
-    accountnumber = models.CharField(max_length=20)
+    accountnumber = models.CharField(max_length=20, null=True, default="6565")
     
 class Item(models.Model):
     ID = models.AutoField(primary_key=True)
