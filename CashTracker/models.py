@@ -28,7 +28,7 @@ class Requisition(models.Model):
     
 class Item(models.Model):
     ID = models.AutoField(primary_key=True)
-    requisitionid = models.CharField(models.ForeignKey(Requisition, on_delete=models.CASCADE, null=False, blank=False))
+    requisitionid = models.ForeignKey(Requisition, on_delete=models.CASCADE, null=False, blank=False)
     itemname = models.CharField(max_length=50, null=False, blank=False)
     reason = models.CharField(max_length=100, null=False, blank=False)
     quantity = models.DecimalField(max_digits=7, decimal_places=2, null=False, blank=False)
@@ -41,13 +41,13 @@ class Item(models.Model):
     
 class Voucher(models.Model):
     ID = models.AutoField(primary_key=True)
-    requisitionid = models.CharField(models.ForeignKey(Requisition, on_delete=models.CASCADE), max_length=20)
-    staffid = models.CharField(models.ForeignKey(Staff, on_delete=models.DO_NOTHING), max_length=20)
+    requisitionid = models.ForeignKey(Requisition, on_delete=models.CASCADE, max_length=20)
+    staffid = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, max_length=20)
     purpose = models.CharField(max_length=200, null=False)
     date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
     
 class Retirement(models.Model):
     ID = models.AutoField(primary_key=True)
-    requisitionid = models.CharField(models.ForeignKey(Requisition, on_delete=models.CASCADE))
-    voucherid = models.CharField(models.ForeignKey(Voucher, on_delete=models.CASCADE))
+    requisitionid = models.ForeignKey(Requisition, on_delete=models.CASCADE)
+    voucherid = models.ForeignKey(Voucher, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
