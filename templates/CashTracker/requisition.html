@@ -34,34 +34,34 @@
 
 
                     <label for="{{ form.projectname.id_for_label }}" class="form-label d-block">Name of Project</label>
-                    {{ form.projectname|add_class:"form-control" }}
-                    {{ form.projectname.errors }} 
+                    {{ requisition_form.projectname|add_class:"form-control" }}
+                    {{ requisition_form.projectname.errors }} 
                     
                 </div>
 
                 <div class="w-25 mx-3">
                     <label for="{{ form.requestingdept.id_for_label }}" class="form-label d-block">Requesting Department</label>
-                    {{ form.requestingdept|add_class:"form-control" }}
-                    {{ form.requestingdept.errors }}
+                    {{ requisition_form.requestingdept|add_class:"form-control" }}
+                    {{ requisition_form.requestingdept.errors }}
 
                     <label for="{{ form.projectcode.id_for_label }}" class="form-label d-block">Project Code</label>
-                    {{ form.projectcode|add_class:"form-control" }}
-                    {{ form.projectcode.errors }}
+                    {{ requisition_form.projectcode|add_class:"form-control" }}
+                    {{ requisition_form.projectcode.errors }}
                     
                 </div>
 
                 <div class="w-25 ms-3 me-4">
                     <label for="{{ form.ID.id_for_label }}" class="form-label d-block">Requisition Number</label>
-                    {{ form.ID|add_class:"form-control" }}
-                    {{ form.ID.errors }}
+                    {{ requisition_form.ID|add_class:"form-control" }}
+                    {{ requisition_form.ID.errors }}
 
                     <label for="{{ form.activityname.id_for_label }}" class="form-label d-block">Project Activity</label>
-                    {{ form.activityname|add_class:"form-control" }}
-                    {{ form.activityname.errors }}
+                    {{ requisition_form.activityname|add_class:"form-control" }}
+                    {{ requisition_form.activityname.errors }}
                     
                 </div>
             </div>
-            {{ form.errors }}
+            {{ requisition_form.errors }}
             <div class="d-flex justify-content-between mx-3 my-1 py-0">
                 <div class="fw-bold">Items Required</div>
                 <div class="btn btn-primary me-3">Add Item</div>
@@ -82,12 +82,12 @@
 
                     <tbody>
                         <tr>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
+                            <td>{{ item_form.itemname|add_class:"form-control" }}</td>
+                            <td>{{ item_form.reason|add_class:"form-control" }}</td>
+                            <td>{{ item_form.quantity|add_class:"form-control" }}</td>
+                            <td>{{ item_form.unitprice|add_class:"form-control" }}</td>
+                            <td>{{ item_form.totalprice|add_class:"form-control" }}</td>
+                            <td><button>Delete</button></td>
                         </tr>
                     </tbody>
                 </table>

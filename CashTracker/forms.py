@@ -16,7 +16,7 @@ class RequisitionForm(forms.ModelForm):
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['itemname', 'reason', 'quantity', 'unitprice']
+        fields = ['itemname', 'reason', 'quantity', 'unitprice', 'totalprice']
 
     
 class VoucherForm(forms.ModelForm):
