@@ -60,7 +60,7 @@
             <div class="col-6 text-center d-block justify-content-end">
 
                 <form class="shadow p-3 mx-auto w-75 h-auto mt-0 rounded" method="POST">
-                    <h4 class="text-primary">Register</h3>
+                    <h4 class="text-primary">Sign Up</h3>
                     <h6 class="text-secondary">Cash Tracking Simplified</h5>
                     {% csrf_token %}
                     {{ form.username|add_class:"form-control mb-2"|attr:"placeholder:Enter your username" }}
@@ -78,8 +78,8 @@
                     {{ form.password2|add_class:"form-control mb-2"|attr:"placeholder:Confirm your password" }}
                     {{ form.password2.errors }}
                     <!-- {{ form }} -->
-                    <button type="submit" class="btn btn-primary w-100 mt-0">Create</button>
-                    <p class="fs-8 mt-3 mb-0">Already have an account? <a href="{% url 'login' %}" class="text-decoration-none">Login</a></p>
+                    <button type="submit" class="btn btn-primary w-100 mt-0">Sign Up</button>
+                    <p class="fs-8 mt-3 mb-0">Already have an account? <a href="{% url 'login' %}" class="text-decoration-none">Sign In</a></p>
                 </form>
             </div>
         </div>

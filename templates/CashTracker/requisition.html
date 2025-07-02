@@ -80,17 +80,24 @@
                         </tr>
                     </thead>
 
+                    
                     <tbody>
+                        {{ item_formset.management_form }}
+                        {%  for form in item_formset %}
                         <tr>
-                            <td>{{ item_form.itemname|add_class:"form-control" }}</td>
-                            <td>{{ item_form.reason|add_class:"form-control" }}</td>
-                            <td>{{ item_form.quantity|add_class:"form-control" }}</td>
-                            <td>{{ item_form.unitprice|add_class:"form-control" }}</td>
-                            <td>{{ item_form.totalprice|add_class:"form-control" }}</td>
+                            <td>{{ form.itemname|add_class:"form-control" }}</td>
+                            <td>{{ form.reason|add_class:"form-control" }}</td>
+                            <td>{{ form.quantity|add_class:"form-control" }}</td>
+                            <td>{{ form.unitprice|add_class:"form-control" }}</td>
+                            <td>{{ form.totalprice|add_class:"form-control" }}</td>
                             <td><button>Delete</button></td>
                         </tr>
+                        {% endfor %}
+
+                        
                     </tbody>
                 </table>
+                
 
             </div>
             <div class="text-end mx-3 pe-5 bg-secondary rounded-bottom">

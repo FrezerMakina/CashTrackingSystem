@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import modelformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 
@@ -17,6 +18,9 @@ class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = ['itemname', 'reason', 'quantity', 'unitprice', 'totalprice']
+        
+        
+ItemFormSet = modelformset_factory(Item, form=ItemForm, extra=4, can_delete=True)
 
     
 class VoucherForm(forms.ModelForm):

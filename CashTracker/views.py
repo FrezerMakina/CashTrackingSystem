@@ -24,25 +24,28 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
     success_url = reverse_lazy("requisition")
     
     def get(self, request, *args, **kwargs):
-        return self.render_to_response({
+        return render( request, self.template_name, {
             'requisition_form' : RequisitionForm(),
-            'item_form' : ItemForm()
+            'item_formset' : ItemFormSet(queryset=Item.objects.none()),
         })
         
     def post(self, request, *args, **kwargs):
         requisition_form = RequisitionForm(request.POST)
-        item_form = ItemForm(request.POST)
+        item_formset = ItemFormSet(request.POST)
         
-        if requisition_form.is_valid() and item_form.is_valid():
+        if requisition_form.is_valid() and item_formset.is_valid():
             requisition = requisition_form.save()
-            item = item_form.save(commit=False)
-            item.requisitionid = requisition
-            item.save()
+            items = item_formset.save(commit=False)
+            
+            for item in items:
+                item.requisitionid = requisition
+                item.save()
+                
             return redirect(self.success_url)
         
         return render(request, self.template_name, {
             'requisition_form' : requisition_form,
-            'item_form' : item_form
+            'item_formset' : item_formset
         })
     
 class VoucherView(LoginRequiredMixin, TemplateView):
