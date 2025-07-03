@@ -20,7 +20,7 @@ class ItemForm(forms.ModelForm):
         fields = ['itemname', 'reason', 'quantity', 'unitprice', 'totalprice']
         
         
-ItemFormSet = modelformset_factory(Item, form=ItemForm, extra=4, can_delete=True)
+ItemFormSet = modelformset_factory(Item, form=ItemForm, extra=1, can_delete=True)
 
     
 class VoucherForm(forms.ModelForm):

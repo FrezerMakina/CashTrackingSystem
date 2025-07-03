@@ -64,7 +64,7 @@
             {{ requisition_form.errors }}
             <div class="d-flex justify-content-between mx-3 my-1 py-0">
                 <div class="fw-bold">Items Required</div>
-                <div class="btn btn-primary me-3">Add Item</div>
+                <div class="btn btn-primary me-3" onclick="additem()">Add Item</div>
             </div>
 
             <div class="d-flex m-3 bg-white rounded w-100 my-0 py-0">
@@ -80,16 +80,16 @@
                         </tr>
                     </thead>
 
-                    
-                    <tbody>
-                        {{ item_formset.management_form }}
+                    {{ item_formset.management_form }}
+                    <tbody id="tablebody">
+                        
                         {%  for form in item_formset %}
-                        <tr>
+                        <tr id="tablerow">
                             <td>{{ form.itemname|add_class:"form-control" }}</td>
                             <td>{{ form.reason|add_class:"form-control" }}</td>
-                            <td>{{ form.quantity|add_class:"form-control" }}</td>
-                            <td>{{ form.unitprice|add_class:"form-control" }}</td>
-                            <td>{{ form.totalprice|add_class:"form-control" }}</td>
+                            <td>{{ form.quantity|add_class:"form-control"|attr:"id:quantity" }}</td>
+                            <td>{{ form.unitprice|add_class:"form-control"|attr:"id:unitprice" }}</td>
+                            <td>{{ form.totalprice|add_class:"form-control"|attr:"id:totalprice" }}</td>
                             <td><button>Delete</button></td>
                         </tr>
                         {% endfor %}
@@ -110,4 +110,15 @@
             
         </form>
     </div>
+
+<script>
+    let formid = {{ item_formset.total_form_count }};
+    function additem(){
+        const item = document.getElementById('tablerow').innerHTML.replace(/__prefix__/g, formid);
+        document.getElementById('tablebody').insertAdjacentHTML('beforeend', item);
+        document.getElementById('id_form-TOTAL_FORMS').value = ++formid;
+    }
+</script>
 {% endblock %}
+
+
