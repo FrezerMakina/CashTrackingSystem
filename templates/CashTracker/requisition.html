@@ -84,17 +84,31 @@
                     <tbody id="tablebody">
                         
                         {%  for form in item_formset %}
-                        <tr id="tablerow">
+                        <tr>
                             <td>{{ form.itemname|add_class:"form-control" }}</td>
                             <td>{{ form.reason|add_class:"form-control" }}</td>
                             <td>{{ form.quantity|add_class:"form-control"|attr:"id:quantity" }}</td>
                             <td>{{ form.unitprice|add_class:"form-control"|attr:"id:unitprice" }}</td>
                             <td>{{ form.totalprice|add_class:"form-control"|attr:"id:totalprice" }}</td>
-                            <td><button>Delete</button></td>
+                            <td><button type="button" onclick="this.closest('tr').remove()">Delete</button></td>
                         </tr>
                         {% endfor %}
 
                         
+                    </tbody>
+
+                </table>
+
+                <table class="d-none">
+                    <tbody>
+                        <tr id="tablerow">
+                            <td>{{ item_formset.empty_form.itemname|add_class:"form-control" }}</td>
+                            <td>{{ item_formset.empty_form.reason|add_class:"form-control" }}</td>
+                            <td>{{ item_formset.empty_form.quantity|add_class:"form-control" }}</td>
+                            <td>{{ item_formset.empty_form.unitprice|add_class:"form-control" }}</td>
+                            <td>{{ item_formset.empty_form.totalprice|add_class:"form-control" }}</td>
+                            <td><button type="button" onclick="this.closest('tr').remove()">Delete</button></td>
+                        </tr>
                     </tbody>
                 </table>
                 
