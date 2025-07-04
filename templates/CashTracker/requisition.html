@@ -84,13 +84,13 @@
                     <tbody id="tablebody">
                         
                         {%  for form in item_formset %}
-                        <tr>
+                        <tr class="tablerow">
                             <td>{{ form.itemname|add_class:"form-control" }}</td>
                             <td>{{ form.reason|add_class:"form-control" }}</td>
-                            <td>{{ form.quantity|add_class:"form-control"|attr:"id:quantity" }}</td>
-                            <td>{{ form.unitprice|add_class:"form-control"|attr:"id:unitprice" }}</td>
-                            <td>{{ form.totalprice|add_class:"form-control"|attr:"id:totalprice" }}</td>
-                            <td><button type="button" onclick="this.closest('tr').remove()">Delete</button></td>
+                            <td>{{ form.quantity|add_class:"form-control quantity"|attr:"id:quantity" }}</td>
+                            <td>{{ form.unitprice|add_class:"form-control unitprice"|attr:"id:unitprice" }}</td>
+                            <td>{{ form.totalprice|add_class:"form-control totalprice"|attr:"id:totalprice"|attr:"readonly:readonly" }}</td>
+                            <td><button type="button" onclick="this.closest('tr').remove(); updateGrandTotal()">Delete</button></td>
                         </tr>
                         {% endfor %}
 
@@ -104,10 +104,10 @@
                         <tr id="tablerow">
                             <td>{{ item_formset.empty_form.itemname|add_class:"form-control" }}</td>
                             <td>{{ item_formset.empty_form.reason|add_class:"form-control" }}</td>
-                            <td>{{ item_formset.empty_form.quantity|add_class:"form-control" }}</td>
-                            <td>{{ item_formset.empty_form.unitprice|add_class:"form-control" }}</td>
-                            <td>{{ item_formset.empty_form.totalprice|add_class:"form-control" }}</td>
-                            <td><button type="button" onclick="this.closest('tr').remove()">Delete</button></td>
+                            <td>{{ item_formset.empty_form.quantity|add_class:"form-control quantity" }}</td>
+                            <td>{{ item_formset.empty_form.unitprice|add_class:"form-control unitprice" }}</td>
+                            <td>{{ item_formset.empty_form.totalprice|add_class:"form-control totalprice"|attr:"readonly:readonly" }}</td>
+                            <td><button type="button" onclick="this.closest('tr').remove(); updateGrandTotal()">Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -115,7 +115,7 @@
 
             </div>
             <div class="text-end mx-3 pe-5 bg-secondary rounded-bottom">
-                <p class="fw-bold fs-5">Grand Total: K5,000</p>
+                <p class="fw-bold fs-5" id="grandtotal">Grand Total: K5,000</p>
             </div>
 
             <div class="m-3">
@@ -131,7 +131,34 @@
         const item = document.getElementById('tablerow').innerHTML.replace(/__prefix__/g, formid);
         document.getElementById('tablebody').insertAdjacentHTML('beforeend', item);
         document.getElementById('id_form-TOTAL_FORMS').value = ++formid;
+        updateGrandTotal();
+    };
+
+    function updateGrandTotal(){
+        let sum = 0;
+        document.querySelectorAll('.totalprice').forEach(function(input){
+            let val = parseFloat(input.value) || 0;
+            sum += val;
+        })
+        document.getElementById('grandtotal').textContent = 'Grand Total: K' + sum.toFixed(2);
     }
+ 
+    document.getElementById('tablebody').addEventListener( 'input', function(e){
+        if(e.target.classList.contains('quantity') || e.target.classList.contains('unitprice')){
+            const row = e.target.closest('tr');
+            const price = parseFloat(row.querySelector('.unitprice').value) || 0;
+            const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+            const total = price * quantity;
+
+            const totalfield = row.querySelector('.totalprice');
+            if(totalfield){
+                totalfield.value = total.toFixed(2)
+            }
+            updateGrandTotal();
+        }
+    } );
+
+    updateGrandTotal();
 </script>
 {% endblock %}
 
