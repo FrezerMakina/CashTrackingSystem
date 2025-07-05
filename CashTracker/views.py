@@ -47,8 +47,8 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
                 subject=f'REQUISITION NUMBER {requisition.ID} SUBMITTED SUCCESSFULLY',
                 body=(
                     f'Hello {request.user.get_username()} ,\n\n'
-                    f'Your requistion form has been successfully received. \n\n'
-                    f'REQUISTION NUMBER : {requisition.ID} \n\n'
+                    f'Your requisition form has been successfully received. \n\n'
+                    f'REQUISITION NUMBER : {requisition.ID} \n\n'
                     f'You will be notified of next steps in due course. \n \n'
                     f'You can be checking for the status of your requisition on the dashboard at the link: \n {dashboard_url} \n\n'
                     f'Regards, \n '
@@ -65,7 +65,7 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
                     f'Hello {finance.username} ,\n\n'
                     f'A new requisition number {requisition.ID} has been submitted by {request.user.get_username()} '
                     f'and is awaiting your review.\n\n'
-                    f'Please review it on the link by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                     f'Your timely review and feedback will be key in this process \n\n'
                     f'Regards, \n'
                     f'CCDO Team'

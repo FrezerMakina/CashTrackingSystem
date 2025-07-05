@@ -20,7 +20,7 @@
             </div>
 
             <div class="text-end text-primary m-4 rounded">
-                <p class="border border-primary p-1 rounded">Requisition Form</p>
+                <p class="border border-primary p-1 rounded"> <img src="{% static 'CashTracker/icons/docs.svg' %}" alt="requisition"> Requisition Form</p>
             </div>
         </div>
 
@@ -64,7 +64,7 @@
             {{ requisition_form.errors }}
             <div class="d-flex justify-content-between mx-3 my-1 py-0">
                 <div class="fw-bold">Items Required</div>
-                <div class="btn btn-primary me-3" onclick="additem()">Add Item</div>
+                <div class="btn btn-primary me-3" onclick="additem()"><img src="{% static 'CashTracker/icons/add_white.svg' %}" alt="add icon">Add Item</div>
             </div>
 
             <div class="d-flex m-3 bg-white rounded w-100 my-0 py-0">
@@ -90,7 +90,7 @@
                             <td>{{ form.quantity|add_class:"form-control quantity"|attr:"id:quantity" }}</td>
                             <td>{{ form.unitprice|add_class:"form-control unitprice"|attr:"id:unitprice" }}</td>
                             <td>{{ form.totalprice|add_class:"form-control totalprice"|attr:"id:totalprice"|attr:"readonly:readonly" }}</td>
-                            <td><button type="button" onclick="this.closest('tr').remove(); updateGrandTotal()">Delete</button></td>
+                            <td><button type="button" class="btn btn-outline-none" onclick="this.closest('tr').remove(); updateGrandTotal()"><img src="{% static 'CashTracker/icons/delete.svg' %}" alt="delete"></button></td>
                         </tr>
                         {% endfor %}
 
@@ -107,7 +107,7 @@
                             <td>{{ item_formset.empty_form.quantity|add_class:"form-control quantity" }}</td>
                             <td>{{ item_formset.empty_form.unitprice|add_class:"form-control unitprice" }}</td>
                             <td>{{ item_formset.empty_form.totalprice|add_class:"form-control totalprice"|attr:"readonly:readonly" }}</td>
-                            <td><button type="button" onclick="this.closest('tr').remove(); updateGrandTotal()">Delete</button></td>
+                            <td><button type="button" class="btn btn-outline-none" onclick="this.closest('tr').remove(); updateGrandTotal()"><img src="{% static 'CashTracker/icons/delete.svg' %}" alt="delete"></button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -119,7 +119,7 @@
             </div>
 
             <div class="m-3">
-                <button type="submit" class="d-flex btn btn-primary ms-auto me-3">Submit Requistion</button>
+                <button type="submit" class="d-flex btn btn-primary ms-auto me-3"><img src="{% static 'CashTracker/icons/save.svg' %}" alt="save">Submit Requisition</button>
             </div>
             
         </form>
