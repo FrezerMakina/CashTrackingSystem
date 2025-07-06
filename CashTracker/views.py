@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.core.mail import EmailMessage
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
+from django.views import View
+from django.db.models import Sum
 from .forms import *
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.views import LoginView
@@ -81,11 +84,80 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
             'item_formset' : item_formset
         })
     
-class VoucherView(LoginRequiredMixin, CreateView):
-    model = Voucher
-    form_class = VoucherForm
+class VoucherView(LoginRequiredMixin, View):
+    # model = Voucher
+    # form_class = VoucherForm
     template_name = "CashTracker/voucher.html"
-    success_url = reverse_lazy("voucher")
+    # success_url = reverse_lazy("voucher")
+    
+    def get(self, request, requisitionid, *args, **kwargs):
+        
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            try:
+                requisition = Requisition.objects.get(pk=requisitionid)
+                department = requisition.requestingdept
+                total_amount = Item.objects.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
+            
+                return JsonResponse({
+                    'department' : department,
+                    'amount' : float(total_amount),
+                })
+            
+            except Requisition.DoesNotExist:
+                return JsonResponse({'error' : 'Requistion not found'}, status=404)
+        
+        else:
+            voucher_form = VoucherForm()
+            return render(request, self.template_name, {
+                'voucher_form': voucher_form,
+                'requisitionid': requisitionid,
+            })
+        
+    def post(self, request, requisitionid, *args, **kwargs):
+        voucher_form = VoucherForm(request.POST)
+        
+        if voucher_form.is_valid():
+            voucher = voucher_form.save()
+               
+            dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
+            user_email = EmailMessage(
+                subject=f'VOUCHER NUMBER {voucher.ID} SUBMITTED SUCCESSFULLY',
+                body=(
+                    f'Hello {request.user.get_username()} ,\n\n'
+                    f'Your voucher has been created successfully received. \n\n'
+                    f'VOUCHER NUMBER : {voucher.ID} \n\n'
+                    f'You will be notified of next steps in due course. \n \n'
+                    f'You can be checking for the status of your requisition on the dashboard at the link: \n {dashboard_url} \n\n'
+                    f'Regards, \n '
+                    f'CCDO Team'
+                ),
+                to=[request.user.email],
+            )
+            user_email.send(fail_silently=False)
+            
+            finance = Staff.objects.filter(role='Finance Officer').first()
+            finance_email = EmailMessage(
+                subject=f'NEW CASH VOUCHER NEEDING YOUR ATTENTION',
+                body=(
+                    f'Hello {finance.username} ,\n\n'
+                    f'A new cash voucher number {voucher.ID} has been submitted by {request.user.get_username()} '
+                    f'and is awaiting your review.\n\n'
+                    f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Your timely review and feedback will be key in this process \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[finance.email],
+            )
+            finance_email.send(fail_silently=False)
+                
+            return redirect(reverse('voucher', kwargs={'requisitionid': requisitionid}))
+        
+        return render(request, self.template_name, {
+            'voucher_form' : voucher_form,
+            'requisitionid': requisitionid,
+        })
+        
     
 class RetirementView(LoginRequiredMixin, TemplateView):
     model = Retirement

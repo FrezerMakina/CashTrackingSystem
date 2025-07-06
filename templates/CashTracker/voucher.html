@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block voucher %}
-<a href="{% url 'voucher' %}" class="icon btn btn-primary w-100 text-start m-1">
+<a href="{% url 'voucher' requisitionid %}" class="icon btn btn-primary w-100 text-start m-1">
     <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
     <p class="d-inline"> New Payment Voucher </p>
     </a>
@@ -35,8 +35,8 @@
             <div class="d-flex justify-content-between">
                 <div class="w-50 mx-3">
                     <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block">Requisition</label>
-                    {{ form.requisitionid|add_class:"form-control" }}
-                    {{ form.requisitionid.errors }}
+                    {{ voucher_form.requisitionid|add_class:"form-control" }}
+                    {{ voucher_form.requisitionid.errors }}
 
                     <!-- <label for="requisition" class="form-label mb-0">Requisition</label>
                     <input type="text" id="requisition" class="form-control"> -->
@@ -50,8 +50,8 @@
                     <label for="dpt" class="form-label mb-0">Department</label>
                     <input type="text" id="dpt" class="form-control">  
                     
-                    <label for="dpt" class="form-label m-0">Amount (MWK)</label>
-                    <input type="number" id="dpt" step="0.001" class="form-control m-0"> 
+                    <label for="amount" class="form-label m-0">Amount (MWK)</label>
+                    <input type="number" id="amount" step="0.001" class="form-control m-0"> 
                 </div>
             </div>
 
@@ -61,8 +61,8 @@
             <textarea type="text" id="purpose" class="form-control mx-3" rows="5"></textarea> -->
 
             <label for="{{ form.purpose.id_for_label }}" class="form-label d-block mx-3">Purpose</label>
-            {{ form.purpose|add_class:"form-control mx-3" }}
-            {{ form.purpose.errors }}
+            {{ voucher_form.purpose|add_class:"form-control mx-3" }}
+            {{ voucher_form.purpose.errors }}
           
 
             <div class="m-3">
@@ -71,4 +71,26 @@
             
         </form>
     </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const reqselect = document.getElementById('{{ id_requistionid }}');
+            reqselect.addEventListener('change', function(){
+                const reqid = this.value;
+                if (reqid){
+                    fetch(`/voucher/${reqid}/`)
+                        .then(response => response.json())
+                        .then(data =>{
+                            document.getElementById('dpt').value = data.department;
+                            document.getElementById('amount').value = data.amount;
+                        });
+                }
+                else {
+                    document.getElementById('dpt').value = '';
+                    document.getElementById('amount').value = '';
+                }
+            });
+        })
+    </script>
 {% endblock %}
