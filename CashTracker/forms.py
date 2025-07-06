@@ -26,8 +26,10 @@ ItemFormSet = modelformset_factory(Item, form=ItemForm, extra=1, can_delete=True
 class VoucherForm(forms.ModelForm):
     class Meta:
         model = Voucher
-        fields = ['purpose',]
-        
+        fields = ['requisitionid', 'purpose',]
+        widgets = {
+            'purpose': forms.Textarea(attrs={'rows': 5, 'cols': 40, 'class': 'form-control'}),
+        }
         
 class RetirementForm(forms.ModelForm):
     class Meta:

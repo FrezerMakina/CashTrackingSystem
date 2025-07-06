@@ -42,7 +42,7 @@ class Item(models.Model):
 class Voucher(models.Model):
     ID = models.AutoField(primary_key=True)
     requisitionid = models.ForeignKey(Requisition, on_delete=models.CASCADE, max_length=20)
-    staffid = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, max_length=20)
+    # staffid = models.ForeignKey(Staff, on_delete=models.DO_NOTHING)
     purpose = models.CharField(max_length=200, null=False)
     date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
     

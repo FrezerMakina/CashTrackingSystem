@@ -81,9 +81,11 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
             'item_formset' : item_formset
         })
     
-class VoucherView(LoginRequiredMixin, TemplateView):
+class VoucherView(LoginRequiredMixin, CreateView):
     model = Voucher
+    form_class = VoucherForm
     template_name = "CashTracker/voucher.html"
+    success_url = reverse_lazy("voucher")
     
 class RetirementView(LoginRequiredMixin, TemplateView):
     model = Retirement

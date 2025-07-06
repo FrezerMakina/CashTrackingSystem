@@ -1,5 +1,6 @@
 {% extends "CashTracker/base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block voucher %}
 <a href="{% url 'voucher' %}" class="icon btn btn-primary w-100 text-start m-1">
@@ -23,7 +24,8 @@
             </div>
         </div>
 
-        <form class="bg-white border-primary">
+        <form class="bg-white border-primary" method="POST">
+            {% csrf_token %}
 
             <div class="mx-3">
                 <p class="text-end me-3 fw-bold">Voucher No: PV-76560</p>
@@ -32,8 +34,12 @@
 
             <div class="d-flex justify-content-between">
                 <div class="w-50 mx-3">
-                    <label for="requisition" class="form-label mb-0">Requisition</label>
-                    <input type="text" id="requisition" class="form-control">
+                    <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block">Requisition</label>
+                    {{ form.requisitionid|add_class:"form-control" }}
+                    {{ form.requisitionid.errors }}
+
+                    <!-- <label for="requisition" class="form-label mb-0">Requisition</label>
+                    <input type="text" id="requisition" class="form-control"> -->
 
                     <label for="date" class="form-label mb-0">Date</label>
                     <input type="date" id="date" class="form-control">
@@ -51,8 +57,12 @@
 
            
             
-            <label for="purpose" class="form-label ms-3 mb-0">Purpose</label>
-            <textarea type="text" id="purpose" class="form-control mx-3" rows="5"></textarea>
+            <!-- <label for="purpose" class="form-label ms-3 mb-0">Purpose</label>
+            <textarea type="text" id="purpose" class="form-control mx-3" rows="5"></textarea> -->
+
+            <label for="{{ form.purpose.id_for_label }}" class="form-label d-block mx-3">Purpose</label>
+            {{ form.purpose|add_class:"form-control mx-3" }}
+            {{ form.purpose.errors }}
           
 
             <div class="m-3">
