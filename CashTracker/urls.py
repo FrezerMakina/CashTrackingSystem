@@ -9,5 +9,6 @@ urlpatterns = [
     path('voucher/<str:requisitionid>/', VoucherajaxView.as_view(), name='voucherajax' ),
     # path('voucher/', VoucherView.as_view(), name='voucher' ),
     path('retirement/', RetirementView.as_view(), name='retirement' ),
+    path('retirement/<int:voucherid>/', RetirementajaxView.as_view(), name='retirementajax' ),
     path('download/', DownloadView.as_view(), name='download' ),
 ]

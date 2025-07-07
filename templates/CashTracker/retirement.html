@@ -1,5 +1,6 @@
 {% extends "CashTracker/base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block retirement %}
     <a href="{% url 'retirement' %}" class="icon btn btn-primary w-100 text-start m-1">
@@ -23,23 +24,32 @@
             </div>
         </div>
 
-        <form class="bg-white border-primary">
+        <form class="bg-white border-primary" method="POST">
+            {% csrf_token %}
             <div class="mx-3">
                 <p class="text-end me-3 fw-bold">Retirement No: CR-76560</p>
             </div>
 
             <div class="d-flex justify-content-between">
                 <div class="w-50 mx-3">
-                    <label for="voucher" class="form-label">Voucher</label>
-                    <input type="text" id="voucher" class="form-control">
+                    <!-- <label for="voucher" class="form-label">Voucher</label>
+                    <input type="text" id="voucher" class="form-control"> -->
+
+                    <label for="{{ form.voucherid.id_for_label }}" class="form-label d-block">Voucher</label>
+                    {{ retirement_form.voucherid|add_class:"form-control"|attr:"id:voucherid" }}
+                    {{ retirement_form.voucherid.errors }}
 
                     <label for="date" class="form-label">Date</label>
                     <input type="date" id="date" class="form-control">    
                 </div>
 
                 <div class="w-50 mx-3">
-                    <label for="requisition" class="form-label">Requesition</label>
-                    <input type="text" id="requisition" class="form-control">
+                    <!-- <label for="requisition" class="form-label">Requesition</label>
+                    <input type="text" id="requisition" class="form-control"> -->
+
+                    <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block">Requisition</label>
+                    {{ retirement_form.requisitionid|add_class:"form-control"|attr:"id:requisitionid" }}
+                    {{ retirement_form.requisitionid.errors }}
 
                     <label for="amount" class="form-label">Amount</label>
                     <input type="number" id="amount" class="form-control">

@@ -34,4 +34,4 @@ class VoucherForm(forms.ModelForm):
 class RetirementForm(forms.ModelForm):
     class Meta:
         model = Retirement
-        fields = []
+        fields = ['voucherid', 'requisitionid']
