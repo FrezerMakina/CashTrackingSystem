@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block voucher %}
-<a href="{% url 'voucher' requisitionid %}" class="icon btn btn-primary w-100 text-start m-1">
+<a href="{% url 'voucher' %}" class="icon btn btn-primary w-100 text-start m-1">
     <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
     <p class="d-inline"> New Payment Voucher </p>
     </a>
@@ -35,23 +35,23 @@
             <div class="d-flex justify-content-between">
                 <div class="w-50 mx-3">
                     <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block">Requisition</label>
-                    {{ voucher_form.requisitionid|add_class:"form-control" }}
+                    {{ voucher_form.requisitionid|add_class:"form-control"|attr:"id:requisitionid" }}
                     {{ voucher_form.requisitionid.errors }}
 
                     <!-- <label for="requisition" class="form-label mb-0">Requisition</label>
                     <input type="text" id="requisition" class="form-control"> -->
 
                     <label for="date" class="form-label mb-0">Date</label>
-                    <input type="date" id="date" class="form-control">
+                    <input type="date" id="date" class="form-control" readonly>
                     
                 </div>
 
                 <div class="w-50 mx-3">
                     <label for="dpt" class="form-label mb-0">Department</label>
-                    <input type="text" id="dpt" class="form-control">  
+                    <input type="text" id="dpt" class="form-control" readonly>  
                     
                     <label for="amount" class="form-label m-0">Amount (MWK)</label>
-                    <input type="number" id="amount" step="0.001" class="form-control m-0"> 
+                    <input type="number" id="amount" step="0.001" class="form-control m-0" readonly> 
                 </div>
             </div>
 
@@ -75,7 +75,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function(){
-            const reqselect = document.getElementById('{{ id_requistionid }}');
+            const reqselect = document.getElementById('requisitionid');
             reqselect.addEventListener('change', function(){
                 const reqid = this.value;
                 if (reqid){

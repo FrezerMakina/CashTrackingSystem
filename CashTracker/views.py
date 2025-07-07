@@ -50,11 +50,12 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
                 subject=f'REQUISITION NUMBER {requisition.ID} SUBMITTED SUCCESSFULLY',
                 body=(
                     f'Hello {request.user.get_username()} ,\n\n'
-                    f'Your requisition form has been successfully received. \n\n'
+                    f'Your requisition form has been successfully received '
+                    f'and it is now at FINANCE OFFICE for review\n\n'
                     f'REQUISITION NUMBER : {requisition.ID} \n\n'
                     f'You will be notified of next steps in due course. \n \n'
-                    f'You can be checking for the status of your requisition on the dashboard at the link: \n {dashboard_url} \n\n'
-                    f'Regards, \n '
+                    f'You can be checking for the status of your requisition on the dashboard at the link: \n{dashboard_url} \n\n'
+                    f'Regards, \n'
                     f'CCDO Team'
                 ),
                 to=[request.user.email],
@@ -90,32 +91,19 @@ class VoucherView(LoginRequiredMixin, View):
     template_name = "CashTracker/voucher.html"
     # success_url = reverse_lazy("voucher")
     
-    def get(self, request, requisitionid, *args, **kwargs):
-        
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            try:
-                requisition = Requisition.objects.get(pk=requisitionid)
-                department = requisition.requestingdept
-                total_amount = Item.objects.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
+    def get(self, request, *args, **kwargs):
+                requisitions = Requisition.objects.all()
+                voucher_form = VoucherForm()
             
-                return JsonResponse({
-                    'department' : department,
-                    'amount' : float(total_amount),
+                return render(request, self.template_name, {
+                    'voucher_form' : voucher_form,
+                    'requisitions' : requisitions,
                 })
-            
-            except Requisition.DoesNotExist:
-                return JsonResponse({'error' : 'Requistion not found'}, status=404)
+
         
-        else:
-            voucher_form = VoucherForm()
-            return render(request, self.template_name, {
-                'voucher_form': voucher_form,
-                'requisitionid': requisitionid,
-            })
-        
-    def post(self, request, requisitionid, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         voucher_form = VoucherForm(request.POST)
-        
+        requisitions = Requisition.objects.all()
         if voucher_form.is_valid():
             voucher = voucher_form.save()
                
@@ -124,11 +112,12 @@ class VoucherView(LoginRequiredMixin, View):
                 subject=f'VOUCHER NUMBER {voucher.ID} SUBMITTED SUCCESSFULLY',
                 body=(
                     f'Hello {request.user.get_username()} ,\n\n'
-                    f'Your voucher has been created successfully received. \n\n'
+                    f'Your voucher has been created successfully '
+                    f'and it is now at FINANCE OFFICE for review\n\n'
                     f'VOUCHER NUMBER : {voucher.ID} \n\n'
                     f'You will be notified of next steps in due course. \n \n'
-                    f'You can be checking for the status of your requisition on the dashboard at the link: \n {dashboard_url} \n\n'
-                    f'Regards, \n '
+                    f'You can be checking for the status of your voucher on the dashboard at the link: \n{dashboard_url} \n\n'
+                    f'Regards, \n'
                     f'CCDO Team'
                 ),
                 to=[request.user.email],
@@ -151,14 +140,29 @@ class VoucherView(LoginRequiredMixin, View):
             )
             finance_email.send(fail_silently=False)
                 
-            return redirect(reverse('voucher', kwargs={'requisitionid': requisitionid}))
+            return redirect('voucher')
         
         return render(request, self.template_name, {
             'voucher_form' : voucher_form,
-            'requisitionid': requisitionid,
+            'requisitions': requisitions,
         })
         
     
+class VoucherajaxView(LoginRequiredMixin, View):
+    def get(self, request, requisitionid, *args, **kwargs):
+        try:
+            requisition = Requisition.objects.get(pk=requisitionid)
+            department = requisition.requestingdept
+            total_amount = Item.objects.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
+            
+            return JsonResponse({
+                'department' : department,
+                'amount' : float(total_amount),
+            })
+            
+        except Requisition.DoesNotExist:
+            return JsonResponse({'error' : 'Requistion not found'}, status=404)
+
 class RetirementView(LoginRequiredMixin, TemplateView):
     model = Retirement
     template_name = "CashTracker/retirement.html"
