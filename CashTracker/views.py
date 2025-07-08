@@ -242,7 +242,9 @@ class RetirementajaxView(LoginRequiredMixin, View):
             for item in items:
                 item_list.append({
                     'itemname' : item.itemname,
-                    'totalprice' : item.totalprice,   
+                    'totalprice' : item.totalprice, 
+                    'unitprice' : item.unitprice,
+                    'quantity' : item.quantity,  
                 })
             
             

@@ -48,11 +48,11 @@
                     <input type="text" id="requisition" class="form-control"> -->
 
                     <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block">Requisition</label>
-                    {{ retirement_form.requisitionid|add_class:"form-control"|attr:"id:requisitionid" }}
+                    {{ retirement_form.requisitionid|add_class:"form-control"|attr:"id:requisitionid"|attr:"readonly:readonly" }}
                     {{ retirement_form.requisitionid.errors }}
 
                     <label for="amount" class="form-label">Amount</label>
-                    <input type="number" id="amount" class="form-control">
+                    <input type="number" id="amount" class="form-control" readonly>
                     
                 </div>
 
@@ -68,17 +68,19 @@
                     <thead>
                         <tr>
                             <th>Description</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
                             <th>Amount</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
 
-                    <tbody>
-                        <tr>
+                    <tbody id="tablebody">
+                        <!-- <tr id="tablerow">
                             <td><input type="text" class="form-control"></td>
                             <td><input type="number" step="0.001" class="form-control"></td>
                             <td><input type="text" class="form-control"></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -86,17 +88,17 @@
             <div class="d-flex justify-content-between m-3">
                 <div class="w-25 bg-success rounded">
                     <p class="text-center">Total Used</p>
-                    <p class="fw-bold text-center">MWK 0</p>
+                    <p class="fw-bold text-center" id="used">MWK 0.00</p>
                 </div>
 
                 <div class="w-25 bg-primary rounded">
                     <p class="text-center">Amount Requested</p>
-                    <p class="fw-bold text-center">MWK 0</p>
+                    <p class="fw-bold text-center" id="requested">MWK 0.00</p>
                 </div>
 
                 <div class="w-25 bg-danger rounded">
                     <p class="text-center">Balance</p>
-                    <p class="fw-bold text-center">MWK 0</p>
+                    <p class="fw-bold text-center" id="balance">MWK 0.00</p>
                 </div>
             </div>
 
@@ -135,4 +137,52 @@
         </form>
         <!-- <div class="h-25"></div> -->
     </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const voucherselect = document.getElementById('voucherid');
+            voucherselect.addEventListener('change', function(){
+                const voucherid = this.value;
+                if (voucherid){
+                    fetch(`/retirement/${voucherid}/`)
+                        .then(response => response.json())
+                        .then(data =>{
+                            document.getElementById('requisitionid').value = data.requisitionid;
+                            document.getElementById('amount').value = data.amount;
+                            document.getElementById('requested').textContent = 'MWK' + data.amount.toFixed(2);
+                            const items = data.item_list;
+                            for (const item of items){
+                                const row = `
+                                    <tr id="tablerow">
+                                        <td><input type="text" class="form-control" value="${item.itemname || ''}" readonly></td>
+                                        <td><input type="number" step="0.001" class="form-control" value="${item.unitprice || ''}" readonly></td>
+                                        <td><input type="number" step="0.001" class="form-control" value="${item.quantity || ''}" readonly></td>
+                                        <td><input type="number" step="0.001" class="form-control" value="${item.totalprice || ''}" readonly></td>
+                                        <td><button type="button" class="btn btn-outline-none" onclick="this.closest('tr').remove(); updateGrandTotal()"><img src="{% static 'CashTracker/icons/delete.svg' %}" alt="delete"></button></td>
+                                    </tr>`
+                                document.getElementById('tablebody').insertAdjacentHTML('beforeend', row);
+                                // updateGrandTotal();
+                            }
+                        });
+                }
+                else {
+                    document.getElementById('requisitionid').value = '';
+                    document.getElementById('amount').value = '';
+                    document.getElementById('requested').textContent = 'MWK 0.00';
+                }
+            });
+        });
+
+        
+
+    // function updateGrandTotal(){
+    //     let sum = 0;
+    //     document.querySelectorAll('.totalprice').forEach(function(input){
+    //         let val = parseFloat(input.value) || 0;
+    //         sum += val;
+    //     })
+    //     document.getElementById('grandtotal').textContent = 'Grand Total: K' + sum.toFixed(2);
+    // }
+    </script>
 {% endblock %}
