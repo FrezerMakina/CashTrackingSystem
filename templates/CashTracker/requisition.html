@@ -140,7 +140,7 @@
             let val = parseFloat(input.value) || 0;
             sum += val;
         })
-        document.getElementById('grandtotal').textContent = 'Grand Total: K' + sum.toFixed(2);
+        document.getElementById('grandtotal').textContent = 'Grand Total: K' + sum.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
     }
  
     document.getElementById('tablebody').addEventListener( 'input', function(e){

@@ -151,7 +151,7 @@
                             document.getElementById('tablebody').innerHTML = "";
                             document.getElementById('requisitionid').value = data.requisitionid;
                             document.getElementById('amount').value = data.amount;
-                            document.getElementById('requested').textContent = 'MWK ' + data.amount.toFixed(2);
+                            document.getElementById('requested').textContent = 'MWK ' + data.amount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
                             const items = data.item_list;
                             for (const item of items){
                                 const row = `
@@ -207,13 +207,13 @@
             let val = parseFloat(input.value) || 0;
             sum += val;
         })
-        document.getElementById('used').textContent = 'MWK ' + sum.toFixed(2);
+        document.getElementById('used').textContent = 'MWK ' + sum.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
         const usednumber = sum;
         const requestedstr = document.getElementById('requested').textContent;
         const requestednumber = parseFloat(requestedstr.replace(/[^\d.]/g, '')) || 0;
         const balance = requestednumber - usednumber;
-        document.getElementById('balance').textContent = `MWK ${balance.toFixed(2)}`;
+        document.getElementById('balance').textContent = `MWK ${balance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
     }
     </script>
 {% endblock %}
