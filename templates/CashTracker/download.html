@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="m-3 w-100 overflow-y-auto overflow-x-hidden h-100 border-start bg-white border-4 border-primary rounded shadow">
+<div class="m-3 w-100 overflow-y-auto overflow-x-hidden border-start bg-white border-4 border-primary rounded shadow" style="height: 85%; width: 98%;">
         <div class="m-3">
             <img src="{% static 'CashTracker/icons/download.svg' %}" alt="download">
             <p class="d-inline fw-bold fs-5"> Download Forms </p>
@@ -65,7 +65,7 @@
                     </thead>
 
                     <tbody>
-                        <tr>
+                        <tr class="my-0">
                             <td>REQ-001</td>
                             <td>Requisition</td>
                             <td>Admin</td>
@@ -73,10 +73,10 @@
                             <td>Office Maintainance</td>
                             <td>2024-01-12</td>
                             <td>2024-01-18</td>
-                            <td>Download</td>
+                            <td><button type="button" class="btn btn-outline-none" onclick="download()"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></button></td>
                         </tr>
 
-                        <tr>
+                        <tr class="my-0">
                             <td>REQ-001</td>
                             <td>Requisition</td>
                             <td>Admin</td>
@@ -84,10 +84,10 @@
                             <td>Office Maintainance</td>
                             <td>2024-01-12</td>
                             <td>2024-01-18</td>
-                            <td>Download</td>
+                            <td><button type="button" class="btn btn-outline-none" onclick="download()"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></button></td>
                         </tr>
 
-                        <tr>
+                        <tr class="my-0">
                             <td>REQ-001</td>
                             <td>Requisition</td>
                             <td>Admin</td>
@@ -95,10 +95,10 @@
                             <td>Office Maintainance</td>
                             <td>2024-01-12</td>
                             <td>2024-01-18</td>
-                            <td>Download</td>
+                            <td><button type="button" class="btn btn-outline-none" onclick="download()"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></button></td>
                         </tr>
 
-                        <tr>
+                        <tr class="my-0">
                             <td>REQ-001</td>
                             <td>Requisition</td>
                             <td>Admin</td>
@@ -106,7 +106,7 @@
                             <td>Office Maintainance</td>
                             <td>2024-01-12</td>
                             <td>2024-01-18</td>
-                            <td>Download</td>
+                            <td><button type="button" class="btn btn-outline-none" onclick="download()"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></button></td>
                         </tr>
 
 
