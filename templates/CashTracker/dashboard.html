@@ -31,10 +31,10 @@
     </div>
 </div>
 
-<div class="container-fluid table-responsive border-primary bg-white w-100 m-3">
+<div class="container-fluid table-responsive border-primary  bg-white h-50 m-3" style="width: 98%;">
     <h3>Status Forms</h3>
     <p>Showing the status of each form in the approval hierarchy</p>
-    <table class="table table-striped table-bordered table-hover p-0" style="width: 98%;">
+    <table class="table table-striped table-bordered table-hover mx-auto p-0" style="width: 98%;">
         <thead>
             <tr>
                 <th>ID</th>
@@ -47,16 +47,63 @@
         </thead>
 
         <tbody>
+            {% for requisition in requisitions %}
             <tr>
-                <td>1</td>
+                <td>{{ requisition.ID }}</td>
                 <td>Requisition</td>
-                <td>5677</td>
-                <td>20 May</td>
-                <td>Pending</td>
+                <td>6565</td>
+                <td>{{ requisition.date }}</td>
+                <td>{{ requisition.status }}</td>
                 <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
             </tr>
+            {% endfor %}
+
+
+            {% for voucher in vouchers %}
+            <tr>
+                <td>{{ voucher.ID }}</td>
+                <td>Voucher</td>
+                <td>6565</td>
+                <td>{{ voucher.date }}</td>
+                <td>Ok</td>
+                <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
+            </tr>
+            {% endfor %}
+
+            {% for retirement in retirements %}
+            <tr>
+                <td>{{ retirement.ID }}</td>
+                <td>Retirement</td>
+                <td>6565</td>
+                <td>{{ retirement.date }}</td>
+                <td>Ok</td>
+                <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
+            </tr>
+            {% endfor %}
+
         </tbody>
     </table>
+</div>
 
+<div class="d-flex justify-content-between container-fluid w-100 mx-0 p-0">
+    <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
+        <p>Forms Sent Back</p>
+        <p class="fw-bold">0</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
+        <p>Authorised Forms</p>
+        <p class="fw-bold">0</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
+        <p>Rejected Forms</p>
+        <p class="fw-bold">0</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
+        <p>In Process</p>
+        <p class="fw-bold">0</p>
+    </div>
 </div>
 {% endblock %}

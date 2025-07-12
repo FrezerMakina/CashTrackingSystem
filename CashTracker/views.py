@@ -17,10 +17,26 @@ class RegisterView(CreateView):
     template_name = "registration/register.html"
     success_url = reverse_lazy("login")
     
-class DashboardView(LoginRequiredMixin, TemplateView):
-    model = Staff
-    template_name = "CashTracker/dashboard.html"
+# class DashboardView(LoginRequiredMixin, TemplateView):
+#     model = Staff
+#     template_name = "CashTracker/dashboard.html"
     
+    
+class DashboardView(LoginRequiredMixin, View):
+    template_name = "CashTracker/dashboard.html"
+    def get(self, request, *args, **kwargs):
+        vouchers = Voucher.objects.all()
+        requisitions = Requisition.objects.all() 
+        retirements = Retirement.objects.all()
+        
+
+        return render(request, self.template_name, {
+            'vouchers' : vouchers,
+            'requisitions' : requisitions,
+            'retirements' : retirements,
+        })
+            
+
 class RequisitionView(LoginRequiredMixin, TemplateView):
     # form_class = RequisitionForm
     # model = Requisition
