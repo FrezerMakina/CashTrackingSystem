@@ -31,7 +31,7 @@
     </div>
 </div>
 
-<div class="container-fluid table-responsive border-primary  bg-white h-50 m-3" style="width: 98%;">
+<div class="container-fluid table-responsive border-primary  bg-white h-50 mx-3 my-0" style="width: 98%;">
     <h3>Status Forms</h3>
     <p>Showing the status of each form in the approval hierarchy</p>
     <table class="table table-striped table-bordered table-hover mx-auto p-0" style="width: 98%;">
@@ -65,7 +65,7 @@
                 <td>Voucher</td>
                 <td>6565</td>
                 <td>{{ voucher.date }}</td>
-                <td>Ok</td>
+                <td>{{ voucher.status }}</td>
                 <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
             </tr>
             {% endfor %}
@@ -76,7 +76,7 @@
                 <td>Retirement</td>
                 <td>6565</td>
                 <td>{{ retirement.date }}</td>
-                <td>Ok</td>
+                <td>{{ retirement.status }}</td>
                 <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
             </tr>
             {% endfor %}
@@ -85,7 +85,7 @@
     </table>
 </div>
 
-<div class="d-flex justify-content-between container-fluid w-100 mx-0 p-0">
+<div class="d-flex justify-content-between container-fluid w-100 m-0 p-0">
     <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
         <p>Forms Sent Back</p>
         <p class="fw-bold">0</p>
