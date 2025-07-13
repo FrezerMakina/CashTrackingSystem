@@ -29,6 +29,20 @@ class DashboardView(LoginRequiredMixin, View):
         requisitions = Requisition.objects.all() 
         retirements = Retirement.objects.all()
         
+        for requisition in requisitions:
+            total_req = Item.objects.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
+            requisition.total = total_req
+        
+        for voucher in vouchers:
+            total_voucher = Item.objects.filter(requisitionid=voucher.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+            voucher.total = total_voucher
+            
+        for retirement in retirements:
+            total_retirement = Item.objects.filter(requisitionid=retirement.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+            retirement.total = total_retirement
+ 
+            
+        
 
         return render(request, self.template_name, {
             'vouchers' : vouchers,
