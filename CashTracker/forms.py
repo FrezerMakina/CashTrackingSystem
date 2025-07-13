@@ -31,7 +31,19 @@ class VoucherForm(forms.ModelForm):
             'purpose': forms.Textarea(attrs={'rows': 5, 'cols': 40, 'class': 'form-control'}),
         }
         
+    def __init__(self, *args, **kwargs):
+        requisition_queryset = kwargs.pop('requisition_queryset', None)
+        super().__init__(*args, **kwargs)
+        if requisition_queryset is not None:
+            self.fields['requisitionid'].queryset = requisition_queryset
+        
 class RetirementForm(forms.ModelForm):
     class Meta:
         model = Retirement
         fields = ['voucherid', 'requisitionid']
+        
+    def __init__(self, *args, **kwargs):
+        voucher_queryset = kwargs.pop('voucher_queryset', None)
+        super().__init__(*args, **kwargs)
+        if voucher_queryset is not None:
+            self.fields['voucherid'].queryset = voucher_queryset

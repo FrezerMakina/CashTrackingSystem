@@ -25,9 +25,12 @@ class RegisterView(CreateView):
 class DashboardView(LoginRequiredMixin, View):
     template_name = "CashTracker/dashboard.html"
     def get(self, request, *args, **kwargs):
-        vouchers = Voucher.objects.all()
-        requisitions = Requisition.objects.all() 
-        retirements = Retirement.objects.all()
+        # vouchers = Voucher.objects.all()
+        # requisitions = Requisition.objects.all() 
+        # retirements = Retirement.objects.all()
+        vouchers = Voucher.objects.filter(createdby=request.user.get_username())
+        requisitions = Requisition.objects.filter(createdby=request.user.get_username()) 
+        retirements = Retirement.objects.filter(createdby=request.user.get_username())
         
         for requisition in requisitions:
             total_req = Item.objects.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
@@ -124,8 +127,8 @@ class VoucherView(LoginRequiredMixin, View):
     # success_url = reverse_lazy("voucher")
     
     def get(self, request, *args, **kwargs):
-                requisitions = Requisition.objects.all()
-                voucher_form = VoucherForm()
+                requisitions = Requisition.objects.filter(createdby=request.user.get_username(), status='Authorised')
+                voucher_form = VoucherForm(requisition_queryset=requisitions)
             
                 return render(request, self.template_name, {
                     'voucher_form' : voucher_form,
@@ -185,7 +188,7 @@ class VoucherView(LoginRequiredMixin, View):
 class VoucherajaxView(LoginRequiredMixin, View):
     def get(self, request, requisitionid, *args, **kwargs):
         try:
-            requisition = Requisition.objects.get(pk=requisitionid)
+            requisition = Requisition.objects.get(pk=requisitionid, createdby=request.user.get_username(), status='Authorised')
             department = requisition.requestingdept
             total_amount = Item.objects.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
             
@@ -206,8 +209,8 @@ class RetirementView(LoginRequiredMixin, View):
     # success_url = reverse_lazy("voucher")
     
     def get(self, request, *args, **kwargs):
-                vouchers = Voucher.objects.all()
-                retirement_form = RetirementForm()
+                vouchers = Voucher.objects.filter(createdby=request.user.get_username(), status='Authorised')
+                retirement_form = RetirementForm(voucher_queryset=vouchers)
             
                 return render(request, self.template_name, {
                     'retirement_form' : retirement_form,
@@ -268,7 +271,7 @@ class RetirementView(LoginRequiredMixin, View):
 class RetirementajaxView(LoginRequiredMixin, View):
     def get(self, request, voucherid, *args, **kwargs):
         try:
-            voucher = Voucher.objects.get(pk=voucherid)
+            voucher = Voucher.objects.get(pk=voucherid, createdby=request.user.get_username(), status='Authorised')
             requisition = voucher.requisitionid            
             items = Item.objects.filter(requisitionid=requisition)
             total_amount = items.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
