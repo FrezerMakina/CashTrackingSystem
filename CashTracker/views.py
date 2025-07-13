@@ -68,7 +68,9 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
         item_formset = ItemFormSet(request.POST)
         
         if requisition_form.is_valid() and item_formset.is_valid():
-            requisition = requisition_form.save()
+            requisition = requisition_form.save(commit=False)
+            requisition.createdby = request.user.get_username()
+            requisition.save()
             items = item_formset.save(commit=False)
             
             for item in items:
@@ -135,7 +137,9 @@ class VoucherView(LoginRequiredMixin, View):
         voucher_form = VoucherForm(request.POST)
         requisitions = Requisition.objects.all()
         if voucher_form.is_valid():
-            voucher = voucher_form.save()
+            voucher = voucher_form.save(commit=False)
+            voucher.createdby = request.user.get_username()
+            voucher.save()
                
             dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
             user_email = EmailMessage(
@@ -215,7 +219,9 @@ class RetirementView(LoginRequiredMixin, View):
         retirement_form = RetirementForm(request.POST)
         vouchers = Voucher.objects.all()
         if retirement_form.is_valid():
-            retirement = retirement_form.save()
+            retirement = retirement_form.save(commit=False)
+            retirement.createdby = request.user.get_username()
+            retirement.save()
                
             dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
             user_email = EmailMessage(
