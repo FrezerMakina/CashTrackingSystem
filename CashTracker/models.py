@@ -28,6 +28,7 @@ class Requisition(models.Model):
     projectcode = models.CharField(max_length=10)
     requestingdept = models.CharField(max_length=40)
     accountnumber = models.CharField(max_length=20, null=True, default="6565")
+    createdby = models.CharField(max_length=50, null=False)
     
     def __str__(self):
         return self.ID
@@ -55,6 +56,7 @@ class Voucher(models.Model):
     status = models.CharField(null=False, max_length=10, default="SUBMITTED")
     purpose = models.CharField(max_length=200, null=False)
     date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
+    createdby = models.CharField(max_length=50, null=False)
     
     
     def __str__(self):
@@ -66,6 +68,7 @@ class Retirement(models.Model):
     voucherid = models.ForeignKey(Voucher, on_delete=models.CASCADE)
     status = models.CharField(null=False, max_length=10, default="SUBMITTED")
     date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
+    createdby = models.CharField(max_length=50, null=False)
     
     def __str__(self):
         return f'Retirement ID {self.ID} for {self.voucherid}'
