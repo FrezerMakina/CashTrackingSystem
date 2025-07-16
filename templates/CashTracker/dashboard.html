@@ -92,8 +92,8 @@
 {% if requisitionsadmin or vouchersadmin or retirementsadmin %}
     {% if request.user.role == "Finance Officer" %}
     <div class="container-fluid table-responsive border-primary  bg-white h-50 mx-3 my-0" style="width: 98%;">
-    <h3>Status Forms</h3>
-    <p>Showing the status of each form in the approval hierarchy</p>
+    <h3>Forms Requiring Your Attention</h3>
+    <p>Showing forms which needs your review and feedback</p>
     <table class="table table-striped table-bordered table-hover mx-auto p-0" style="width: 98%;">
         <thead>
             
@@ -101,7 +101,7 @@
                 <th>ID</th>
                 <th>Type</th>
                 <th>Date Submitted</th>
-                <th>Status</th>
+                <th>Submitted By</th>
                 <th>Actions</th>
             </tr>
             
@@ -114,8 +114,8 @@
                         <td>{{ requisitionadmin.ID }}</td>
                         <td>Requisition</td>
                         <td>{{ requisitionadmin.date }}</td>
-                        <td>{{ requisitionadmin.status }}</td>
-                        <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
+                        <td>{{ requisitionadmin.createdby }}</td>
+                        <td><button class="btn btn-primary">Review</button></td>
                     </tr>
                 {% endif %}
                 {% endfor %}
@@ -126,8 +126,8 @@
                         <td>{{ voucheradmin.ID }}</td>
                         <td>Voucher</td>
                         <td>{{ voucheradmin.date }}</td>
-                        <td>{{ voucheradmin.status }}</td>
-                        <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
+                        <td>{{ voucheradmin.createdby }}</td>
+                        <td><button class="btn btn-primary">Review</button></td>
                     </tr>
                 {% endif %}
                 {% endfor %}
@@ -138,8 +138,127 @@
                         <td>{{ retirementadmin.ID }}</td>
                         <td>Retirement</td>
                         <td>{{ retirementadmin.date }}</td>
-                        <td>{{ retirementadmin.status }}</td>
-                        <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
+                        <td>{{ retirementadmin.createdby }}</td>
+                        <td><button class="btn btn-primary">Review</button></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+
+    {% if request.user.role == "Programs Manager" %}
+    <div class="container-fluid table-responsive border-primary  bg-white h-50 mx-3 my-0" style="width: 98%;">
+    <h3>Forms Requiring Your Attention</h3>
+    <p>Showing forms which needs your review and feedback</p>
+    <table class="table table-striped table-bordered table-hover mx-auto p-0" style="width: 98%;">
+        <thead>
+            
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Date Submitted</th>
+                <th>Submitted By</th>
+                <th>Actions</th>
+            </tr>
+            
+        </thead>
+
+            <tbody>
+                {% for requisitionadmin in requisitionsadmin %}
+                {% if requisitionadmin.status == "Reviewed" %}
+                    <tr>
+                        <td>{{ requisitionadmin.ID }}</td>
+                        <td>Requisition</td>
+                        <td>{{ requisitionadmin.date }}</td>
+                        <td>{{ requisitionadmin.createdby }}</td>
+                        <td><button class="btn btn-primary">Review</button></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+
+                {% for voucheradmin in vouchersadmin %}
+                {% if voucheradmin.status == "Reviewed" %}
+                    <tr>
+                        <td>{{ voucheradmin.ID }}</td>
+                        <td>Voucher</td>
+                        <td>{{ voucheradmin.date }}</td>
+                        <td>{{ voucheradmin.createdby }}</td>
+                        <td><button class="btn btn-primary">Review</button></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+
+                {% for retirementadmin in retirementsadmin %}
+                {% if retirementadmin.status == "Reviewed" %}
+                    <tr>
+                        <td>{{ retirementadmin.ID }}</td>
+                        <td>Retirement</td>
+                        <td>{{ retirementadmin.date }}</td>
+                        <td>{{ retirementadmin.createdby }}</td>
+                        <td><button class="btn btn-primary">Review</button></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% if request.user.role == "ED" %}
+    <div class="container-fluid table-responsive border-primary  bg-white h-50 mx-3 my-0" style="width: 98%;">
+    <h3>Forms Requiring Your Attention</h3>
+    <p>Showing forms which needs your review and feedback</p>
+    <table class="table table-striped table-bordered table-hover mx-auto p-0" style="width: 98%;">
+        <thead>
+            
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Date Submitted</th>
+                <th>Submitted By</th>
+                <th>Actions</th>
+            </tr>
+            
+        </thead>
+
+            <tbody>
+                {% for requisitionadmin in requisitionsadmin %}
+                {% if requisitionadmin.status == "Approved" %}
+                    <tr>
+                        <td>{{ requisitionadmin.ID }}</td>
+                        <td>Requisition</td>
+                        <td>{{ requisitionadmin.date }}</td>
+                        <td>{{ requisitionadmin.createdby }}</td>
+                        <td><button class="btn btn-primary">Review</button></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+
+                {% for voucheradmin in vouchersadmin %}
+                {% if voucheradmin.status == "Approved" %}
+                    <tr>
+                        <td>{{ voucheradmin.ID }}</td>
+                        <td>Voucher</td>
+                        <td>{{ voucheradmin.date }}</td>
+                        <td>{{ voucheradmin.createdby }}</td>
+                        <td><button class="btn btn-primary">Review</button></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+
+                {% for retirementadmin in retirementsadmin %}
+                {% if retirementadmin.status == "Approved" %}
+                    <tr>
+                        <td>{{ retirementadmin.ID }}</td>
+                        <td>Retirement</td>
+                        <td>{{ retirementadmin.date }}</td>
+                        <td>{{ retirementadmin.createdby }}</td>
+                        <td><button class="btn btn-primary">Review</button></td>
                     </tr>
                 {% endif %}
                 {% endfor %}

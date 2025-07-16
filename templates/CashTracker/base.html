@@ -92,7 +92,7 @@
                 <h3 class="w-100 pt-3">CCDO Cash Tracking</h3>
                 <div class="border border-dark w-25 d-flex justify-content-center rounded m-1">
                     <img src="{% static 'CashTracker/icons/person.svg' %}" alt="person">
-                    <p class="d-inline pt-3">Staff Member</p>
+                    <p class="d-inline pt-3">{{ request.user.username }}</p>
                 </div>
             </div>
 
