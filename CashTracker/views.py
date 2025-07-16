@@ -28,6 +28,11 @@ class DashboardView(LoginRequiredMixin, View):
         # vouchers = Voucher.objects.all()
         # requisitions = Requisition.objects.all() 
         # retirements = Retirement.objects.all()
+        
+        vouchersadmin = Voucher.objects.all()
+        requisitionsadmin = Requisition.objects.all()
+        retirementsadmin = Retirement.objects.all()
+        
         vouchers = Voucher.objects.filter(createdby=request.user.get_username())
         requisitions = Requisition.objects.filter(createdby=request.user.get_username()) 
         retirements = Retirement.objects.filter(createdby=request.user.get_username())
@@ -51,6 +56,9 @@ class DashboardView(LoginRequiredMixin, View):
             'vouchers' : vouchers,
             'requisitions' : requisitions,
             'retirements' : retirements,
+            'vouchersadmin' : vouchersadmin,
+            'requisitionsadmin' : requisitionsadmin,
+            'retirementsadmin' : retirementsadmin,
         })
             
 

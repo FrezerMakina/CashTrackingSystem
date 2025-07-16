@@ -31,12 +31,13 @@
     </div>
 </div>
 
+{% if requisitions or vouchers or retirements %}
 <div class="container-fluid table-responsive border-primary  bg-white h-50 mx-3 my-0" style="width: 98%;">
     <h3>Status Forms</h3>
     <p>Showing the status of each form in the approval hierarchy</p>
     <table class="table table-striped table-bordered table-hover mx-auto p-0" style="width: 98%;">
         <thead>
-            {% if requisitions or vouchers or retirements %}
+            
             <tr>
                 <th>ID</th>
                 <th>Type</th>
@@ -45,11 +46,7 @@
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
-            {% else %}
-            <p>All caught up! No forms to show.</p>
-            <p>Your requisitions, vouchers and retirements will be shown here</p>
             
-            {% endif %}
         </thead>
 
         <tbody>
@@ -90,6 +87,68 @@
         </tbody>
     </table>
 </div>
+{% endif %}
+
+{% if requisitionsadmin or vouchersadmin or retirementsadmin %}
+    {% if request.user.role == "Finance Officer" %}
+    <div class="container-fluid table-responsive border-primary  bg-white h-50 mx-3 my-0" style="width: 98%;">
+    <h3>Status Forms</h3>
+    <p>Showing the status of each form in the approval hierarchy</p>
+    <table class="table table-striped table-bordered table-hover mx-auto p-0" style="width: 98%;">
+        <thead>
+            
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Date Submitted</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            
+        </thead>
+
+            <tbody>
+                {% for requisitionadmin in requisitionsadmin %}
+                {% if requisitionadmin.status == "SUBMITTED" %}
+                    <tr>
+                        <td>{{ requisitionadmin.ID }}</td>
+                        <td>Requisition</td>
+                        <td>{{ requisitionadmin.date }}</td>
+                        <td>{{ requisitionadmin.status }}</td>
+                        <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+
+                {% for voucheradmin in vouchersadmin %}
+                {% if voucheradmin.status == "SUBMITTED" %}
+                    <tr>
+                        <td>{{ voucheradmin.ID }}</td>
+                        <td>Voucher</td>
+                        <td>{{ voucheradmin.date }}</td>
+                        <td>{{ voucheradmin.status }}</td>
+                        <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+
+                {% for retirementadmin in retirementsadmin %}
+                {% if retirementadmin.status == "SUBMITTED" %}
+                    <tr>
+                        <td>{{ retirementadmin.ID }}</td>
+                        <td>Retirement</td>
+                        <td>{{ retirementadmin.date }}</td>
+                        <td>{{ retirementadmin.status }}</td>
+                        <td><button class="btn btn-primary">View</button> <button class="btn btn-danger">Download</button></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+{% endif %}
 
 <div class="d-flex justify-content-between container-fluid w-100 m-0 p-0">
     <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
