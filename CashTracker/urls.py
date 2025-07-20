@@ -11,4 +11,6 @@ urlpatterns = [
     path('retirement/', RetirementView.as_view(), name='retirement' ),
     path('retirement/<int:voucherid>/', RetirementajaxView.as_view(), name='retirementajax' ),
     path('download/', DownloadView.as_view(), name='download' ),
+    path('requisition/<str:pk>/edit/', RequisitionUpdateView.as_view(), name='requisitionedit'),
+    path('items/<str:requisitionid>/', ItemsajaxView.as_view(), name='itemsajax' ),
 ]

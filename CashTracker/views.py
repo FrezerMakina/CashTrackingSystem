@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.core.mail import EmailMessage
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views import View
 from django.db.models import Sum
 from .forms import *
@@ -308,6 +308,43 @@ class RetirementajaxView(LoginRequiredMixin, View):
             return JsonResponse({'error' : 'Requisition not found'}, status=404)  
 
     
+    
+    
+class ItemsajaxView(LoginRequiredMixin, View):
+    def get(self, request, requisitionid, *args, **kwargs):
+        try:
+            requisition = Requisition.objects.get(pk=requisitionid)           
+            items = Item.objects.filter(requisitionid=requisition)
+            total_amount = items.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
+            
+            
+            item_list = []
+            for item in items:
+                item_list.append({
+                    'itemname' : item.itemname,
+                    'totalprice' : item.totalprice, 
+                    'unitprice' : item.unitprice,
+                    'quantity' : item.quantity,
+                    'reason' : item.reason,  
+                })
+            
+            
+            return JsonResponse({
+                'requisitionid' : requisition.pk,
+                'amount' : float(total_amount),
+                'item_list' : item_list,
+            })
+            
+        except Requisition.DoesNotExist:
+            return JsonResponse({'error' : 'Requisition not found'}, status=404) 
+    
+    
 class DownloadView(LoginRequiredMixin, TemplateView):
     # model = Retirement
     template_name = "CashTracker/download.html"
+    
+class RequisitionUpdateView(LoginRequiredMixin, UpdateView):
+    model = Requisition
+    form_class = RequisitionForm
+    template_name = 'CashTracker/updates/requisition.html'
+    success_url = reverse_lazy('requisition')
