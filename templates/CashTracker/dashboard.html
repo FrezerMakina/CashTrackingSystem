@@ -115,7 +115,7 @@
                         <td>Requisition</td>
                         <td>{{ requisitionadmin.date }}</td>
                         <td>{{ requisitionadmin.createdby }}</td>
-                        <td><button class="btn btn-primary">Review</button></td>
+                        <td><a class="btn btn-primary" href="{% url 'requisitionreview' requisitionadmin.ID %}" >Review</a></td>
                     </tr>
                 {% endif %}
                 {% endfor %}
@@ -175,7 +175,7 @@
                         <td>Requisition</td>
                         <td>{{ requisitionadmin.date }}</td>
                         <td>{{ requisitionadmin.createdby }}</td>
-                        <td><button class="btn btn-primary">Review</button></td>
+                        <td><a class="btn btn-primary" href="{% url 'requisitionreview' requisitionadmin.ID %}" >Review</a></td>
                     </tr>
                 {% endif %}
                 {% endfor %}
