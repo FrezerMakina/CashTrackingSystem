@@ -95,11 +95,15 @@
 
             </div>
             <div class="text-end mx-3 pe-5 bg-secondary rounded-bottom">
-                <p class="fw-bold fs-5" id="grandtotal">Grand Total: K5,000</p>
+                <p class="fw-bold fs-5 my-1" id="grandtotal">Grand Total: K5,000</p>
             </div>
 
-            <div class="m-3">
-                <button type="submit" class="d-flex btn btn-primary ms-auto me-3"><img src="{% static 'CashTracker/icons/save.svg' %}" alt="save">Submit Requisition</button>
+            <textarea type="text" id="comments" placeholder="Comments" class="form-control mx-3 my-0" rows="3" style="width: 98%;"></textarea>
+
+            <div class="mx-3 my-1 d-flex ms-auto w-50">
+                <button type="button" class="d-inline btn btn-danger ms-auto"><img src="{% static 'CashTracker/icons/save.svg' %}" alt="reject">Reject Requisition</button>
+                <button type="button" class="d-inline btn btn-primary ms-auto"><img src="{% static 'CashTracker/icons/save.svg' %}" alt="send back">Send Back Requisition</button>
+                <button type="submit" class="d-inline btn btn-success ms-auto"><img src="{% static 'CashTracker/icons/save.svg' %}" alt="save">Accept Requisition</button>
             </div>
             
         </form>
