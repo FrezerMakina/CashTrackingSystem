@@ -13,4 +13,5 @@ urlpatterns = [
     path('download/', DownloadView.as_view(), name='download' ),
     path('requisition/<str:pk>/review/', RequisitionUpdateView.as_view(), name='requisitionreview'),
     path('items/<str:requisitionid>/', ItemsajaxView.as_view(), name='itemsajax' ),
+    path('download/requisition/<str:pk>/', RequisitionDownloadView.as_view(), name='requisitiondownload'),
 ]

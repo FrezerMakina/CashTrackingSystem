@@ -57,57 +57,27 @@
                             <th>Type</th>
                             <th>Department</th>
                             <th>Amount</th>
-                            <th>Purpose</th>
+                          
                             <th>Date Submitted</th>
-                            <th>Date Completed</th>
+                            
                             <th>Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
+                        {% for req in requisitions %}
                         <tr class="my-0">
-                            <td>REQ-001</td>
+                            <td>{{ req.ID }}</td>
                             <td>Requisition</td>
-                            <td>Admin</td>
-                            <td>MK 50,000</td>
-                            <td>Office Maintainance</td>
-                            <td>2024-01-12</td>
-                            <td>2024-01-18</td>
-                            <td><button type="button" class="btn btn-outline-none" onclick="download()"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></button></td>
+                            <td>{{req.requestingdept}}</td>
+                            <td>{{ req.total }}</td>
+                            
+                            <td>{{ req.date }}</td>
+                            
+                            <td><a type="button" href="{% url 'requisitiondownload' req.ID %}" class="btn btn-outline-none"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></a></td>
                         </tr>
+                        {% endfor %}
 
-                        <tr class="my-0">
-                            <td>REQ-001</td>
-                            <td>Requisition</td>
-                            <td>Admin</td>
-                            <td>MK 50,000</td>
-                            <td>Office Maintainance</td>
-                            <td>2024-01-12</td>
-                            <td>2024-01-18</td>
-                            <td><button type="button" class="btn btn-outline-none" onclick="download()"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></button></td>
-                        </tr>
-
-                        <tr class="my-0">
-                            <td>REQ-001</td>
-                            <td>Requisition</td>
-                            <td>Admin</td>
-                            <td>MK 50,000</td>
-                            <td>Office Maintainance</td>
-                            <td>2024-01-12</td>
-                            <td>2024-01-18</td>
-                            <td><button type="button" class="btn btn-outline-none" onclick="download()"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></button></td>
-                        </tr>
-
-                        <tr class="my-0">
-                            <td>REQ-001</td>
-                            <td>Requisition</td>
-                            <td>Admin</td>
-                            <td>MK 50,000</td>
-                            <td>Office Maintainance</td>
-                            <td>2024-01-12</td>
-                            <td>2024-01-18</td>
-                            <td><button type="button" class="btn btn-outline-none" onclick="download()"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></button></td>
-                        </tr>
 
 
                     </tbody>

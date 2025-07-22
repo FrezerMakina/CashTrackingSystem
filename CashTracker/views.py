@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core.mail import EmailMessage
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views import View
 from django.db.models import Sum
+from django.template.loader import render_to_string
+from weasyprint import HTML
 from .forms import *
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.views import LoginView
@@ -339,9 +341,7 @@ class ItemsajaxView(LoginRequiredMixin, View):
             return JsonResponse({'error' : 'Requisition not found'}, status=404) 
     
     
-class DownloadView(LoginRequiredMixin, TemplateView):
-    # model = Retirement
-    template_name = "CashTracker/download.html"
+
     
 class RequisitionUpdateView(LoginRequiredMixin, UpdateView):
     model = Requisition
@@ -501,4 +501,49 @@ class RequisitionUpdateView(LoginRequiredMixin, UpdateView):
             
             return super().form_valid(form)
         
+        
+class DownloadView(LoginRequiredMixin, TemplateView):
+    template_name = "CashTracker/download.html"
+    def get(self, request, *args, **kwargs):
+       
+        vouchers = Voucher.objects.filter(status='Authorised')
+        requisitions = Requisition.objects.filter(status='Authorised') 
+        retirements = Retirement.objects.filter(status='Authorised')
+        
+        for requisition in requisitions:
+            total_req = Item.objects.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
+            requisition.total = total_req
+        
+        for voucher in vouchers:
+            total_voucher = Item.objects.filter(requisitionid=voucher.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+            voucher.total = total_voucher
+            
+        for retirement in retirements:
+            total_retirement = Item.objects.filter(requisitionid=retirement.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+            retirement.total = total_retirement
+ 
+            
+        
+
+        return render(request, self.template_name, {
+            'vouchers' : vouchers,
+            'requisitions' : requisitions,
+            'retirements' : retirements,
+          
+        })
     
+    
+class RequisitionDownloadView(LoginRequiredMixin, View):
+    def get(self, request, pk, *args, **kwargs):
+        requisition = Requisition.objects.get(pk=pk)
+        items = Item.objects.filter(requisitionid=requisition)
+        total_amount = items.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
+        html_string = render_to_string('CashTracker/pdf/requisition_pdf.html', {
+            'requisition' : requisition,
+            'items' : items,
+            'total_amount' : total_amount,
+        })
+        pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="requisition_{requisition.ID}.pdf"'
+        return response
