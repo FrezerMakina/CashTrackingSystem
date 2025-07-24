@@ -16,7 +16,8 @@
 
 
 
-    <div class="m-3 overflow-y-auto overflow-x-hidden border-start border-4 border-primary rounded shadow" style="height: 85%; width: 98%;">
+    <form class="m-3 overflow-y-auto overflow-x-hidden border-start border-4 border-primary rounded shadow" style="height: 85%; width: 98%;">
+        {% csrf_token %}
         <div class="d-flex justify-content-between">
             <div class="m-3">
                 <p class="m-0 fw-bold text-primary">CCDO REQUISITION FORM</p>
@@ -30,9 +31,9 @@
             </div>
         </div>
 
-        <form class="bg-white border-primary" method="POST">
+        <div class="bg-white border-primary" method="POST">
 
-            {% csrf_token %}
+            
             <div class="d-flex justify-content-between">
                 <div class="w-25 mx-3">
                     <label for="date" class="form-label">Date</label>
@@ -106,8 +107,8 @@
                 <button type="submit" class="d-inline btn btn-success ms-auto"><img src="{% static 'CashTracker/icons/save.svg' %}" alt="save">Accept Requisition</button>
             </div>
             
-        </form>
-    </div>
+        </div>
+    </form>
 
 <script>
         document.addEventListener('DOMContentLoaded', function(){

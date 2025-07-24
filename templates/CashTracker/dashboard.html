@@ -127,7 +127,7 @@
                         <td>Voucher</td>
                         <td>{{ voucheradmin.date }}</td>
                         <td>{{ voucheradmin.createdby }}</td>
-                        <td><button class="btn btn-primary">Review</button></td>
+                        <td><a class="btn btn-primary" href="{% url 'voucherreview' voucheradmin.ID %}" >Review</a></td>
                     </tr>
                 {% endif %}
                 {% endfor %}

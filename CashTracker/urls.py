@@ -11,7 +11,8 @@ urlpatterns = [
     path('retirement/', RetirementView.as_view(), name='retirement' ),
     path('retirement/<int:voucherid>/', RetirementajaxView.as_view(), name='retirementajax' ),
     path('download/', DownloadView.as_view(), name='download' ),
-    path('requisition/<str:pk>/review/', RequisitionUpdateView.as_view(), name='requisitionreview'),
+    path('requisition/<str:pk>/review/', RequisitionReviewView.as_view(), name='requisitionreview'),
+    path('voucher/<int:pk>/review/', VoucherReviewView.as_view(), name='voucherreview'),
     path('items/<str:requisitionid>/', ItemsajaxView.as_view(), name='itemsajax' ),
     path('download/requisition/<str:pk>/', RequisitionDownloadView.as_view(), name='requisitiondownload'),
 ]

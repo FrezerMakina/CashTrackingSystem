@@ -332,6 +332,7 @@ class ItemsajaxView(LoginRequiredMixin, View):
             
             
             return JsonResponse({
+                'dept' : requisition.requestingdept,
                 'requisitionid' : requisition.pk,
                 'amount' : float(total_amount),
                 'item_list' : item_list,
@@ -343,10 +344,10 @@ class ItemsajaxView(LoginRequiredMixin, View):
     
 
     
-class RequisitionUpdateView(LoginRequiredMixin, UpdateView):
+class RequisitionReviewView(LoginRequiredMixin, UpdateView):
     model = Requisition
     form_class = RequisitionForm
-    template_name = 'CashTracker/updates/requisition.html'
+    template_name = 'CashTracker/review/requisition_review.html'
     success_url = reverse_lazy('requisition')
     
     def form_valid(self, form):
@@ -498,6 +499,166 @@ class RequisitionUpdateView(LoginRequiredMixin, UpdateView):
                 to=[reqowner.email],
             )
             reqowner_email.send(fail_silently=False)
+            
+            return super().form_valid(form)
+        
+        
+        
+class VoucherReviewView(LoginRequiredMixin, UpdateView):
+    model = Voucher
+    form_class = VoucherForm
+    template_name = 'CashTracker/review/voucher_review.html'
+    success_url = reverse_lazy('voucher')
+    
+    def form_valid(self, form):
+        voucher = form.save(commit=False)
+        if self.request.user.role == "Finance Officer":
+            voucher.status = "Reviewed"
+            voucher.save()
+            dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
+            user_email = EmailMessage(
+                subject=f'VOUCHER FORM NUMBER {voucher.ID} REVIEWED',
+                body=(
+                    f'Hello {self.request.user.get_username()} ,\n\n'
+                    f'You have successfully reviewed the voucher form of {voucher.createdby}'
+                    f' and it has been sent to the PROGRAMS MANAGER OFFICE for approval\n\n'
+                    f'VOUCHER FORM NUMBER : {voucher.ID} \n\n'
+                    f'Thank you for your review\n'
+                    f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[self.request.user.email],
+            )
+            user_email.send(fail_silently=False)
+            
+            programs = Staff.objects.filter(role='Programs Manager').first()
+            programs_email = EmailMessage(
+                subject=f'NEW VOUCHER FORM NEEDING YOUR ATTENTION',
+                body=(
+                    f'Hello {programs.username} ,\n\n'
+                    f'A new voucher form number {voucher.ID} submitted by {voucher.createdby} has been reviewed by {self.request.user.get_username()} '
+                    f'and is awaiting your approval.\n\n'
+                    f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Your timely review and feedback will be key in this process \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[programs.email],
+            )
+            programs_email.send(fail_silently=False)
+            
+            
+            
+            
+            voucherowner = Staff.objects.filter(username=voucher.createdby).first()
+            voucherowner_email = EmailMessage(
+                subject=f'VOUCHER FORM NUMBER {voucher.ID} REVIEWED',
+                body=(
+                    f'Hello {voucherowner.username} ,\n\n'
+                    f'Your VOUCHER form number {voucher.ID} has been reviewed at the FINANCES OFFICE and is at the PROGRAMS MANAGER\'S OFFICE awaiting approval\n\n'
+                    f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[voucherowner.email],
+            )
+            voucherowner_email.send(fail_silently=False)
+            
+            return super().form_valid(form)
+        
+        
+        elif self.request.user.role == "Programs Manager":
+            voucher.status = "Approved"
+            voucher.save()
+            dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
+            user_email = EmailMessage(
+                subject=f'VOUCHER FORM NUMBER {voucher.ID} APPROVED',
+                body=(
+                    f'Hello {self.request.user.get_username()} ,\n\n'
+                    f'You have successfully approved the voucher form of {voucher.createdby}'
+                    f' and it has been sent to the EXECUTIVE DIRECTOR\'S OFFICE for authorisation\n\n'
+                    f'VOUCHER FORM NUMBER : {voucher.ID} \n\n'
+                    f'Thank you for your approval\n'
+                    f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[self.request.user.email],
+            )
+            user_email.send(fail_silently=False)
+            
+            ed = Staff.objects.filter(role='ED').first()
+            ed_email = EmailMessage(
+                subject=f'NEW VOUCHER FORM NEEDING YOUR ATTENTION',
+                body=(
+                    f'Hello {ed.username} ,\n\n'
+                    f'A new voucher form number {voucher.ID} submitted by {voucher.createdby} has been approved by {self.request.user.get_username()} '
+                    f'and is awaiting your authorisation.\n\n'
+                    f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Your timely review and feedback will be key in this process \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[ed.email],
+            )
+            ed_email.send(fail_silently=False)
+            
+            
+            
+            
+            voucherowner = Staff.objects.filter(username=voucher.createdby).first()
+            voucherowner_email = EmailMessage(
+                subject=f'VOUCHER FORM NUMBER {voucher.ID} APPROVED',
+                body=(
+                    f'Hello {voucherowner.username} ,\n\n'
+                    f'Your voucher form number {voucher.ID} has been approved at the PROGRAMS MANAGER OFFICE\'S OFFICE and is at the EXECUTIVE DIRECTOR\'S OFFICE awaiting authorisation\n\n'
+                    f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[voucherowner.email],
+            )
+            voucherowner_email.send(fail_silently=False)
+            
+            return super().form_valid(form)
+        
+        
+        elif self.request.user.role == "ED":
+            voucher.status = "Authorised"
+            voucher.save()
+            dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
+            user_email = EmailMessage(
+                subject=f'VOUCHER FORM NUMBER {voucher.ID} AUTHORISED',
+                body=(
+                    f'Hello {self.request.user.get_username()} ,\n\n'
+                    f'You have successfully authorised the voucher form of {voucher.createdby}'
+                    f' and an email has been also sent to {voucher.createdby} so that a voucher can be created\n\n'
+                    f'VOUCHER FORM NUMBER : {voucher.ID} \n\n'
+                    f'Thank you for your authorisation\n'
+                    f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[self.request.user.email],
+            )
+            user_email.send(fail_silently=False)
+            
+            
+            voucherowner = Staff.objects.filter(username=voucher.createdby).first()
+            voucherowner_email = EmailMessage(
+                subject=f'CASH REQUISTION FORM NUMBER {voucher.ID} APPROVED',
+                body=(
+                    f'Hello {voucherowner.username} ,\n\n'
+                    f'Your voucher form number {voucher.ID} has been authorised at the EXECUTIVE DIRECTOR\'S OFFICE\n\n'
+                    f'Log into the Cash Tracking system and create the voucher for this authorised requisition\n\n'
+                    f'You can be checking for the status of other forms by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[voucherowner.email],
+            )
+            voucherowner_email.send(fail_silently=False)
             
             return super().form_valid(form)
         
