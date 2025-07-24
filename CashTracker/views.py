@@ -348,7 +348,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
     model = Requisition
     form_class = RequisitionForm
     template_name = 'CashTracker/review/requisition_review.html'
-    success_url = reverse_lazy('requisition')
+    success_url = reverse_lazy('dashboard')
     
     def form_valid(self, form):
         requisition = form.save(commit=False)
@@ -508,7 +508,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
     model = Voucher
     form_class = VoucherForm
     template_name = 'CashTracker/review/voucher_review.html'
-    success_url = reverse_lazy('voucher')
+    success_url = reverse_lazy('dashboard')
     
     def form_valid(self, form):
         voucher = form.save(commit=False)
@@ -612,7 +612,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                 subject=f'VOUCHER FORM NUMBER {voucher.ID} APPROVED',
                 body=(
                     f'Hello {voucherowner.username} ,\n\n'
-                    f'Your voucher form number {voucher.ID} has been approved at the PROGRAMS MANAGER OFFICE\'S OFFICE and is at the EXECUTIVE DIRECTOR\'S OFFICE awaiting authorisation\n\n'
+                    f'Your voucher form number {voucher.ID} has been approved at the PROGRAMS MANAGER\'S OFFICE and is at the EXECUTIVE DIRECTOR\'S OFFICE awaiting authorisation\n\n'
                     f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                     f'Regards, \n'
                     f'CCDO Team'
@@ -633,7 +633,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                 body=(
                     f'Hello {self.request.user.get_username()} ,\n\n'
                     f'You have successfully authorised the voucher form of {voucher.createdby}'
-                    f' and an email has been also sent to {voucher.createdby} so that a voucher can be created\n\n'
+                    f' and an email has been also sent to {voucher.createdby} so that cash can be taken from accounts office\n\n'
                     f'VOUCHER FORM NUMBER : {voucher.ID} \n\n'
                     f'Thank you for your authorisation\n'
                     f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
@@ -647,11 +647,11 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
             
             voucherowner = Staff.objects.filter(username=voucher.createdby).first()
             voucherowner_email = EmailMessage(
-                subject=f'CASH REQUISTION FORM NUMBER {voucher.ID} APPROVED',
+                subject=f'VOUCHER FORM NUMBER {voucher.ID} APPROVED',
                 body=(
                     f'Hello {voucherowner.username} ,\n\n'
                     f'Your voucher form number {voucher.ID} has been authorised at the EXECUTIVE DIRECTOR\'S OFFICE\n\n'
-                    f'Log into the Cash Tracking system and create the voucher for this authorised requisition\n\n'
+                    f'Go to the accounts office and get the money for this voucher\n\n'
                     f'You can be checking for the status of other forms by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                     f'Regards, \n'
                     f'CCDO Team'
@@ -659,6 +659,165 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                 to=[voucherowner.email],
             )
             voucherowner_email.send(fail_silently=False)
+            
+            return super().form_valid(form)
+        
+        
+class RetirementReviewView(LoginRequiredMixin, UpdateView):
+    model = Retirement
+    form_class = RetirementForm
+    template_name = 'CashTracker/review/retirement_review.html'
+    success_url = reverse_lazy('dashboard')
+    
+    def form_valid(self, form):
+        retirement = form.save(commit=False)
+        if self.request.user.role == "Finance Officer":
+            retirement.status = "Reviewed"
+            retirement.save()
+            dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
+            user_email = EmailMessage(
+                subject=f'RETIREMENT FORM NUMBER {retirement.ID} REVIEWED',
+                body=(
+                    f'Hello {self.request.user.get_username()} ,\n\n'
+                    f'You have successfully reviewed the retirement form of {retirement.createdby}'
+                    f' and it has been sent to the PROGRAMS MANAGER OFFICE for approval\n\n'
+                    f'VOUCHER FORM NUMBER : {retirement.ID} \n\n'
+                    f'Thank you for your review\n'
+                    f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[self.request.user.email],
+            )
+            user_email.send(fail_silently=False)
+            
+            programs = Staff.objects.filter(role='Programs Manager').first()
+            programs_email = EmailMessage(
+                subject=f'NEW RETIREMENT FORM NEEDING YOUR ATTENTION',
+                body=(
+                    f'Hello {programs.username} ,\n\n'
+                    f'A new retirement form number {retirement.ID} submitted by {retirement.createdby} has been reviewed by {self.request.user.get_username()} '
+                    f'and is awaiting your approval.\n\n'
+                    f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Your timely review and feedback will be key in this process \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[programs.email],
+            )
+            programs_email.send(fail_silently=False)
+            
+            
+            
+            
+            retirementowner = Staff.objects.filter(username=retirement.createdby).first()
+            retirementowner_email = EmailMessage(
+                subject=f'RETIREMENT FORM NUMBER {retirement.ID} REVIEWED',
+                body=(
+                    f'Hello {retirementowner.username} ,\n\n'
+                    f'Your RETIREMENT form number {retirement.ID} has been reviewed at the FINANCES OFFICE and is at the PROGRAMS MANAGER\'S OFFICE awaiting approval\n\n'
+                    f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[retirementowner.email],
+            )
+            retirementowner_email.send(fail_silently=False)
+            
+            return super().form_valid(form)
+        
+        
+        elif self.request.user.role == "Programs Manager":
+            retirement.status = "Approved"
+            retirement.save()
+            dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
+            user_email = EmailMessage(
+                subject=f'RETIREMENT FORM NUMBER {retirement.ID} APPROVED',
+                body=(
+                    f'Hello {self.request.user.get_username()} ,\n\n'
+                    f'You have successfully approved the retirement form of {retirement.createdby}'
+                    f' and it has been sent to the EXECUTIVE DIRECTOR\'S OFFICE for authorisation\n\n'
+                    f'RETIREMENT FORM NUMBER : {retirement.ID} \n\n'
+                    f'Thank you for your approval\n'
+                    f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[self.request.user.email],
+            )
+            user_email.send(fail_silently=False)
+            
+            ed = Staff.objects.filter(role='ED').first()
+            ed_email = EmailMessage(
+                subject=f'NEW RETIREMENT FORM NEEDING YOUR ATTENTION',
+                body=(
+                    f'Hello {ed.username} ,\n\n'
+                    f'A new retirement form number {retirement.ID} submitted by {retirement.createdby} has been approved by {self.request.user.get_username()} '
+                    f'and is awaiting your authorisation.\n\n'
+                    f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Your timely review and feedback will be key in this process \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[ed.email],
+            )
+            ed_email.send(fail_silently=False)
+            
+            
+            
+            
+            retirementowner = Staff.objects.filter(username=retirement.createdby).first()
+            retirementowner_email = EmailMessage(
+                subject=f'RETIREMENT FORM NUMBER {retirement.ID} APPROVED',
+                body=(
+                    f'Hello {retirementowner.username} ,\n\n'
+                    f'Your retirement form number {retirement.ID} has been approved at the PROGRAMS MANAGER OFFICE\'S OFFICE and is at the EXECUTIVE DIRECTOR\'S OFFICE awaiting authorisation\n\n'
+                    f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[retirementowner.email],
+            )
+            retirementowner_email.send(fail_silently=False)
+            
+            return super().form_valid(form)
+        
+        
+        elif self.request.user.role == "ED":
+            retirement.status = "Authorised"
+            retirement.save()
+            dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
+            user_email = EmailMessage(
+                subject=f'RETIREMENT FORM NUMBER {retirement.ID} AUTHORISED',
+                body=(
+                    f'Hello {self.request.user.get_username()} ,\n\n'
+                    f'You have successfully authorised the retirement form of {retirement.createdby}'
+                    f' and an email has been also sent to {retirement.createdby} alerting the same\n\n'
+                    f'VOUCHER FORM NUMBER : {retirement.ID} \n\n'
+                    f'Thank you for your authorisation\n'
+                    f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[self.request.user.email],
+            )
+            user_email.send(fail_silently=False)
+            
+            
+            retirementowner = Staff.objects.filter(username=retirement.createdby).first()
+            retirementowner_email = EmailMessage(
+                subject=f'FINALLY!!! RETIREMENT FORM NUMBER {retirement.ID} AUTHORISED',
+                body=(
+                    f'Hello {retirementowner.username} ,\n\n'
+                    f'Your retirement form number {retirement.ID} has been authorised at the EXECUTIVE DIRECTOR\'S OFFICE\n\n'
+                    f'This means a cash tracking for this process has come to an end.\n\n'
+                    f'You can be checking for the status of other forms by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
+                    f'Regards, \n'
+                    f'CCDO Team'
+                ),
+                to=[retirementowner.email],
+            )
+            retirementowner_email.send(fail_silently=False)
             
             return super().form_valid(form)
         

@@ -139,7 +139,7 @@
                         <td>Retirement</td>
                         <td>{{ retirementadmin.date }}</td>
                         <td>{{ retirementadmin.createdby }}</td>
-                        <td><button class="btn btn-primary">Review</button></td>
+                        <td><a class="btn btn-primary" href="{% url 'retirementreview' retirementadmin.ID %}" >Review</a></td>
                     </tr>
                 {% endif %}
                 {% endfor %}
@@ -187,7 +187,7 @@
                         <td>Voucher</td>
                         <td>{{ voucheradmin.date }}</td>
                         <td>{{ voucheradmin.createdby }}</td>
-                        <td><button class="btn btn-primary">Review</button></td>
+                        <td><a class="btn btn-primary" href="{% url 'voucherreview' voucheradmin.ID %}" >Review</a></td>
                     </tr>
                 {% endif %}
                 {% endfor %}
@@ -199,7 +199,7 @@
                         <td>Retirement</td>
                         <td>{{ retirementadmin.date }}</td>
                         <td>{{ retirementadmin.createdby }}</td>
-                        <td><button class="btn btn-primary">Review</button></td>
+                        <td><a class="btn btn-primary" href="{% url 'retirementreview' retirementadmin.ID %}" >Review</a></td>
                     </tr>
                 {% endif %}
                 {% endfor %}
@@ -246,7 +246,7 @@
                         <td>Voucher</td>
                         <td>{{ voucheradmin.date }}</td>
                         <td>{{ voucheradmin.createdby }}</td>
-                        <td><button class="btn btn-primary">Review</button></td>
+                        <td><a class="btn btn-primary" href="{% url 'voucherreview' voucheradmin.ID %}" >Review</a></td>
                     </tr>
                 {% endif %}
                 {% endfor %}
@@ -258,7 +258,7 @@
                         <td>Retirement</td>
                         <td>{{ retirementadmin.date }}</td>
                         <td>{{ retirementadmin.createdby }}</td>
-                        <td><button class="btn btn-primary">Review</button></td>
+                        <td><a class="btn btn-primary" href="{% url 'retirementreview' retirementadmin.ID %}" >Review</a></td>
                     </tr>
                 {% endif %}
                 {% endfor %}
