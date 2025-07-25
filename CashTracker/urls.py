@@ -17,5 +17,8 @@ urlpatterns = [
     path('retirement/<int:pk>/review/', RetirementReviewView.as_view(), name='retirementreview'),
     
     path('items/<str:requisitionid>/', ItemsajaxView.as_view(), name='itemsajax' ),
+    
     path('download/requisition/<str:pk>/', RequisitionDownloadView.as_view(), name='requisitiondownload'),
+    path('download/voucher/<int:pk>/', VoucherDownloadView.as_view(), name='voucherdownload'),
+    path('download/retirement/<int:pk>/', RetirementDownloadView.as_view(), name='retirementdownload'),
 ]

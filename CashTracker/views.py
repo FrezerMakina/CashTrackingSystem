@@ -837,10 +837,12 @@ class DownloadView(LoginRequiredMixin, TemplateView):
         for voucher in vouchers:
             total_voucher = Item.objects.filter(requisitionid=voucher.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
             voucher.total = total_voucher
+            voucher.dept = Requisition.objects.filter(ID=voucher.requisitionid).first().requestingdept
             
         for retirement in retirements:
             total_retirement = Item.objects.filter(requisitionid=retirement.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
             retirement.total = total_retirement
+            retirement.dept = Requisition.objects.filter(ID=retirement.requisitionid).first().requestingdept
  
             
         
@@ -866,4 +868,35 @@ class RequisitionDownloadView(LoginRequiredMixin, View):
         pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="requisition_{requisition.ID}.pdf"'
+        return response
+    
+class VoucherDownloadView(LoginRequiredMixin, View):
+    def get(self, request, pk, *args, **kwargs):
+        voucher = Voucher.objects.get(pk=pk)
+        items = Item.objects.filter(requisitionid=voucher.requisitionid)
+        total_amount = items.filter(requisitionid=voucher.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+        html_string = render_to_string('CashTracker/pdf/requisition_pdf.html', {
+            'voucher' : voucher,
+            'items' : items,
+            'total_amount' : total_amount,
+        })
+        pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="voucher_{voucher.ID}.pdf"'
+        return response
+    
+    
+class RetirementDownloadView(LoginRequiredMixin, View):
+    def get(self, request, pk, *args, **kwargs):
+        retirement = Retirement.objects.get(pk=pk)
+        items = Item.objects.filter(requisitionid=retirement.requisitionid)
+        total_amount = items.filter(requisitionid=retirement.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+        html_string = render_to_string('CashTracker/pdf/requisition_pdf.html', {
+            'retirement' : retirement,
+            'items' : items,
+            'total_amount' : total_amount,
+        })
+        pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="retirement_{retirement.ID}.pdf"'
         return response

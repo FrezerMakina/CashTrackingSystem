@@ -78,6 +78,33 @@
                         </tr>
                         {% endfor %}
 
+                        {% for voucher in vouchers %}
+                        <tr class="my-0">
+                            <td>{{ voucher.ID }}</td>
+                            <td>Voucher</td>
+                            <td>{{ voucher.dept }}</td>
+                            <td>{{ voucher.total }}</td>
+                            
+                            <td>{{ voucher.date }}</td>
+                            
+                            <td><a type="button" href="{% url 'voucherdownload' voucher.ID %}" class="btn btn-outline-none"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></a></td>
+                        </tr>
+                        {% endfor %}
+
+
+                        {% for retirement in retirements %}
+                        <tr class="my-0">
+                            <td>{{ retirement.ID }}</td>
+                            <td>Retirement</td>
+                            <td>{{ retirement.dept }}</td>
+                            <td>{{ retirement.total }}</td>
+                            
+                            <td>{{ retirement.date }}</td>
+                            
+                            <td><a type="button" href="{% url 'retirementdownload' retirement.ID %}" class="btn btn-outline-none"><img src="{% static 'CashTracker/icons/download.svg' %}" alt="download"></a></td>
+                        </tr>
+                        {% endfor %}
+
 
 
                     </tbody>
