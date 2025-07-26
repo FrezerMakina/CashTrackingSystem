@@ -9,6 +9,17 @@
 {% endblock %}
 
 {% block content %}
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+
 <div class="d-flex justify-content-between container-fluid w-100 mx-0 p-0">
     <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
         <p>Forms Sent Back</p>
