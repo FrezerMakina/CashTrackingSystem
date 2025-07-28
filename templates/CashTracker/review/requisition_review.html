@@ -37,7 +37,7 @@
             <div class="d-flex justify-content-between">
                 <div class="w-25 mx-3">
                     <label for="date" class="form-label">Date</label>
-                    <input type="date" id="date" class="form-control" value="{{ today }}" readonly>
+                    <input type="date" id="date" name="date" class="form-control" value="{{ requisition.date|date:'Y-m-d' }}" readonly>
 
 
                     <label for="{{ form.projectname.id_for_label }}" class="form-label d-block">Name of Project</label>

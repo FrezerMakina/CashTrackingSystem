@@ -42,7 +42,7 @@
                     {{ form.voucherid.errors }}
 
                     <label for="date" class="form-label">Date</label>
-                    <input type="date" id="date" class="form-control">    
+                    <input type="date" id="date" name="date" class="form-control" value="{{ retirement.date|date:'Y-m-d' }}" readonly>   
                 </div>
 
                 <div class="w-50 mx-3">
@@ -60,9 +60,9 @@
 
             </div>
 
-            <div class="d-flex justify-content-between mx-3 my-1 py-0">
+            <div class="d-flex justify-content-between mx-3 mt-3 py-0">
                 <div class="fw-bold">Cash Used For</div>
-                <div class="btn btn-primary me-3">Add Expense</div>
+                <!-- <div class="btn btn-primary me-3">Add Expense</div> -->
             </div>
 
             <div class="d-flex m-3 bg-white rounded w-100 my-0 py-0">
@@ -73,7 +73,6 @@
                             <th>Unit Price</th>
                             <th>Quantity</th>
                             <th>Amount</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
 
@@ -150,8 +149,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function(){
             const voucherselect = document.getElementById('voucherid');
-            voucherselect.addEventListener('change', function(){
-                const voucherid = this.value;
+            const voucherid = voucherselect.value;
                 if (voucherid){
                     fetch(`/retirement/${voucherid}/`)
                         .then(response => response.json())
@@ -168,7 +166,6 @@
                                         <td><input type="number" step="0.001" class="form-control unitprice" value="${item.unitprice || ''}"></td>
                                         <td><input type="number" step="0.001" class="form-control quantity" value="${item.quantity || ''}"></td>
                                         <td><input type="number" step="0.001" class="form-control totalprice" value="${item.totalprice || ''}" readonly></td>
-                                        <td><button type="button" class="btn btn-outline-none" onclick="this.closest('tr').remove(); updateGrandTotal()"><img src="{% static 'CashTracker/icons/delete.svg' %}" alt="delete"></button></td>
                                     </tr>`
                                 document.getElementById('tablebody').insertAdjacentHTML('beforeend', row);
                                 updateGrandTotal();
@@ -179,41 +176,9 @@
                     document.getElementById('requisitionid').value = '';
                     document.getElementById('amount').value = '';
                     document.getElementById('requested').textContent = 'MWK 0.00';
-                }
-            });
-        });
+                }}
+            )
 
-
-        document.getElementById('tablebody').addEventListener( 'input', function(e){
-        if(e.target.classList.contains('quantity') || e.target.classList.contains('unitprice')){
-            const row = e.target.closest('tr');
-            const price = parseFloat(row.querySelector('.unitprice').value) || 0;
-            const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
-            const total = price * quantity;
-
-            const totalfield = row.querySelector('.totalprice');
-            if(totalfield){
-                totalfield.value = total.toFixed(2)
-            }
-            updateGrandTotal();
-        }
-    })
-
-
-    function updateGrandTotal(){
-        let sum = 0;
-        document.querySelectorAll('.totalprice').forEach(function(input){
-            let val = parseFloat(input.value) || 0;
-            sum += val;
-        })
-        document.getElementById('used').textContent = 'MWK ' + sum.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-        const usednumber = sum;
-        const requestedstr = document.getElementById('requested').textContent;
-        const requestednumber = parseFloat(requestedstr.replace(/[^\d.]/g, '')) || 0;
-        const balance = requestednumber - usednumber;
-        document.getElementById('balance').textContent = `MWK ${balance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-    }
     </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>

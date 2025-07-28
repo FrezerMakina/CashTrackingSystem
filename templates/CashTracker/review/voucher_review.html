@@ -44,7 +44,7 @@
                     <input type="text" id="requisition" class="form-control"> -->
 
                     <label for="date" class="form-label mb-0">Date</label>
-                    <input type="date" id="date" class="form-control" readonly>
+                    <input type="date" id="date" name="date" class="form-control" value="{{ voucher.date|date:'Y-m-d' }}" readonly>
                     
                 </div>
 
