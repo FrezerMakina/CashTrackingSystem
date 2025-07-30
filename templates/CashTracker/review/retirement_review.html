@@ -70,6 +70,7 @@
                     <thead>
                         <tr>
                             <th>Description</th>
+                            <th>Reason</th>
                             <th>Unit Price</th>
                             <th>Quantity</th>
                             <th>Amount</th>
@@ -146,40 +147,80 @@
     </div>
 
 
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', function(){
-            const voucherselect = document.getElementById('voucherid');
-            const voucherid = voucherselect.value;
-                if (voucherid){
-                    fetch(`/retirement/${voucherid}/`)
+            
+                    const reqid = document.getElementById('requisitionid').value;
+                    fetch(`/items/${reqid}/`)
                         .then(response => response.json())
                         .then(data =>{
                             document.getElementById('tablebody').innerHTML = "";
-                            document.getElementById('requisitionid').value = data.requisitionid;
-                            document.getElementById('amount').value = data.amount;
-                            document.getElementById('requested').textContent = 'MWK ' + data.amount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                            
+                            // document.getElementById('amount').value = data.amount;
+                            
                             const items = data.item_list;
                             for (const item of items){
                                 const row = `
                                     <tr id="tablerow">
                                         <td><input type="text" class="form-control" value="${item.itemname || ''}" readonly></td>
-                                        <td><input type="number" step="0.001" class="form-control unitprice" value="${item.unitprice || ''}"></td>
-                                        <td><input type="number" step="0.001" class="form-control quantity" value="${item.quantity || ''}"></td>
+                                        <td><input type="text" class="form-control reason" value="${item.reason || ''}" readonly></td>
+                                        <td><input type="number" step="0.001" class="form-control unitprice" value="${item.unitprice || ''}" readonly></td>
+                                        <td><input type="number" step="0.001" class="form-control quantity" value="${item.quantity || ''}" readonly></td>
                                         <td><input type="number" step="0.001" class="form-control totalprice" value="${item.totalprice || ''}" readonly></td>
+                                        
                                     </tr>`
                                 document.getElementById('tablebody').insertAdjacentHTML('beforeend', row);
-                                updateGrandTotal();
+                                
                             }
-                        });
-                }
-                else {
-                    document.getElementById('requisitionid').value = '';
-                    document.getElementById('amount').value = '';
-                    document.getElementById('requested').textContent = 'MWK 0.00';
-                }}
-            )
+                            document.getElementById('requested').textContent = `MK ${data.amount}`;
+                            document.getElementById('used').textContent = `MK ${data.amount}`;
+                            document.getElementById('amount').value = data.amount;
+                        })});
+                
+            
 
-    </script>
+
+        document.getElementById('tablebody').addEventListener( 'input', function(e){
+        if(e.target.classList.contains('quantity') || e.target.classList.contains('unitprice')){
+            const row = e.target.closest('tr');
+            const price = parseFloat(row.querySelector('.unitprice').value) || 0;
+            const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+            const total = price * quantity;
+
+            const totalfield = row.querySelector('.totalprice');
+            if(totalfield){
+                totalfield.value = total.toFixed(2)
+            }
+            updateGrandTotal();
+        }
+    })
+
+    // const usedstr = document.getElementById('used').value;
+    // const usednumber = parseFloat(usedstr.replace(/[^\d.]/g, '')); 
+
+    // const requestedstr = document.getElementById('used').value;
+    // const requestednumber = parseFloat(usedstr.replace(/[^\d.]/g, '')); 
+
+    // const balance = requestednumber - usednumber;
+
+    // document.getElementById('balance').textContent = `MWK ${balance}`;
+
+    function updateGrandTotal(){
+        let sum = 0;
+        document.querySelectorAll('.totalprice').forEach(function(input){
+            let val = parseFloat(input.value) || 0;
+            sum += val;
+        })
+        document.getElementById('used').textContent = 'MWK ' + sum.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+        const usednumber = sum;
+        const requestedstr = document.getElementById('requested').textContent;
+        const requestednumber = parseFloat(requestedstr.replace(/[^\d.]/g, '')) || 0;
+        const balance = requestednumber - usednumber;
+        document.getElementById('balance').textContent = `MWK ${balance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    }
+</script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 
