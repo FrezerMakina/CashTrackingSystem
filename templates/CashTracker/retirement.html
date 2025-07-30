@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <form class="bg-white border-primary" method="POST">
+        <form class="bg-white border-primary" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mx-3">
                 <p class="text-end me-3 fw-bold">Retirement No: CR-76560</p>
@@ -108,24 +108,24 @@
                 <div class="w-50 me-3">
                     <div class="bg-success w-100 rounded">
                         <p>Proof of Payment</p>
-                        <p>Not Uploaded</p>
+                        <p>{{ retirement_form.proofofpay }}</p>
                     </div>
 
                     <div class="bg-success w-100 rounded">
                         <p>Participarts Payment Form</p>
-                        <p>Not Uploaded</p>
+                        <p>{{ retirement_form.participantspay }}</p>
                     </div>
                 </div>
 
                 <div class="w-50">
                     <div class="bg-success w-100 rounded">
                         <p>Receipts</p>
-                        <p>Not Uploaded</p>
+                        <p>{{ retirement_form.receipt }}</p>
                     </div>
 
                     <div class="bg-success w-100 rounded">
                         <p>Cash Payment Form</p>
-                        <p>Not Uploaded</p>
+                        <p>{{ retirement_form.cashpay }}</p>
                     </div>
                 </div>
             </div>

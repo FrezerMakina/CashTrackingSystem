@@ -1,0 +1,43 @@
+DJANGO SETUP
+1. SET UP VIRTUAL ENVIRONMENT
+	python -m venv venv
+
+2. ACTIVATE VIRTUAL ENVIRONMENT
+	.\venv\Scripts\activate
+
+3. INSTALL DJANGO
+	pip install django
+
+4. FREEZE REQUIREMENTS
+	pip freeze > requirements.txt
+
+5. START DJANGO PROJECT
+	django-admin startproject PROJECTNAME .
+
+6. START APP
+	 python manage.py startapp trial
+
+7. REGISTER THE APP IN SETTINGS FILE
+
+8. CREATE urls.py FILE INSIDE APP FOLDER
+
+9. START SERVER
+	python manage.py runserver 
+
+10. CREATE MEDIA, TEMPLATES AND STATIC FOLDERS
+
+11. UNDER TEMPLATES IN SETTINGS FILE
+	'DIRS': [BASE_DIR / "templates"],
+
+12. STATIC FILES DIRS ABOVE WSGI_APPLICATION
+	STATICFILES_DIRS = [BASE_DIR / "static"]
+
+13. BELOW STATIC_URL
+	# Define the base URL for serving media files
+	MEDIA_URL = '/media/'
+
+	# Specify the directory where media files are stored
+	MEDIA_ROOT = BASE_DIR / 'media'
+
+
+xzhh ccsg uhog tfip

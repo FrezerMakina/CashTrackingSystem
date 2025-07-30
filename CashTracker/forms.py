@@ -40,7 +40,7 @@ class VoucherForm(forms.ModelForm):
 class RetirementForm(forms.ModelForm):
     class Meta:
         model = Retirement
-        fields = ['voucherid', 'requisitionid',]
+        fields = ['voucherid', 'requisitionid', 'receipt', 'proofofpay', 'participantspay', 'cashpay',]
         
     def __init__(self, *args, **kwargs):
         voucher_queryset = kwargs.pop('voucher_queryset', None)

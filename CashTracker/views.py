@@ -232,7 +232,7 @@ class RetirementView(LoginRequiredMixin, View):
 
         
     def post(self, request, *args, **kwargs):
-        retirement_form = RetirementForm(request.POST)
+        retirement_form = RetirementForm(request.POST, request.FILES)
         vouchers = Voucher.objects.all()
         if retirement_form.is_valid():
             retirement = retirement_form.save(commit=False)

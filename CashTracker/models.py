@@ -70,5 +70,11 @@ class Retirement(models.Model):
     date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
     createdby = models.CharField(max_length=50, null=False)
     
+    
+    receipt = models.FileField(upload_to='CashTracker/retirements/', null=True, blank=True)
+    proofofpay = models.FileField(upload_to='CashTracker/retirements/', null=True, blank=True)
+    participantspay = models.FileField(upload_to='CashTracker/retirements/', null=True, blank=True)
+    cashpay = models.FileField(upload_to='CashTracker/retirements/', null=True, blank=True)
+    
     def __str__(self):
         return f'Retirement ID {self.ID} for {self.voucherid}'

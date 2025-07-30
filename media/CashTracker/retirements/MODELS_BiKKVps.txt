@@ -1,0 +1,37 @@
+CASH TRACKING SYSTEM MODELS
+
+1. STAFF
+-> Add email and position to default user model
+
+2. REQUISITION
+->ID (Primary Key)
+->Date
+->Status
+->StaffID (Foreign key, Staff)
+->ActivityName
+->ProjectName
+->ProjectCode
+->RequestingDepartment
+->AccountNumber
+
+3. ITEMS
+->ID (Primary Key)
+->RequisitionID (Foreign Key, Requisition)
+->Item
+->ReasonForRequest
+->Quantity
+->UnitPrice
+->TotalPrice
+
+4. VOUCHER
+->ID(Primary Key)
+->RequisitionID(Foreign Key, Requisition)
+->StaffID(Foreign key, Staff)
+->Purpose
+->Date
+
+5. RETIREMENT
+->ID(Primary)
+->RequisitionID(Foreign Key, Requisition)
+->VoucherID(Foreign Key, Voucher)
+->Date
