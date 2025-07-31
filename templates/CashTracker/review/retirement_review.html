@@ -107,27 +107,51 @@
             <div class="m-3 fw-bold fs-5">Required Attachments</div>
 
             <div class="d-flex justify-content-between m-3">
-                <div class="w-50 me-3">
+                <div class="w-50 me-3 my-3">
                     <div class="bg-success w-100 rounded">
                         <p>Proof of Payment</p>
-                        <p>Not Uploaded</p>
+                        {% if form.instance.proofofpay %}
+                            <a href="{{ form.instance.proofofpay.url }}" target="_blank" class="btn btn-outline-primary">
+                                View Proof of Payment
+                            </a>
+                        {% else %}
+                            <p class="text-muted">No proof of payment uploaded.</p>
+                        {% endif %}
                     </div>
 
-                    <div class="bg-success w-100 rounded">
+                    <div class="bg-success w-100 rounded my-3">
                         <p>Participarts Payment Form</p>
-                        <p>Not Uploaded</p>
+                        {% if form.instance.participantspay %}
+                            <a href="{{ form.instance.participantspay.url }}" target="_blank" class="btn btn-outline-primary">
+                                View Partcipants Payment Form
+                            </a>
+                        {% else %}
+                            <p class="text-muted">No Participants Payment Form uploaded.</p>
+                        {% endif %}
                     </div>
                 </div>
 
                 <div class="w-50">
-                    <div class="bg-success w-100 rounded">
+                    <div class="bg-success w-100 rounded my-3">
                         <p>Receipts</p>
-                        <p>Not Uploaded</p>
+                        {% if form.instance.receipt %}
+                            <a href="{{ form.instance.receipt.url }}" target="_blank" class="btn btn-outline-primary">
+                                View Receipt
+                            </a>
+                        {% else %}
+                            <p class="text-muted">No receipt uploaded.</p>
+                        {% endif %}
                     </div>
 
-                    <div class="bg-success w-100 rounded">
+                    <div class="bg-success w-100 rounded my-3">
                         <p>Cash Payment Form</p>
-                        <p>Not Uploaded</p>
+                        {% if form.instance.cashpay %}
+                            <a href="{{ form.instance.cashpay.url }}" target="_blank" class="btn btn-outline-primary">
+                                View Cash Payment Form
+                            </a>
+                        {% else %}
+                            <p class="text-muted">No cash payment form uploaded.</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
