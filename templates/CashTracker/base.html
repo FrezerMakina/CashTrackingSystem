@@ -37,6 +37,8 @@
                 </a>
                 {% endblock %}
 
+
+                {% if request.user.role not in 'Finance Officer, ED, Programs Manager' %}
                 {% block requisition %}
                 <a href="{% url 'requisition' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
                     <img src="{% static 'CashTracker/icons/add.svg' %}" alt="requisition">
@@ -57,6 +59,7 @@
                     <p class="d-inline"> New Cash Retirement </p>
                 </a>
                 {% endblock %}
+                {% endif %}
 
                 {% block download %}
                 <a href="{% url 'download' %}" class="icon btn btn-outline-primary btn-link text-decoration-none text-dark w-100 text-start m-1">
