@@ -1012,10 +1012,16 @@ class RequisitionDownloadView(LoginRequiredMixin, View):
         requisition = Requisition.objects.get(pk=pk)
         items = Item.objects.filter(requisitionid=requisition)
         total_amount = items.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
+        finance = Staff.objects.filter(role='Finance Officer').first()
+        programs = Staff.objects.filter(role='Programs Manager').first()
+        ed = Staff.objects.filter(role='ED').first()
         html_string = render_to_string('CashTracker/pdf/requisition_pdf.html', {
             'requisition' : requisition,
             'items' : items,
             'total_amount' : total_amount,
+            'finance' : finance,
+            'programs' : programs,
+            'ed' : ed,
         })
         pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
@@ -1027,10 +1033,16 @@ class VoucherDownloadView(LoginRequiredMixin, View):
         voucher = Voucher.objects.get(pk=pk)
         items = Item.objects.filter(requisitionid=voucher.requisitionid)
         total_amount = items.filter(requisitionid=voucher.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+        finance = Staff.objects.filter(role='Finance Officer').first()
+        programs = Staff.objects.filter(role='Programs Manager').first()
+        ed = Staff.objects.filter(role='ED').first()
         html_string = render_to_string('CashTracker/pdf/requisition_pdf.html', {
             'voucher' : voucher,
             'items' : items,
             'total_amount' : total_amount,
+            'finance' : finance,
+            'programs' : programs,
+            'ed' : ed,
         })
         pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
@@ -1043,10 +1055,16 @@ class RetirementDownloadView(LoginRequiredMixin, View):
         retirement = Retirement.objects.get(pk=pk)
         items = Item.objects.filter(requisitionid=retirement.requisitionid)
         total_amount = items.filter(requisitionid=retirement.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+        finance = Staff.objects.filter(role='Finance Officer').first()
+        programs = Staff.objects.filter(role='Programs Manager').first()
+        ed = Staff.objects.filter(role='ED').first()
         html_string = render_to_string('CashTracker/pdf/requisition_pdf.html', {
             'retirement' : retirement,
             'items' : items,
             'total_amount' : total_amount,
+            'finance' : finance,
+            'programs' : programs,
+            'ed' : ed,
         })
         pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
