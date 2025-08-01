@@ -1031,18 +1031,20 @@ class RequisitionDownloadView(LoginRequiredMixin, View):
 class VoucherDownloadView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         voucher = Voucher.objects.get(pk=pk)
+        requisition = Requisition.objects.get(pk=voucher.requisitionid)
         items = Item.objects.filter(requisitionid=voucher.requisitionid)
         total_amount = items.filter(requisitionid=voucher.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
         finance = Staff.objects.filter(role='Finance Officer').first()
         programs = Staff.objects.filter(role='Programs Manager').first()
         ed = Staff.objects.filter(role='ED').first()
-        html_string = render_to_string('CashTracker/pdf/requisition_pdf.html', {
+        html_string = render_to_string('CashTracker/pdf/voucher_pdf.html', {
             'voucher' : voucher,
             'items' : items,
             'total_amount' : total_amount,
             'finance' : finance,
             'programs' : programs,
             'ed' : ed,
+            'requisition' : requisition,
         })
         pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
@@ -1058,7 +1060,7 @@ class RetirementDownloadView(LoginRequiredMixin, View):
         finance = Staff.objects.filter(role='Finance Officer').first()
         programs = Staff.objects.filter(role='Programs Manager').first()
         ed = Staff.objects.filter(role='ED').first()
-        html_string = render_to_string('CashTracker/pdf/requisition_pdf.html', {
+        html_string = render_to_string('CashTracker/pdf/retirement_pdf.html', {
             'retirement' : retirement,
             'items' : items,
             'total_amount' : total_amount,

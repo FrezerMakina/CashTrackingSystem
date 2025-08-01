@@ -12,133 +12,93 @@
     <link rel="stylesheet" href="{% static 'CashTracker/styles.css' %}">
 </head>
 <body>
-     <div class="m-3 overflow-y-auto overflow-x-hidden  border-start border-4 border-primary rounded shadow" style="height: 85%; width: 98%;">
-        <div class="d-flex justify-content-between">
-            <div class="m-3">
+     <div>
+        <div>
+            <div>
                 <p class="m-0 fw-bold text-primary">CCDO CASH RETIREMENT FORM</p>
                 <P class="m-0">Chipembere Community Development organisation</P>
                 <p class="m-0">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
                 <P class="m-0">Account Number: 10033647388364</P>
-            </div>
-
-            <div class="text-end text-primary m-4 rounded">
-                <p class="border border-primary p-1 rounded">Cash Retirement</p>
-            </div>
         </div>
 
-        <form class="bg-white border-primary" method="POST">
+        <div class="bg-white border-primary">
             {% csrf_token %}
             <div class="mx-3">
-                <p class="text-end me-3 fw-bold">Retirement No: CR-76560</p>
+                <p class="text-end fw-bold">Retirement No: CR-00{{ retirement.ID }}</p>
             </div>
 
             <div class="d-flex justify-content-between">
-                <div class="w-50 mx-3">
+                <div class="w-50 me-3">
                     <!-- <label for="voucher" class="form-label">Voucher</label>
                     <input type="text" id="voucher" class="form-control"> -->
 
-                    <label for="{{ form.voucherid.id_for_label }}" class="form-label d-block">Voucher</label>
-                    {{ form.voucherid|add_class:"form-control"|attr:"id:voucherid" }}
-                    {{ form.voucherid.errors }}
+                    <label for="voucherid" class="form-label d-block">Voucher</label>
+                    <p id="voucherid" class=" bg-secondary text-white">{{ retirement.voucherid }}</p>
 
                     <label for="date" class="form-label">Date</label>
-                    <input type="date" id="date" class="form-control">    
+                    <p id="date" class=" bg-secondary text-white ">{{ retirement.date }}</p> 
                 </div>
 
-                <div class="w-50 mx-3">
+                <div class="w-50">
                     <!-- <label for="requisition" class="form-label">Requesition</label>
                     <input type="text" id="requisition" class="form-control"> -->
 
-                    <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block">Requisition</label>
-                    {{ form.requisitionid|add_class:"form-control"|attr:"id:requisitionid"|attr:"readonly:readonly" }}
-                    {{ form.requisitionid.errors }}
+                    <label for="requisitionid" class="form-label d-block">Requisition</label>
+                    <p id="requisitionid" class=" bg-secondary text-white">{{ retirement.requisitionid }}</p>
 
-                    <label for="amount" class="form-label">Amount</label>
-                    <input type="number" id="amount" class="form-control" readonly>
+                    <label for="amount" class="form-label">Amount (MWK)</label>
+                    <p id="amount" class="bg-secondary text-white">{{ total_amount }}</p> 
                     
                 </div>
 
             </div>
 
-            <div class="d-flex justify-content-between mx-3 my-1 py-0">
-                <div class="fw-bold">Cash Used For</div>
-                <div class="btn btn-primary me-3">Add Expense</div>
-            </div>
-
-            <div class="d-flex m-3 bg-white rounded w-100 my-0 py-0">
-                <table class="table table-striped table-bordered table-hover p-0" style="width: 97%;">
+            <div class="d-flex bg-white rounded w-100 my-0 py-0">
+                <table class="table table-striped table-bordered table-hover p-0">
                     <thead>
                         <tr>
-                            <th>Description</th>
-                            <th>Unit Price</th>
-                            <th>Quantity</th>
-                            <th>Amount</th>
-                            <th>Actions</th>
+                            <th class="bg-secondary text-white">CASH USED FOR</th>
+                            <th class="bg-secondary text-white">AMOUNT RECEIVED/USED</th>
                         </tr>
                     </thead>
 
                     <tbody id="tablebody">
-                        <!-- <tr id="tablerow">
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="number" step="0.001" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                        </tr> -->
+                        {% for item in items %}
+                        <tr class="my-0">
+                            <td>{{ item.itemname }}</td>
+                            <td>{{ item.totalprice }}</td>
+                        </tr>
+                        {% endfor %}
+
+                        <tr class="my-0">
+                            <td class="bg-secondary text-white">TOTAL USED</td>
+                            <td class="bg-secondary text-white">{{ total_amount }}</td>
+                        </tr>
+
+                        <tr class="my-0">
+                            <td class="bg-secondary text-white">AMOUNT REQUESTED</td>
+                            <td class="bg-secondary text-white">{{ total_amount }}</td>
+                        </tr>
+
+                        <tr class="my-0">
+                            <td class="bg-secondary text-white">BALANCE</td>
+                            <td class="bg-secondary text-white">0.00</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="d-flex justify-content-between m-3">
-                <div class="w-25 bg-success rounded">
-                    <p class="text-center">Total Used</p>
-                    <p class="fw-bold text-center" id="used">MWK 0.00</p>
-                </div>
-
-                <div class="w-25 bg-primary rounded">
-                    <p class="text-center">Amount Requested</p>
-                    <p class="fw-bold text-center" id="requested">MWK 0.00</p>
-                </div>
-
-                <div class="w-25 bg-danger rounded">
-                    <p class="text-center">Balance</p>
-                    <p class="fw-bold text-center" id="balance">MWK 0.00</p>
-                </div>
-            </div>
-
-            <div class="m-3 fw-bold fs-5">Required Attachments</div>
-
-            <div class="d-flex justify-content-between m-3">
-                <div class="w-50 me-3">
-                    <div class="bg-success w-100 rounded">
-                        <p>Proof of Payment</p>
-                        <p>Not Uploaded</p>
-                    </div>
-
-                    <div class="bg-success w-100 rounded">
-                        <p>Participarts Payment Form</p>
-                        <p>Not Uploaded</p>
-                    </div>
-                </div>
-
-                <div class="w-50">
-                    <div class="bg-success w-100 rounded">
-                        <p>Receipts</p>
-                        <p>Not Uploaded</p>
-                    </div>
-
-                    <div class="bg-success w-100 rounded">
-                        <p>Cash Payment Form</p>
-                        <p>Not Uploaded</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="m-3">
-                <button type="submit" class="d-flex btn text-white bg-danger ms-auto">Submit Retirement</button>
-            </div>
-            
-        </form>
-        <!-- <div class="h-25"></div> -->
+        </div>
+ 
     </div>
+
+    <div>
+        <p>PREPARED BY: {{ retirement.createdby }}</p>
+        <p>CHECKED BY: {{ finance.username }}</p>
+        <p>APPROVED BY: {{ programs.username }}</p>
+        <p>AUTHORISED BY: {{ ed.username }}</p>
+    </div>
+    <p class="fw-bold text-dark fs-5"><strong>NB: This form is supposed to always be correct. If you are not sure if it's legit download a new copy in the system or let it be downloaded while you are there</strong></p>
 
 </body>
 </html>

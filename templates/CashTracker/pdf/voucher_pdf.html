@@ -13,47 +13,42 @@
 </head>
 <body>
     <div class="w-100 rounded ">
-        <div class="d-flex justify-content-between">
-            <div class="m-3">
-                <p class="m-0 fw-bold text-primary">CCDO CASH PAYMENT VOUCHER</p>
-                <P class="m-0">Chipembere Community Development organisation</P>
-                <p class="m-0">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
-                <P class="m-0">Account Number: 10033647388364</P>
-            </div>
 
-            <div class="text-end text-primary m-4 rounded">
-                <p class="border border-primary p-1 rounded">Payment Voucher</p>
-            </div>
+        <div class="my-3">
+            <p class="m-0 fw-bold text-primary">CCDO CASH PAYMENT VOUCHER</p>
+            <P class="m-0">Chipembere Community Development organisation</P>
+            <p class="m-0">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
+            <P class="m-0">Account Number: 10033647388364</P>
         </div>
 
-        <form class="bg-white border-primary" method="POST">
+
+        <div class="bg-white border-primary">
             {% csrf_token %}
 
             <div class="mx-3">
-                <p class="text-end me-3 fw-bold">Voucher No: PV-007866</p>
+                <p class="text-end fw-bold">Voucher No: PV-00{{ voucher.ID }}</p>
             </div>
             
 
             <div class="d-flex justify-content-between">
-                <div class="w-50 mx-3">
-                    <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block">Requisition</label>
-                    {{ form.requisitionid|add_class:"form-control"|attr:"id:requisitionid"|attr:"readonly:readonly" }}
-                    {{ form.requisitionid.errors }}
+                <div class="w-50">
+                    <label for="requisitionid" class="form-label d-block">Requisition</label>
+                    <p id="requisitionid" class=" bg-secondary text-white me-3">{{ voucher.requisitionid }}</p>
 
                     <!-- <label for="requisition" class="form-label mb-0">Requisition</label>
                     <input type="text" id="requisition" class="form-control"> -->
 
-                    <label for="date" class="form-label mb-0">Date</label>
-                    <input type="date" id="date" class="form-control" readonly>
+                    <label for="date" class="form-label mb-0 d-block">Date</label>
+                    <p id="requisitionid" class=" bg-secondary text-white me-3">{{ voucher.date }}</p>
                     
                 </div>
 
-                <div class="w-50 mx-3">
+                <div class="w-50">
                     <label for="dept" class="form-label">Department</label>
-                    <input type="text" id="dept" class="form-control" readonly>  
+                    <p id="dept" class=" bg-secondary text-white">{{ requisition.requestingdept }}</p>  
                     
                     <label for="amount" class="form-label m-0">Amount (MWK)</label>
-                    <input type="number" id="amount" step="0.001" class="form-control m-0" readonly> 
+                    <p id="amount" class=" bg-secondary text-white">{{ total_amount }}</p> 
                 </div>
             </div>
 
@@ -61,22 +56,22 @@
             
             <!-- <label for="purpose" class="form-label ms-3 mb-0">Purpose</label>
             <textarea type="text" id="purpose" class="form-control mx-3" rows="5"></textarea> -->
-            <div style="width: 98%;">
-            <label for="{{ form.purpose.id_for_label }}" class="form-label d-block mx-3">Purpose</label>
-            {{ form.purpose|add_class:"form-control mx-3"|attr:"readonly:readonly" }}
-            {{ form.purpose.errors }}
-            </div>
+        <div>
+            <label for="purpose" class="form-label d-block">Purpose</label>
+            <textarea type="text" id="comments" placeholder="Comments" class="form-control my-3" rows="3">{{ voucher.purpose }}</textarea>
 
-            <textarea type="text" id="comments" placeholder="Comments" class="form-control mx-3 my-3" rows="3" style="width: 98%;"></textarea>
-
-            <div class="mx-3 my-1 d-flex ms-auto w-50">
-                <button type="button" class="d-inline btn btn-danger ms-auto"><img src="{% static 'CashTracker/icons/save.svg' %}" alt="reject">Reject Voucher</button>
-                <button type="button" class="d-inline btn btn-primary ms-auto"><img src="{% static 'CashTracker/icons/save.svg' %}" alt="send back">Send Back Voucher</button>
-                <button type="submit" class="d-inline btn btn-success ms-auto"><img src="{% static 'CashTracker/icons/save.svg' %}" alt="save">Accept Voucher</button>
-            </div>
             
-        </form>
+            
+        </div>
     </div>
+
+    <div>
+        <p>PREPARED BY:         {{ voucher.createdby }}</p>
+        <p>CHECKED BY:          {{ finance.username }}</p>
+        <p>APPROVED BY:         {{ programs.username }}</p>
+        <p>AUTHORISED BY:       {{ ed.username }}</p>
+    </div>
+    <p class="fw-bold text-dark fs-5"><strong>NB: This form is supposed to always be correct. If you are not sure if it's legit download a new copy in the system or let it be downloaded while you are there</strong></p>
 
 
 </body>
