@@ -19,28 +19,98 @@
   {% endfor %}
 {% endif %}
 
-
+{% if request.user.role == 'Finance Officer' %}
 <div class="d-flex justify-content-between container-fluid w-100 mx-0 p-0">
-    <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
+    <div class="container-fluid border-start border-4 border-primary bg-warning text-white w-25 m-3 rounded">
         <p>Forms Sent Back</p>
-        <p class="fw-bold">0</p>
+        <p class="fw-bold">{{ back_fin_count }}</p>
     </div>
 
-    <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
-        <p>Authorised Forms</p>
-        <p class="fw-bold">0</p>
+    <div class="container-fluid border-start border-4 border-primary bg-success text-white w-25 m-3 rounded">
+        <p>Reviewed Forms</p>
+        <p class="fw-bold">{{ reviewed_count }}</p>
     </div>
 
-    <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
+    <div class="container-fluid border-start border-4 border-primary bg-danger text-white w-25 m-3 rounded">
         <p>Rejected Forms</p>
-        <p class="fw-bold">0</p>
+        <p class="fw-bold">{{ rej_fin_count }}</p>
     </div>
 
-    <div class="container-fluid border-start border-4 border-primary bg-white w-25 m-3 rounded">
-        <p>In Process</p>
-        <p class="fw-bold">0</p>
+    <div class="container-fluid border-start border-4 border-primary bg-primary text-white w-25 m-3 rounded">
+        <p>Awaiting Review</p>
+        <p class="fw-bold">{{ submitted_count }}</p>
     </div>
 </div>
+
+{% elif request.user.role == 'Programs Manager' %}
+<div class="d-flex justify-content-between container-fluid w-100 mx-0 p-0">
+    <div class="container-fluid border-start border-4 border-primary bg-warning text-white w-25 m-3 rounded">
+        <p>Forms Sent Back</p>
+        <p class="fw-bold">{{ back_programs_count }}</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-success text-white w-25 m-3 rounded">
+        <p>Approved Forms</p>
+        <p class="fw-bold">{{ approved_count }}</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-danger text-white w-25 m-3 rounded">
+        <p>Rejected Forms</p>
+        <p class="fw-bold">{{ rej_programs_count }}</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-primary text-white w-25 m-3 rounded">
+        <p>Awaiting Approval</p>
+        <p class="fw-bold">{{ reviewed_count }}</p>
+    </div>
+</div>
+
+{% elif request.user.role == 'ED' %}
+<div class="d-flex justify-content-between container-fluid w-100 mx-0 p-0">
+    <div class="container-fluid border-start border-4 border-primary bg-warning text-white w-25 m-3 rounded">
+        <p>Forms Sent Back</p>
+        <p class="fw-bold">{{ back_ed_count }}</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-success text-white w-25 m-3 rounded">
+        <p>Authorised Forms</p>
+        <p class="fw-bold">{{ authorised_count }}</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-danger text-white w-25 m-3 rounded">
+        <p>Rejected Forms</p>
+        <p class="fw-bold">{{ rej_ed_count }}</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-primary text-white w-25 m-3 rounded">
+        <p>Awaiting Authorisation</p>
+        <p class="fw-bold">{{ approved_count }}</p>
+    </div>
+</div>
+
+{% else %}
+<div class="d-flex justify-content-between container-fluid w-100 mx-0 p-0">
+    <div class="container-fluid border-start border-4 border-primary bg-warning text-white w-25 m-3 rounded">
+        <p>Forms Sent Back</p>
+        <p class="fw-bold">{{ user_back_count }}</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-success text-white w-25 m-3 rounded">
+        <p>Authorised Forms</p>
+        <p class="fw-bold">{{ completed_count }}</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-danger text-white w-25 m-3 rounded">
+        <p>Rejected Forms</p>
+        <p class="fw-bold">{{ user_rej_count }}</p>
+    </div>
+
+    <div class="container-fluid border-start border-4 border-primary bg-primary text-white w-25 m-3 rounded">
+        <p>In Process</p>
+        <p class="fw-bold">{{ user_process_count }}</p>
+    </div>
+</div>
+{% endif %}
 
 {% if requisitions or vouchers or retirements %}
 <div class="container-fluid table-responsive border-primary  bg-white mx-3 my-0" style="width: 98%; height: 68%;">

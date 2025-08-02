@@ -21,7 +21,7 @@ class Staff(AbstractUser):
 class Requisition(models.Model):
     ID = models.CharField(primary_key=True, max_length=10)
     date = models.DateTimeField(auto_now_add=True, null=False)
-    status = models.CharField(null=False, max_length=10, default="SUBMITTED")
+    status = models.CharField(null=False, max_length=50, default="SUBMITTED")
     staffid = models.CharField(models.ForeignKey(Staff, on_delete=models.DO_NOTHING), null=True, default="frezer")
     activityname = models.CharField(max_length=50, null=False)
     projectname = models.CharField(max_length=50, null=False)
@@ -53,7 +53,7 @@ class Voucher(models.Model):
     ID = models.AutoField(primary_key=True)
     requisitionid = models.ForeignKey(Requisition, on_delete=models.CASCADE, max_length=20)
     # staffid = models.ForeignKey(Staff, on_delete=models.DO_NOTHING)
-    status = models.CharField(null=False, max_length=10, default="SUBMITTED")
+    status = models.CharField(null=False, max_length=50, default="SUBMITTED")
     purpose = models.CharField(max_length=200, null=False)
     date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
     createdby = models.CharField(max_length=50, null=False)
@@ -66,7 +66,7 @@ class Retirement(models.Model):
     ID = models.AutoField(primary_key=True)
     requisitionid = models.ForeignKey(Requisition, on_delete=models.CASCADE)
     voucherid = models.ForeignKey(Voucher, on_delete=models.CASCADE)
-    status = models.CharField(null=False, max_length=10, default="SUBMITTED")
+    status = models.CharField(null=False, max_length=50, default="SUBMITTED")
     date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
     createdby = models.CharField(max_length=50, null=False)
     

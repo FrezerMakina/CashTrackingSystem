@@ -28,6 +28,75 @@ class RegisterView(CreateView):
 class DashboardView(LoginRequiredMixin, View):
     template_name = "CashTracker/dashboard.html"
     def get(self, request, *args, **kwargs):
+        req_completed = Requisition.objects.filter(status="Authorised", createdby=request.user.get_username()).count()
+        voucher_completed = Voucher.objects.filter(status="Authorised", createdby=request.user.get_username()).count()
+        ret_completed = Retirement.objects.filter(status="Authorised", createdby=request.user.get_username()).count()
+        completed_count = req_completed + voucher_completed + ret_completed
+        
+        user_req_back = Requisition.objects.filter(status__in=['Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED'], createdby=request.user.get_username()).count()
+        user_voucher_back = Voucher.objects.filter(status__in=['Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED'], createdby=request.user.get_username()).count()
+        user_ret_back = Retirement.objects.filter(status__in=['Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED'], createdby=request.user.get_username()).count()
+        user_back_count = user_req_back + user_voucher_back + user_ret_back
+        
+        user_req_rej = Requisition.objects.filter(status__in=['Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED'], createdby=request.user.get_username()).count()
+        user_voucher_rej = Voucher.objects.filter(status__in=['Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED'], createdby=request.user.get_username()).count()
+        user_ret_rej = Retirement.objects.filter(status__in=['Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED'], createdby=request.user.get_username()).count()
+        user_rej_count = user_req_rej + user_voucher_rej + user_ret_rej
+        
+        user_req_process = Requisition.objects.filter(createdby=request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
+        user_voucher_process = Voucher.objects.filter(createdby=request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
+        user_ret_process = Retirement.objects.filter(createdby=request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
+        user_process_count = user_req_process + user_voucher_process + user_ret_process
+        
+        req_submitted = Requisition.objects.filter(status="SUBMIITED").count()
+        voucher_submitted = Voucher.objects.filter(status="SUBMITTED").count()
+        ret_submitted = Retirement.objects.filter(status="SUBMITTED").count()
+        submitted_count = req_submitted + voucher_submitted + ret_submitted
+        
+        req_reviewed = Requisition.objects.filter(status="Reviewed").count()
+        voucher_reviewed = Voucher.objects.filter(status="Reviewed").count()
+        ret_reviewed = Retirement.objects.filter(status="Reviewed").count()
+        reviewed_count = req_reviewed + voucher_reviewed + ret_reviewed
+        
+        req_approved = Requisition.objects.filter(status="Approved").count()
+        voucher_approved = Voucher.objects.filter(status="Approved").count()
+        ret_approved = Retirement.objects.filter(status="Approved").count()
+        approved_count = req_approved + voucher_approved + ret_approved
+        
+        req_authorised = Requisition.objects.filter(status="Authorised").count()
+        voucher_authorised = Voucher.objects.filter(status="Authorised").count()
+        ret_authorised = Retirement.objects.filter(status="Authorised").count()
+        authorised_count = req_authorised + voucher_authorised + ret_authorised
+        
+        req_back_fin = Requisition.objects.filter(status="Sent Back by Finance Officer").count()
+        voucher_back_fin = Voucher.objects.filter(status="Sent Back by Finance Officer").count()
+        ret_back_fin = Retirement.objects.filter(status="Sent Back by Finance Officer").count()
+        back_fin_count = req_back_fin + voucher_back_fin + ret_back_fin
+        
+        req_back_programs = Requisition.objects.filter(status="Sent Back by Programs Manager").count()
+        voucher_back_programs = Voucher.objects.filter(status="Sent Back by Programs Manager").count()
+        ret_back_programs = Retirement.objects.filter(status="Sent Back by Programs Manager").count()
+        back_programs_count = req_back_programs + voucher_back_programs + ret_back_programs
+        
+        req_back_ed = Requisition.objects.filter(status="Sent Back by ED").count()
+        voucher_back_ed = Voucher.objects.filter(status="Sent Back by ED").count()
+        ret_back_ed = Retirement.objects.filter(status="Sent Back by ED").count()
+        back_ed_count = req_back_ed + voucher_back_ed + ret_back_ed
+        
+        req_rej_fin = Requisition.objects.filter(status="Rejected by Finance Officer").count()
+        voucher_rej_fin = Voucher.objects.filter(status="Rejected by Finance Officer").count()
+        ret_rej_fin = Retirement.objects.filter(status="Rejected by Finance Officer").count()
+        rej_fin_count = req_rej_fin + voucher_rej_fin + ret_rej_fin
+        
+        req_rej_programs = Requisition.objects.filter(status="Rejected by Programs Manager").count()
+        voucher_rej_programs = Voucher.objects.filter(status="Rejected by Programs Manager").count()
+        ret_rej_programs = Retirement.objects.filter(status="Rejected by Programs Manager").count()
+        rej_programs_count = req_rej_programs + voucher_rej_programs + ret_rej_programs
+        
+        req_rej_ed = Requisition.objects.filter(status="Rejected by ED").count()
+        voucher_rej_ed = Voucher.objects.filter(status="Rejected by ED").count()
+        ret_rej_ed = Retirement.objects.filter(status="Rejected by ED").count()
+        rej_ed_count = req_rej_ed + voucher_rej_ed + ret_rej_ed
         # vouchers = Voucher.objects.all()
         # requisitions = Requisition.objects.all() 
         # retirements = Retirement.objects.all()
@@ -62,6 +131,20 @@ class DashboardView(LoginRequiredMixin, View):
             'vouchersadmin' : vouchersadmin,
             'requisitionsadmin' : requisitionsadmin,
             'retirementsadmin' : retirementsadmin,
+            'reviewed_count' : reviewed_count,
+            'approved_count' : approved_count,
+            'authorised_count' : authorised_count,
+            'back_fin_count' : back_fin_count,
+            'back_programs_count' : back_programs_count,
+            'back_ed_count' : back_ed_count,
+            'rej_fin_count' : rej_fin_count,
+            'rej_programs_count' : rej_programs_count,
+            'rej_ed_count' : rej_ed_count,
+            'submitted_count' : submitted_count,
+            'completed_count' : completed_count,
+            'user_back_count' : user_back_count,
+            'user_rej_count' : user_rej_count,
+            'user_process_count' : user_process_count,
         })
             
 
@@ -361,7 +444,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
         dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
         
         if action == "reject":
-            requisition.status = "Rejected"
+            requisition.status = f'Rejected by {self.request.role}'
             requisition.save()
             messages.success(self.request, f"Requisition {requisition.ID} rejected successfully.")
 
@@ -382,7 +465,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
             return super().form_valid(form)
         
         elif action == "send_back":
-            requisition.status = "Sent Back"
+            requisition.status = f'Sent Back by {self.request.role}'
             requisition.save()
             messages.success(self.request, f"Requisition {requisition.ID} sent back successfully.")
 
@@ -570,7 +653,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
         dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
         
         if action == "reject":
-            voucher.status = "Rejected"
+            voucher.status = f'Rejected by {self.request.role}'
             voucher.save()
             messages.success(self.request, f"Voucher {voucher.ID} rejected successfully.")
 
@@ -591,7 +674,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
             return super().form_valid(form)
         
         elif action == "send_back":
-            voucher.status = "Sent Back"
+            voucher.status = f'Sent Back by {self.request.role}'
             voucher.save()
             messages.success(self.request, f"Voucher {voucher.ID} sent back successfully.")
 
@@ -778,7 +861,7 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
         dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
         
         if action == "reject":
-            retirement.status = "Rejected"
+            retirement.status = f'Rejected by {self.request.role}'
             retirement.save()
             messages.success(self.request, f"Retirement {retirement.ID} rejected successfully.")
             
@@ -800,7 +883,7 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
             return super().form_valid(form)
         
         elif action == "send_back":
-            retirement.status = "Sent Back"
+            retirement.status = f'Sent Back by {self.request.role}'
             retirement.save()
             messages.success(self.request, f"Retirement {retirement.ID} sent back successfully.")
 
