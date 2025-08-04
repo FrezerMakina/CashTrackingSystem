@@ -145,7 +145,7 @@
 
             {% for voucher in vouchers %}
             <tr>
-                <td>{{ voucher.ID }}</td>
+                <td>PV-00{{ voucher.ID }}</td>
                 <td>Voucher</td>
                 <td>{{ voucher.total }}</td>
                 <td>{{ voucher.date }}</td>
@@ -156,7 +156,7 @@
 
             {% for retirement in retirements %}
             <tr>
-                <td>{{ retirement.ID }}</td>
+                <td>CR-00{{ retirement.ID }}</td>
                 <td>Retirement</td>
                 <td>{{ retirement.total }}</td>
                 <td>{{ retirement.date }}</td>
@@ -204,7 +204,7 @@
                 {% for voucheradmin in vouchersadmin %}
                 {% if voucheradmin.status == "SUBMITTED" %}
                     <tr>
-                        <td>{{ voucheradmin.ID }}</td>
+                        <td>PV-00{{ voucheradmin.ID }}</td>
                         <td>Voucher</td>
                         <td>{{ voucheradmin.date }}</td>
                         <td>{{ voucheradmin.createdby }}</td>
@@ -216,7 +216,7 @@
                 {% for retirementadmin in retirementsadmin %}
                 {% if retirementadmin.status == "SUBMITTED" %}
                     <tr>
-                        <td>{{ retirementadmin.ID }}</td>
+                        <td>CR-00{{ retirementadmin.ID }}</td>
                         <td>Retirement</td>
                         <td>{{ retirementadmin.date }}</td>
                         <td>{{ retirementadmin.createdby }}</td>
@@ -264,7 +264,7 @@
                 {% for voucheradmin in vouchersadmin %}
                 {% if voucheradmin.status == "Reviewed" %}
                     <tr>
-                        <td>{{ voucheradmin.ID }}</td>
+                        <td>PV-00{{ voucheradmin.ID }}</td>
                         <td>Voucher</td>
                         <td>{{ voucheradmin.date }}</td>
                         <td>{{ voucheradmin.createdby }}</td>
@@ -276,7 +276,7 @@
                 {% for retirementadmin in retirementsadmin %}
                 {% if retirementadmin.status == "Reviewed" %}
                     <tr>
-                        <td>{{ retirementadmin.ID }}</td>
+                        <td>CR-00{{ retirementadmin.ID }}</td>
                         <td>Retirement</td>
                         <td>{{ retirementadmin.date }}</td>
                         <td>{{ retirementadmin.createdby }}</td>
