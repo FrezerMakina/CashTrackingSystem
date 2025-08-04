@@ -653,7 +653,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
         dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
         
         if action == "reject":
-            voucher.status = f'Rejected by {self.request.role}'
+            voucher.status = f'Rejected by {self.request.user.role}'
             voucher.save()
             messages.success(self.request, f"Voucher {voucher.ID} rejected successfully.")
 
@@ -674,7 +674,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
             return super().form_valid(form)
         
         elif action == "send_back":
-            voucher.status = f'Sent Back by {self.request.role}'
+            voucher.status = f'Sent Back by {self.request.user.role}'
             voucher.save()
             messages.success(self.request, f"Voucher {voucher.ID} sent back successfully.")
 
@@ -861,7 +861,7 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
         dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
         
         if action == "reject":
-            retirement.status = f'Rejected by {self.request.role}'
+            retirement.status = f'Rejected by {self.request.user.role}'
             retirement.save()
             messages.success(self.request, f"Retirement {retirement.ID} rejected successfully.")
             
@@ -883,7 +883,7 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
             return super().form_valid(form)
         
         elif action == "send_back":
-            retirement.status = f'Sent Back by {self.request.role}'
+            retirement.status = f'Sent Back by {self.request.user.role}'
             retirement.save()
             messages.success(self.request, f"Retirement {retirement.ID} sent back successfully.")
 
