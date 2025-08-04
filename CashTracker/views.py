@@ -43,9 +43,9 @@ class DashboardView(LoginRequiredMixin, View):
         user_ret_rej = Retirement.objects.filter(status__in=['Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED'], createdby=request.user.get_username()).count()
         user_rej_count = user_req_rej + user_voucher_rej + user_ret_rej
         
-        user_req_process = Requisition.objects.filter(createdby=request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
-        user_voucher_process = Voucher.objects.filter(createdby=request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
-        user_ret_process = Retirement.objects.filter(createdby=request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
+        user_req_process = Requisition.objects.filter(createdby=self.request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
+        user_voucher_process = Voucher.objects.filter(createdby=self.request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
+        user_ret_process = Retirement.objects.filter(createdby=self.request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
         user_process_count = user_req_process + user_voucher_process + user_ret_process
         
         req_submitted = Requisition.objects.filter(status="SUBMIITED").count()
@@ -105,9 +105,9 @@ class DashboardView(LoginRequiredMixin, View):
         requisitionsadmin = Requisition.objects.all()
         retirementsadmin = Retirement.objects.all()
         
-        vouchers = Voucher.objects.filter(createdby=request.user.get_username())
-        requisitions = Requisition.objects.filter(createdby=request.user.get_username()) 
-        retirements = Retirement.objects.filter(createdby=request.user.get_username())
+        vouchers = Voucher.objects.filter(createdby=self.request.user.get_username())
+        requisitions = Requisition.objects.filter(createdby=self.request.user.get_username()) 
+        retirements = Retirement.objects.filter(createdby=self.request.user.get_username())
         
         for requisition in requisitions:
             total_req = Item.objects.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
@@ -166,7 +166,7 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
         
         if requisition_form.is_valid() and item_formset.is_valid():
             requisition = requisition_form.save(commit=False)
-            requisition.createdby = request.user.get_username()
+            requisition.createdby = self.request.user.get_username()
             requisition.save()
             messages.success(self.request, f"Requisition {requisition.ID} saved successfully.")
             items = item_formset.save(commit=False)
@@ -179,7 +179,7 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
             user_email = EmailMessage(
                 subject=f'REQUISITION NUMBER {requisition.ID} SUBMITTED SUCCESSFULLY',
                 body=(
-                    f'Hello {request.user.get_username()} ,\n\n'
+                    f'Hello {self.request.user.get_username()} ,\n\n'
                     f'Your requisition form has been successfully received '
                     f'and it is now at FINANCE OFFICE for review\n\n'
                     f'REQUISITION NUMBER : {requisition.ID} \n\n'
@@ -188,7 +188,7 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
                     f'Regards, \n'
                     f'CCDO Team'
                 ),
-                to=[request.user.email],
+                to=[self.request.user.email],
             )
             user_email.send(fail_silently=False)
             
@@ -197,7 +197,7 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
                 subject=f'NEW REQUISITION NEEDING YOUR ATTENTION',
                 body=(
                     f'Hello {finance.username} ,\n\n'
-                    f'A new requisition number {requisition.ID} has been submitted by {request.user.get_username()} '
+                    f'A new requisition number {requisition.ID} has been submitted by {self.request.user.get_username()} '
                     f'and is awaiting your review.\n\n'
                     f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                     f'Your timely review and feedback will be key in this process \n\n'
@@ -222,7 +222,7 @@ class VoucherView(LoginRequiredMixin, View):
     # success_url = reverse_lazy("dashboard")
     
     def get(self, request, *args, **kwargs):
-                requisitions = Requisition.objects.filter(createdby=request.user.get_username(), status='Authorised')
+                requisitions = Requisition.objects.filter(createdby=self.request.user.get_username(), status='Authorised')
                 voucher_form = VoucherForm(requisition_queryset=requisitions)
             
                 return render(request, self.template_name, {
@@ -236,7 +236,7 @@ class VoucherView(LoginRequiredMixin, View):
         requisitions = Requisition.objects.all()
         if voucher_form.is_valid():
             voucher = voucher_form.save(commit=False)
-            voucher.createdby = request.user.get_username()
+            voucher.createdby = self.request.user.get_username()
             voucher.save()
             messages.success(self.request, f"Voucher {voucher.ID} saved successfully.")
                
@@ -244,7 +244,7 @@ class VoucherView(LoginRequiredMixin, View):
             user_email = EmailMessage(
                 subject=f'VOUCHER NUMBER {voucher.ID} SUBMITTED SUCCESSFULLY',
                 body=(
-                    f'Hello {request.user.get_username()} ,\n\n'
+                    f'Hello {self.request.user.get_username()} ,\n\n'
                     f'Your voucher has been created successfully '
                     f'and it is now at FINANCE OFFICE for review\n\n'
                     f'VOUCHER NUMBER : {voucher.ID} \n\n'
@@ -253,7 +253,7 @@ class VoucherView(LoginRequiredMixin, View):
                     f'Regards, \n'
                     f'CCDO Team'
                 ),
-                to=[request.user.email],
+                to=[self.request.user.email],
             )
             user_email.send(fail_silently=False)
             
@@ -262,7 +262,7 @@ class VoucherView(LoginRequiredMixin, View):
                 subject=f'NEW CASH VOUCHER NEEDING YOUR ATTENTION',
                 body=(
                     f'Hello {finance.username} ,\n\n'
-                    f'A new cash voucher number {voucher.ID} has been submitted by {request.user.get_username()} '
+                    f'A new cash voucher number {voucher.ID} has been submitted by {self.request.user.get_username()} '
                     f'and is awaiting your review.\n\n'
                     f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                     f'Your timely review and feedback will be key in this process \n\n'
@@ -319,7 +319,7 @@ class RetirementView(LoginRequiredMixin, View):
         vouchers = Voucher.objects.all()
         if retirement_form.is_valid():
             retirement = retirement_form.save(commit=False)
-            retirement.createdby = request.user.get_username()
+            retirement.createdby = self.request.user.get_username()
             retirement.save()
             messages.success(self.request, f"Retirement {retirement.ID} saved successfully.")
                
@@ -327,7 +327,7 @@ class RetirementView(LoginRequiredMixin, View):
             user_email = EmailMessage(
                 subject=f'RETIREMENT FORM NUMBER {retirement.ID} SUBMITTED SUCCESSFULLY',
                 body=(
-                    f'Hello {request.user.get_username()} ,\n\n'
+                    f'Hello {self.request.user.get_username()} ,\n\n'
                     f'Your retirement form has been created successfully '
                     f'and it is now at FINANCE OFFICE for review\n\n'
                     f'RETIREMENT FORM NUMBER : {retirement.ID} \n\n'
@@ -336,7 +336,7 @@ class RetirementView(LoginRequiredMixin, View):
                     f'Regards, \n'
                     f'CCDO Team'
                 ),
-                to=[request.user.email],
+                to=[self.request.user.email],
             )
             user_email.send(fail_silently=False)
             
@@ -345,7 +345,7 @@ class RetirementView(LoginRequiredMixin, View):
                 subject=f'NEW CASH RETIREMENT FORM NEEDING YOUR ATTENTION',
                 body=(
                     f'Hello {finance.username} ,\n\n'
-                    f'A new cash retirement form number {retirement.ID} has been submitted by {request.user.get_username()} '
+                    f'A new cash retirement form number {retirement.ID} has been submitted by {self.request.user.get_username()} '
                     f'and is awaiting your review.\n\n'
                     f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                     f'Your timely review and feedback will be key in this process \n\n'
@@ -444,7 +444,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
         dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
         
         if action == "reject":
-            requisition.status = f'Rejected by {self.request.role}'
+            requisition.status = f'Rejected by {self.request.user.role}'
             requisition.save()
             messages.success(self.request, f"Requisition {requisition.ID} rejected successfully.")
 
@@ -465,7 +465,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
             return super().form_valid(form)
         
         elif action == "send_back":
-            requisition.status = f'Sent Back by {self.request.role}'
+            requisition.status = f'Sent Back by {self.request.user.role}'
             requisition.save()
             messages.success(self.request, f"Requisition {requisition.ID} sent back successfully.")
 
