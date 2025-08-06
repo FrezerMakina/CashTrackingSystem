@@ -238,6 +238,11 @@ class VoucherView(LoginRequiredMixin, View):
             voucher = voucher_form.save(commit=False)
             voucher.createdby = self.request.user.get_username()
             voucher.save()
+            
+            requisition = voucher.requisitionid  
+            requisition.status = 'Done'
+            requisition.save()
+            
             messages.success(self.request, f"Voucher PV-00{voucher.ID} saved successfully.")
                
             dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
@@ -321,6 +326,11 @@ class RetirementView(LoginRequiredMixin, View):
             retirement = retirement_form.save(commit=False)
             retirement.createdby = self.request.user.get_username()
             retirement.save()
+            
+            voucher = retirement.voucherid  
+            voucher.status = 'Done'
+            voucher.save()
+            
             messages.success(self.request, f"Retirement CR-00{retirement.ID} saved successfully.")
                
             dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
