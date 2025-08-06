@@ -105,7 +105,7 @@
         <p class="fw-bold">{{ user_rej_count }}</p>
     </div>
 
-    <div class="container-fluid border-start border-4 border-primary bg-primary text-white w-25 m-3 rounded">
+    <div class="container-fluid border-start border-4 border-white bg-primary text-white w-25 m-3 rounded">
         <p>In Process</p>
         <p class="fw-bold">{{ user_process_count }}</p>
     </div>
@@ -133,7 +133,7 @@
         <tbody>
             {% for requisition in requisitions %}
             <tr>
-                <td>{{ requisition.ID }}</td>
+                <td>REQ-00{{ requisition.ID }}</td>
                 <td>Requisition</td>
                 <td>{{requisition.total }}</td>
                 <td>{{ requisition.date }}</td>
@@ -192,7 +192,7 @@
                 {% for requisitionadmin in requisitionsadmin %}
                 {% if requisitionadmin.status == "SUBMITTED" %}
                     <tr>
-                        <td>{{ requisitionadmin.ID }}</td>
+                        <td>REQ-00{{ requisitionadmin.ID }}</td>
                         <td>Requisition</td>
                         <td>{{ requisitionadmin.date }}</td>
                         <td>{{ requisitionadmin.createdby }}</td>
@@ -252,7 +252,7 @@
                 {% for requisitionadmin in requisitionsadmin %}
                 {% if requisitionadmin.status == "Reviewed" %}
                     <tr>
-                        <td>{{ requisitionadmin.ID }}</td>
+                        <td>REQ-00{{ requisitionadmin.ID }}</td>
                         <td>Requisition</td>
                         <td>{{ requisitionadmin.date }}</td>
                         <td>{{ requisitionadmin.createdby }}</td>
@@ -311,7 +311,7 @@
                 {% for requisitionadmin in requisitionsadmin %}
                 {% if requisitionadmin.status == "Approved" %}
                     <tr>
-                        <td>{{ requisitionadmin.ID }}</td>
+                        <td>REQ-00{{ requisitionadmin.ID }}</td>
                         <td>Requisition</td>
                         <td>{{ requisitionadmin.date }}</td>
                         <td>{{ requisitionadmin.createdby }}</td>

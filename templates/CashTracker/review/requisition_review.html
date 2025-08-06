@@ -59,7 +59,8 @@
 
                 <div class="w-25 ms-3 me-4">
                     <label for="{{ form.ID.id_for_label }}" class="form-label d-block">Requisition Number</label>
-                    {{ form.ID|add_class:"form-control"|attr:"id:requisitionid"|attr:"readonly:readonly" }}
+                    <p class="border border-secondary rounded p-1" id="requisitionid">REQ-00{{requisition.ID}}</p>
+                    <!-- {{ form.ID|add_class:"form-control"|attr:"id:requisitionid"|attr:"readonly:readonly" }} -->
                     {{ form.ID.errors }}
 
                     <label for="{{ form.activityname.id_for_label }}" class="form-label d-block">Project Activity</label>
@@ -113,7 +114,8 @@
 <script>
         document.addEventListener('DOMContentLoaded', function(){
             
-                    const reqid = document.getElementById('requisitionid').value;
+                    const reqidText = document.getElementById('requisitionid').textContent;
+                    const reqid = reqidText.match(/\d+/)[0];
                     fetch(`/items/${reqid}/`)
                         .then(response => response.json())
                         .then(data =>{

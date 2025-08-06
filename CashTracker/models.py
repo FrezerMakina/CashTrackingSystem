@@ -19,19 +19,44 @@ class Staff(AbstractUser):
         return self.username
     
 class Requisition(models.Model):
-    ID = models.CharField(primary_key=True, max_length=10)
+    dept = (
+        ("Administration", "Administration"),
+        ("Finance", "Finance"),
+        ("Programs", "Programs"),
+        ("Human Resource", "Human Resource"),
+        ("Communications", "Communications"),
+        
+    )
+    requestingdept = models.CharField(max_length=100, choices=dept)
+    
+    project = (
+        ("Ending Gender Based Violence", "Ending Gender Based Violence"),
+        ("Building ECDs", "Building ECDs"),
+        
+    )
+    projectname = models.CharField(max_length=100, choices=project)
+    
+    
+    code = (
+        ("GBV2025", "GBV2025"),
+        ("ECD2025", "ECD2025"),
+        
+    )
+    projectcode = models.CharField(max_length=100, choices=code)
+    
+    ID = models.AutoField(primary_key=True)
     date = models.DateTimeField(auto_now_add=True, null=False)
     status = models.CharField(null=False, max_length=50, default="SUBMITTED")
     staffid = models.CharField(models.ForeignKey(Staff, on_delete=models.DO_NOTHING), null=True, default="frezer")
     activityname = models.CharField(max_length=50, null=False)
-    projectname = models.CharField(max_length=50, null=False)
-    projectcode = models.CharField(max_length=10)
-    requestingdept = models.CharField(max_length=40)
+    
+    
+    
     accountnumber = models.CharField(max_length=20, null=True, default="6565")
     createdby = models.CharField(max_length=50, null=False)
     
     def __str__(self):
-        return self.ID
+        return str(self.ID)
     
 class Item(models.Model):
     ID = models.AutoField(primary_key=True)

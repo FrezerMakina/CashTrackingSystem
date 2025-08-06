@@ -168,7 +168,7 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
             requisition = requisition_form.save(commit=False)
             requisition.createdby = self.request.user.get_username()
             requisition.save()
-            messages.success(self.request, f"Requisition {requisition.ID} saved successfully.")
+            messages.success(self.request, f"Requisition REQ-00{requisition.ID} saved successfully.")
             items = item_formset.save(commit=False)
             
             for item in items:
@@ -177,12 +177,12 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
                
             dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
             user_email = EmailMessage(
-                subject=f'REQUISITION NUMBER {requisition.ID} SUBMITTED SUCCESSFULLY',
+                subject=f'REQUISITION NUMBER REQ-00{requisition.ID} SUBMITTED SUCCESSFULLY',
                 body=(
                     f'Hello {self.request.user.get_username()} ,\n\n'
                     f'Your requisition form has been successfully received '
                     f'and it is now at FINANCE OFFICE for review\n\n'
-                    f'REQUISITION NUMBER : {requisition.ID} \n\n'
+                    f'REQUISITION NUMBER : REQ-00{requisition.ID} \n\n'
                     f'You will be notified of next steps in due course. \n \n'
                     f'You can be checking for the status of your requisition on the dashboard at the link: \n{dashboard_url} \n\n'
                     f'Regards, \n'
@@ -197,7 +197,7 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
                 subject=f'NEW REQUISITION NEEDING YOUR ATTENTION',
                 body=(
                     f'Hello {finance.username} ,\n\n'
-                    f'A new requisition number {requisition.ID} has been submitted by {self.request.user.get_username()} '
+                    f'A new requisition number REQ-00{requisition.ID} has been submitted by {self.request.user.get_username()} '
                     f'and is awaiting your review.\n\n'
                     f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                     f'Your timely review and feedback will be key in this process \n\n'
@@ -238,16 +238,16 @@ class VoucherView(LoginRequiredMixin, View):
             voucher = voucher_form.save(commit=False)
             voucher.createdby = self.request.user.get_username()
             voucher.save()
-            messages.success(self.request, f"Voucher {voucher.ID} saved successfully.")
+            messages.success(self.request, f"Voucher PV-00{voucher.ID} saved successfully.")
                
             dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
             user_email = EmailMessage(
-                subject=f'VOUCHER NUMBER {voucher.ID} SUBMITTED SUCCESSFULLY',
+                subject=f'VOUCHER NUMBER PV-00{voucher.ID} SUBMITTED SUCCESSFULLY',
                 body=(
                     f'Hello {self.request.user.get_username()} ,\n\n'
                     f'Your voucher has been created successfully '
                     f'and it is now at FINANCE OFFICE for review\n\n'
-                    f'VOUCHER NUMBER : {voucher.ID} \n\n'
+                    f'VOUCHER NUMBER : PV-00{voucher.ID} \n\n'
                     f'You will be notified of next steps in due course. \n \n'
                     f'You can be checking for the status of your voucher on the dashboard at the link: \n{dashboard_url} \n\n'
                     f'Regards, \n'
@@ -262,7 +262,7 @@ class VoucherView(LoginRequiredMixin, View):
                 subject=f'NEW CASH VOUCHER NEEDING YOUR ATTENTION',
                 body=(
                     f'Hello {finance.username} ,\n\n'
-                    f'A new cash voucher number {voucher.ID} has been submitted by {self.request.user.get_username()} '
+                    f'A new cash voucher number PV-00{voucher.ID} has been submitted by {self.request.user.get_username()} '
                     f'and is awaiting your review.\n\n'
                     f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                     f'Your timely review and feedback will be key in this process \n\n'
@@ -321,16 +321,16 @@ class RetirementView(LoginRequiredMixin, View):
             retirement = retirement_form.save(commit=False)
             retirement.createdby = self.request.user.get_username()
             retirement.save()
-            messages.success(self.request, f"Retirement {retirement.ID} saved successfully.")
+            messages.success(self.request, f"Retirement CR-00{retirement.ID} saved successfully.")
                
             dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
             user_email = EmailMessage(
-                subject=f'RETIREMENT FORM NUMBER {retirement.ID} SUBMITTED SUCCESSFULLY',
+                subject=f'RETIREMENT FORM NUMBER CR-00{retirement.ID} SUBMITTED SUCCESSFULLY',
                 body=(
                     f'Hello {self.request.user.get_username()} ,\n\n'
                     f'Your retirement form has been created successfully '
                     f'and it is now at FINANCE OFFICE for review\n\n'
-                    f'RETIREMENT FORM NUMBER : {retirement.ID} \n\n'
+                    f'RETIREMENT FORM NUMBER : CR-00{retirement.ID} \n\n'
                     f'You will be notified of next steps in due course. \n \n'
                     f'You can be checking for the status of your retirement form on the dashboard at the link: \n{dashboard_url} \n\n'
                     f'Regards, \n'
@@ -345,7 +345,7 @@ class RetirementView(LoginRequiredMixin, View):
                 subject=f'NEW CASH RETIREMENT FORM NEEDING YOUR ATTENTION',
                 body=(
                     f'Hello {finance.username} ,\n\n'
-                    f'A new cash retirement form number {retirement.ID} has been submitted by {self.request.user.get_username()} '
+                    f'A new cash retirement form number CR-00{retirement.ID} has been submitted by {self.request.user.get_username()} '
                     f'and is awaiting your review.\n\n'
                     f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                     f'Your timely review and feedback will be key in this process \n\n'
@@ -446,15 +446,15 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
         if action == "reject":
             requisition.status = f'Rejected by {self.request.user.role}'
             requisition.save()
-            messages.success(self.request, f"Requisition {requisition.ID} rejected successfully.")
+            messages.success(self.request, f"Requisition REQ-00{requisition.ID} rejected successfully.")
 
         # Notify requester
             requester = Staff.objects.filter(username=requisition.createdby).first()
             EmailMessage(
-                subject=f'REQUISITION FORM NUMBER {requisition.ID} REJECTED',
+                subject=f'REQUISITION FORM NUMBER REQ-00{requisition.ID} REJECTED',
                 body=(
                     f'Dear {requester.username},\n\n'
-                    f'Your requisition form number {requisition.ID} has been rejected by {self.request.user.get_username()}\n\n'
+                    f'Your requisition form number REQ-00{requisition.ID} has been rejected by {self.request.user.get_username()}\n\n'
                     f'COMMENTS: {comments if comments else "No additional comments."}\n\n'
                     f'You can chech on the dashboard for the status of other forms: {dashboard_url}\n\n'
                     f'Regards,\nCCDO Team'
@@ -467,15 +467,15 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
         elif action == "send_back":
             requisition.status = f'Sent Back by {self.request.user.role}'
             requisition.save()
-            messages.success(self.request, f"Requisition {requisition.ID} sent back successfully.")
+            messages.success(self.request, f"Requisition REQ-00{requisition.ID} sent back successfully.")
 
             # Notify requester
             requester = Staff.objects.filter(username=requisition.createdby).first()
             EmailMessage(
-                subject=f'REQUISITION FORM NUMBER {requisition.ID} SENT BACK FOR CORRECTION',
+                subject=f'REQUISITION FORM NUMBER REQ-00{requisition.ID} SENT BACK FOR CORRECTION',
                 body=(
                     f'Dear {requester.username},\n\n'
-                    f'Your requisition form number {requisition.ID} has been sent back for correction by {self.request.user.get_username()}.\n\n'
+                    f'Your requisition form number REQ-00{requisition.ID} has been sent back for correction by {self.request.user.get_username()}.\n\n'
                     f'Comment: {comments if comments else "No additional comments."}\n\n'
                     f'Please log in to submit a new requesition based on the comments provides.\n\nYou can also check for the status of other forms on the link: \n{dashboard_url}\n\n'
                     f'Regards,\nCCDO Team'
@@ -488,15 +488,15 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
             if self.request.user.role == "Finance Officer":
                 requisition.status = "Reviewed"
                 requisition.save()
-                messages.success(self.request, f"Requisition {requisition.ID} reviewed successfully.")
+                messages.success(self.request, f"Requisition REQ-00{requisition.ID} reviewed successfully.")
             
                 user_email = EmailMessage(
-                    subject=f'REQUISITION FORM NUMBER {requisition.ID} REVIEWED',
+                    subject=f'REQUISITION FORM NUMBER REQ-00{requisition.ID} REVIEWED',
                     body=(
                         f'Hello {self.request.user.get_username()} ,\n\n'
                         f'You have successfully reviewed the requisition form of {requisition.createdby}'
                         f' and it has been sent to the PROGRAMS MANAGER OFFICE for approval\n\n'
-                        f'REQUISITION FORM NUMBER : {requisition.ID} \n\n'
+                        f'REQUISITION FORM NUMBER : REQ-00{requisition.ID} \n\n'
                         f'Thank you for your review\n'
                         f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -511,7 +511,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     subject=f'NEW CASH REQUISTION FORM NEEDING YOUR ATTENTION',
                     body=(
                         f'Hello {programs.username} ,\n\n'
-                        f'A new cash requisition form number {requisition.ID} submitted by {requisition.createdby} has been reviewed by {self.request.user.get_username()} '
+                        f'A new cash requisition form number REQ-00{requisition.ID} submitted by {requisition.createdby} has been reviewed by {self.request.user.get_username()} '
                         f'and is awaiting your approval.\n\n'
                         f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Your timely review and feedback will be key in this process \n\n'
@@ -527,10 +527,10 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
             
                 reqowner = Staff.objects.filter(username=requisition.createdby).first()
                 reqowner_email = EmailMessage(
-                    subject=f'CASH REQUISTION FORM NUMBER {requisition.ID} REVIEWED',
+                    subject=f'CASH REQUISTION FORM NUMBER REQ-00{requisition.ID} REVIEWED',
                     body=(
                         f'Hello {reqowner.username} ,\n\n'
-                        f'Your cash requisition form number {requisition.ID} has been reviewed at the FINANCES OFFICE and is at the PROGRAMS MANAGER\'S OFFICE awaiting approval\n\n'
+                        f'Your cash requisition form number REQ-00{requisition.ID} has been reviewed at the FINANCES OFFICE and is at the PROGRAMS MANAGER\'S OFFICE awaiting approval\n\n'
                         f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Regards, \n'
                         f'CCDO Team'
@@ -545,15 +545,15 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
             elif self.request.user.role == "Programs Manager":
                 requisition.status = "Approved"
                 requisition.save()
-                messages.success(self.request, f"Requisition {requisition.ID} approved successfully.")
+                messages.success(self.request, f"Requisition REQ-00{requisition.ID} approved successfully.")
             
                 user_email = EmailMessage(
-                    subject=f'REQUISITION FORM NUMBER {requisition.ID} APPROVED',
+                    subject=f'REQUISITION FORM NUMBER REQ-00{requisition.ID} APPROVED',
                     body=(
                         f'Hello {self.request.user.get_username()} ,\n\n'
                         f'You have successfully approved the requisition form of {requisition.createdby}'
                         f' and it has been sent to the EXECUTIVE DIRECTOR\'S OFFICE for authorisation\n\n'
-                        f'REQUISITION FORM NUMBER : {requisition.ID} \n\n'
+                        f'REQUISITION FORM NUMBER : REQ-00{requisition.ID} \n\n'
                         f'Thank you for your approval\n'
                         f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -568,7 +568,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     subject=f'NEW CASH REQUISTION FORM NEEDING YOUR ATTENTION',
                     body=(
                         f'Hello {ed.username} ,\n\n'
-                        f'A new cash requisition form number {requisition.ID} submitted by {requisition.createdby} has been approved by {self.request.user.get_username()} '
+                        f'A new cash requisition form number REQ-00{requisition.ID} submitted by {requisition.createdby} has been approved by {self.request.user.get_username()} '
                         f'and is awaiting your authorisation.\n\n'
                         f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Your timely review and feedback will be key in this process \n\n'
@@ -584,10 +584,10 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
             
                 reqowner = Staff.objects.filter(username=requisition.createdby).first()
                 reqowner_email = EmailMessage(
-                    subject=f'CASH REQUISTION FORM NUMBER {requisition.ID} APPROVED',
+                    subject=f'CASH REQUISTION FORM NUMBER REQ-00{requisition.ID} APPROVED',
                     body=(
                         f'Hello {reqowner.username} ,\n\n'
-                        f'Your cash requisition form number {requisition.ID} has been approved at the PROGRAMS MANAGER OFFICE\'S OFFICE and is at the EXECUTIVE DIRECTOR\'S OFFICE awaiting authorisation\n\n'
+                        f'Your cash requisition form number REQ-00{requisition.ID} has been approved at the PROGRAMS MANAGER OFFICE\'S OFFICE and is at the EXECUTIVE DIRECTOR\'S OFFICE awaiting authorisation\n\n'
                         f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Regards, \n'
                         f'CCDO Team'
@@ -602,15 +602,15 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
             elif self.request.user.role == "ED":
                 requisition.status = "Authorised"
                 requisition.save()
-                messages.success(self.request, f"Requisition {requisition.ID} authorised successfully.")
+                messages.success(self.request, f"Requisition REQ-00{requisition.ID} authorised successfully.")
              
                 user_email = EmailMessage(
-                    subject=f'REQUISITION FORM NUMBER {requisition.ID} AUTHORISED',
+                    subject=f'REQUISITION FORM NUMBER REQ-00{requisition.ID} AUTHORISED',
                     body=(
                         f'Hello {self.request.user.get_username()} ,\n\n'
                         f'You have successfully authorised the requisition form of {requisition.createdby}'
                         f' and an email has been also sent to {requisition.createdby} so that a voucher can be created\n\n'
-                        f'REQUISITION FORM NUMBER : {requisition.ID} \n\n'
+                        f'REQUISITION FORM NUMBER : REQ-00{requisition.ID} \n\n'
                         f'Thank you for your authorisation\n'
                         f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -623,10 +623,10 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
             
                 reqowner = Staff.objects.filter(username=requisition.createdby).first()
                 reqowner_email = EmailMessage(
-                    subject=f'CASH REQUISTION FORM NUMBER {requisition.ID} APPROVED',
+                    subject=f'CASH REQUISTION FORM NUMBER REQ-00{requisition.ID} APPROVED',
                     body=(
                         f'Hello {reqowner.username} ,\n\n'
-                        f'Your cash requisition form number {requisition.ID} has been authorised at the EXECUTIVE DIRECTOR\'S OFFICE\n\n'
+                        f'Your cash requisition form number REQ-00{requisition.ID} has been authorised at the EXECUTIVE DIRECTOR\'S OFFICE\n\n'
                         f'Log into the Cash Tracking system and create the voucher for this authorised requisition\n\n'
                         f'You can be checking for the status of other forms by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -655,15 +655,15 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
         if action == "reject":
             voucher.status = f'Rejected by {self.request.user.role}'
             voucher.save()
-            messages.success(self.request, f"Voucher {voucher.ID} rejected successfully.")
+            messages.success(self.request, f"Voucher PV-00{voucher.ID} rejected successfully.")
 
         # Notify requester
             requester = Staff.objects.filter(username=voucher.createdby).first()
             EmailMessage(
-                subject=f'VOUCHER FORM NUMBER {voucher.ID} REJECTED',
+                subject=f'VOUCHER FORM NUMBER PV-00{voucher.ID} REJECTED',
                 body=(
                     f'Dear {requester.username},\n\n'
-                    f'Your voucher form number {voucher.ID} has been rejected by {self.request.user.get_username()}\n\n'
+                    f'Your voucher form number PV-00{voucher.ID} has been rejected by {self.request.user.get_username()}\n\n'
                     f'COMMENTS: {comments if comments else "No additional comments."}\n\n'
                     f'You can chech on the dashboard for the status of other forms: {dashboard_url}\n\n'
                     f'Regards,\nCCDO Team'
@@ -676,15 +676,15 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
         elif action == "send_back":
             voucher.status = f'Sent Back by {self.request.user.role}'
             voucher.save()
-            messages.success(self.request, f"Voucher {voucher.ID} sent back successfully.")
+            messages.success(self.request, f"Voucher PV-00{voucher.ID} sent back successfully.")
 
             # Notify requester
             requester = Staff.objects.filter(username=voucher.createdby).first()
             EmailMessage(
-                subject=f'VOUCHER FORM NUMBER {voucher.ID} SENT BACK FOR CORRECTION',
+                subject=f'VOUCHER FORM NUMBER PV-00{voucher.ID} SENT BACK FOR CORRECTION',
                 body=(
                     f'Dear {requester.username},\n\n'
-                    f'Your voucher form number {voucher.ID} has been sent back for correction by {self.request.user.get_username()}.\n\n'
+                    f'Your voucher form number PV-00{voucher.ID} has been sent back for correction by {self.request.user.get_username()}.\n\n'
                     f'Comment: {comments if comments else "No additional comments."}\n\n'
                     f'Please log in to submit a new voucher based on the comments provides.\n\nYou can also check for the status of other forms on the link: \n{dashboard_url}\n\n'
                     f'Regards,\nCCDO Team'
@@ -697,15 +697,15 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
             if self.request.user.role == "Finance Officer":
                 voucher.status = "Reviewed"
                 voucher.save()
-                messages.success(self.request, f"Voucher {voucher.ID} reviewed successfully.")
+                messages.success(self.request, f"Voucher PV-00{voucher.ID} reviewed successfully.")
                 dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
                 user_email = EmailMessage(
-                    subject=f'VOUCHER FORM NUMBER {voucher.ID} REVIEWED',
+                    subject=f'VOUCHER FORM NUMBER PV-00{voucher.ID} REVIEWED',
                     body=(
                         f'Hello {self.request.user.get_username()} ,\n\n'
                         f'You have successfully reviewed the voucher form of {voucher.createdby}'
                         f' and it has been sent to the PROGRAMS MANAGER OFFICE for approval\n\n'
-                        f'VOUCHER FORM NUMBER : {voucher.ID} \n\n'
+                        f'VOUCHER FORM NUMBER : PV-00{voucher.ID} \n\n'
                         f'Thank you for your review\n'
                         f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -720,7 +720,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     subject=f'NEW VOUCHER FORM NEEDING YOUR ATTENTION',
                     body=(
                         f'Hello {programs.username} ,\n\n'
-                        f'A new voucher form number {voucher.ID} submitted by {voucher.createdby} has been reviewed by {self.request.user.get_username()} '
+                        f'A new voucher form number PV-00{voucher.ID} submitted by {voucher.createdby} has been reviewed by {self.request.user.get_username()} '
                         f'and is awaiting your approval.\n\n'
                         f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Your timely review and feedback will be key in this process \n\n'
@@ -736,10 +736,10 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
             
                 voucherowner = Staff.objects.filter(username=voucher.createdby).first()
                 voucherowner_email = EmailMessage(
-                    subject=f'VOUCHER FORM NUMBER {voucher.ID} REVIEWED',
+                    subject=f'VOUCHER FORM NUMBER PV-00{voucher.ID} REVIEWED',
                     body=(
                         f'Hello {voucherowner.username} ,\n\n'
-                        f'Your VOUCHER form number {voucher.ID} has been reviewed at the FINANCES OFFICE and is at the PROGRAMS MANAGER\'S OFFICE awaiting approval\n\n'
+                        f'Your VOUCHER form number PV-00{voucher.ID} has been reviewed at the FINANCES OFFICE and is at the PROGRAMS MANAGER\'S OFFICE awaiting approval\n\n'
                         f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Regards, \n'
                         f'CCDO Team'
@@ -754,15 +754,15 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
             elif self.request.user.role == "Programs Manager":
                 voucher.status = "Approved"
                 voucher.save()
-                messages.success(self.request, f"Voucher {voucher.ID} approved successfully.")
+                messages.success(self.request, f"Voucher PV-00{voucher.ID} approved successfully.")
                 dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
                 user_email = EmailMessage(
-                    subject=f'VOUCHER FORM NUMBER {voucher.ID} APPROVED',
+                    subject=f'VOUCHER FORM NUMBER PV-00{voucher.ID} APPROVED',
                     body=(
                         f'Hello {self.request.user.get_username()} ,\n\n'
                         f'You have successfully approved the voucher form of {voucher.createdby}'
                         f' and it has been sent to the EXECUTIVE DIRECTOR\'S OFFICE for authorisation\n\n'
-                        f'VOUCHER FORM NUMBER : {voucher.ID} \n\n'
+                        f'VOUCHER FORM NUMBER : PV-00{voucher.ID} \n\n'
                         f'Thank you for your approval\n'
                         f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -777,7 +777,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     subject=f'NEW VOUCHER FORM NEEDING YOUR ATTENTION',
                     body=(
                         f'Hello {ed.username} ,\n\n'
-                        f'A new voucher form number {voucher.ID} submitted by {voucher.createdby} has been approved by {self.request.user.get_username()} '
+                        f'A new voucher form number PV-00{voucher.ID} submitted by {voucher.createdby} has been approved by {self.request.user.get_username()} '
                         f'and is awaiting your authorisation.\n\n'
                         f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Your timely review and feedback will be key in this process \n\n'
@@ -793,10 +793,10 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
             
                 voucherowner = Staff.objects.filter(username=voucher.createdby).first()
                 voucherowner_email = EmailMessage(
-                    subject=f'VOUCHER FORM NUMBER {voucher.ID} APPROVED',
+                    subject=f'VOUCHER FORM NUMBER PV-00{voucher.ID} APPROVED',
                     body=(
                         f'Hello {voucherowner.username} ,\n\n'
-                        f'Your voucher form number {voucher.ID} has been approved at the PROGRAMS MANAGER\'S OFFICE and is at the EXECUTIVE DIRECTOR\'S OFFICE awaiting authorisation\n\n'
+                        f'Your voucher form number PV-00{voucher.ID} has been approved at the PROGRAMS MANAGER\'S OFFICE and is at the EXECUTIVE DIRECTOR\'S OFFICE awaiting authorisation\n\n'
                         f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Regards, \n'
                         f'CCDO Team'
@@ -811,15 +811,15 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
             elif self.request.user.role == "ED":
                 voucher.status = "Authorised"
                 voucher.save()
-                messages.success(self.request, f"Voucher {voucher.ID} authorised successfully.")
+                messages.success(self.request, f"Voucher PV-00{voucher.ID} authorised successfully.")
                 dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
                 user_email = EmailMessage(
-                    subject=f'VOUCHER FORM NUMBER {voucher.ID} AUTHORISED',
+                    subject=f'VOUCHER FORM NUMBER PV-00{voucher.ID} AUTHORISED',
                     body=(
                         f'Hello {self.request.user.get_username()} ,\n\n'
                         f'You have successfully authorised the voucher form of {voucher.createdby}'
                         f' and an email has been also sent to {voucher.createdby} so that cash can be taken from accounts office\n\n'
-                        f'VOUCHER FORM NUMBER : {voucher.ID} \n\n'
+                        f'VOUCHER FORM NUMBER : PV-00{voucher.ID} \n\n'
                         f'Thank you for your authorisation\n'
                         f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -832,10 +832,10 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
             
                 voucherowner = Staff.objects.filter(username=voucher.createdby).first()
                 voucherowner_email = EmailMessage(
-                    subject=f'VOUCHER FORM NUMBER {voucher.ID} APPROVED',
+                    subject=f'VOUCHER FORM NUMBER PV-00{voucher.ID} APPROVED',
                     body=(
                         f'Hello {voucherowner.username} ,\n\n'
-                        f'Your voucher form number {voucher.ID} has been authorised at the EXECUTIVE DIRECTOR\'S OFFICE\n\n'
+                        f'Your voucher form number PV-00{voucher.ID} has been authorised at the EXECUTIVE DIRECTOR\'S OFFICE\n\n'
                         f'Go to the accounts office and get the money for this voucher\n\n'
                         f'You can be checking for the status of other forms by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -863,16 +863,16 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
         if action == "reject":
             retirement.status = f'Rejected by {self.request.user.role}'
             retirement.save()
-            messages.success(self.request, f"Retirement {retirement.ID} rejected successfully.")
+            messages.success(self.request, f"Retirement CR-00{retirement.ID} rejected successfully.")
             
 
         # Notify requester
             requester = Staff.objects.filter(username=retirement.createdby).first()
             EmailMessage(
-                subject=f'RETIREMENT FORM NUMBER {retirement.ID} REJECTED',
+                subject=f'RETIREMENT FORM NUMBER CR-00{retirement.ID} REJECTED',
                 body=(
                     f'Dear {requester.username},\n\n'
-                    f'Your retirement form number {retirement.ID} has been rejected by {self.request.user.get_username()}\n\n'
+                    f'Your retirement form number CR-00{retirement.ID} has been rejected by {self.request.user.get_username()}\n\n'
                     f'COMMENTS: {comments if comments else "No additional comments."}\n\n'
                     f'You can chech on the dashboard for the status of other forms: {dashboard_url}\n\n'
                     f'Regards,\nCCDO Team'
@@ -885,15 +885,15 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
         elif action == "send_back":
             retirement.status = f'Sent Back by {self.request.user.role}'
             retirement.save()
-            messages.success(self.request, f"Retirement {retirement.ID} sent back successfully.")
+            messages.success(self.request, f"Retirement CR-00{retirement.ID} sent back successfully.")
 
             # Notify requester
             requester = Staff.objects.filter(username=retirement.createdby).first()
             EmailMessage(
-                subject=f'RETIREMENT FORM NUMBER {retirement.ID} SENT BACK FOR CORRECTION',
+                subject=f'RETIREMENT FORM NUMBER CR-00{retirement.ID} SENT BACK FOR CORRECTION',
                 body=(
                     f'Dear {requester.username},\n\n'
-                    f'Your retirement form number {retirement.ID} has been sent back for correction by {self.request.user.get_username()}.\n\n'
+                    f'Your retirement form number CR-00{retirement.ID} has been sent back for correction by {self.request.user.get_username()}.\n\n'
                     f'Comment: {comments if comments else "No additional comments."}\n\n'
                     f'Please log in to submit a new retirement based on the comments provides.\n\nYou can also check for the status of other forms on the link: \n{dashboard_url}\n\n'
                     f'Regards,\nCCDO Team'
@@ -906,15 +906,15 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
             if self.request.user.role == "Finance Officer":
                 retirement.status = "Reviewed"
                 retirement.save()
-                messages.success(self.request, f"Retirement {retirement.ID} reviewed successfully.")
+                messages.success(self.request, f"Retirement CR-00{retirement.ID} reviewed successfully.")
                 dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
                 user_email = EmailMessage(
-                    subject=f'RETIREMENT FORM NUMBER {retirement.ID} REVIEWED',
+                    subject=f'RETIREMENT FORM NUMBER CR-00{retirement.ID} REVIEWED',
                     body=(
                         f'Hello {self.request.user.get_username()} ,\n\n'
                         f'You have successfully reviewed the retirement form of {retirement.createdby}'
                         f' and it has been sent to the PROGRAMS MANAGER OFFICE for approval\n\n'
-                        f'VOUCHER FORM NUMBER : {retirement.ID} \n\n'
+                        f'VOUCHER FORM NUMBER : CR-00{retirement.ID} \n\n'
                         f'Thank you for your review\n'
                         f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -929,7 +929,7 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
                     subject=f'NEW RETIREMENT FORM NEEDING YOUR ATTENTION',
                     body=(
                         f'Hello {programs.username} ,\n\n'
-                        f'A new retirement form number {retirement.ID} submitted by {retirement.createdby} has been reviewed by {self.request.user.get_username()} '
+                        f'A new retirement form number CR-00{retirement.ID} submitted by {retirement.createdby} has been reviewed by {self.request.user.get_username()} '
                         f'and is awaiting your approval.\n\n'
                         f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Your timely review and feedback will be key in this process \n\n'
@@ -945,10 +945,10 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
             
                 retirementowner = Staff.objects.filter(username=retirement.createdby).first()
                 retirementowner_email = EmailMessage(
-                    subject=f'RETIREMENT FORM NUMBER {retirement.ID} REVIEWED',
+                    subject=f'RETIREMENT FORM NUMBER CR-00{retirement.ID} REVIEWED',
                     body=(
                         f'Hello {retirementowner.username} ,\n\n'
-                        f'Your RETIREMENT form number {retirement.ID} has been reviewed at the FINANCES OFFICE and is at the PROGRAMS MANAGER\'S OFFICE awaiting approval\n\n'
+                        f'Your RETIREMENT form number CR-00{retirement.ID} has been reviewed at the FINANCES OFFICE and is at the PROGRAMS MANAGER\'S OFFICE awaiting approval\n\n'
                         f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Regards, \n'
                         f'CCDO Team'
@@ -963,15 +963,15 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
             elif self.request.user.role == "Programs Manager":
                 retirement.status = "Approved"
                 retirement.save()
-                messages.success(self.request, f"Retirement {retirement.ID} approved successfully.")
+                messages.success(self.request, f"Retirement CR-00{retirement.ID} approved successfully.")
                 dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
                 user_email = EmailMessage(
-                    subject=f'RETIREMENT FORM NUMBER {retirement.ID} APPROVED',
+                    subject=f'RETIREMENT FORM NUMBER CR-00{retirement.ID} APPROVED',
                     body=(
                         f'Hello {self.request.user.get_username()} ,\n\n'
                         f'You have successfully approved the retirement form of {retirement.createdby}'
                         f' and it has been sent to the EXECUTIVE DIRECTOR\'S OFFICE for authorisation\n\n'
-                        f'RETIREMENT FORM NUMBER : {retirement.ID} \n\n'
+                        f'RETIREMENT FORM NUMBER : CR-00{retirement.ID} \n\n'
                         f'Thank you for your approval\n'
                         f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -986,7 +986,7 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
                     subject=f'NEW RETIREMENT FORM NEEDING YOUR ATTENTION',
                     body=(
                         f'Hello {ed.username} ,\n\n'
-                        f'A new retirement form number {retirement.ID} submitted by {retirement.createdby} has been approved by {self.request.user.get_username()} '
+                        f'A new retirement form number CR-00{retirement.ID} submitted by {retirement.createdby} has been approved by {self.request.user.get_username()} '
                         f'and is awaiting your authorisation.\n\n'
                         f'Please review it by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Your timely review and feedback will be key in this process \n\n'
@@ -1002,10 +1002,10 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
             
                 retirementowner = Staff.objects.filter(username=retirement.createdby).first()
                 retirementowner_email = EmailMessage(
-                    subject=f'RETIREMENT FORM NUMBER {retirement.ID} APPROVED',
+                    subject=f'RETIREMENT FORM NUMBER CR-00{retirement.ID} APPROVED',
                     body=(
                         f'Hello {retirementowner.username} ,\n\n'
-                        f'Your retirement form number {retirement.ID} has been approved at the PROGRAMS MANAGER OFFICE\'S OFFICE and is at the EXECUTIVE DIRECTOR\'S OFFICE awaiting authorisation\n\n'
+                        f'Your retirement form number CR-00{retirement.ID} has been approved at the PROGRAMS MANAGER OFFICE\'S OFFICE and is at the EXECUTIVE DIRECTOR\'S OFFICE awaiting authorisation\n\n'
                         f'You can be checking for it\'s status by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Regards, \n'
                         f'CCDO Team'
@@ -1020,15 +1020,15 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
             elif self.request.user.role == "ED":
                 retirement.status = "Authorised"
                 retirement.save()
-                messages.success(self.request, f"Retirement {retirement.ID} authorised successfully.")
+                messages.success(self.request, f"Retirement CR-00{retirement.ID} authorised successfully.")
                 dashboard_url = self.request.build_absolute_uri(reverse('dashboard')) 
                 user_email = EmailMessage(
-                    subject=f'RETIREMENT FORM NUMBER {retirement.ID} AUTHORISED',
+                    subject=f'RETIREMENT FORM NUMBER CR-00{retirement.ID} AUTHORISED',
                     body=(
                         f'Hello {self.request.user.get_username()} ,\n\n'
                         f'You have successfully authorised the retirement form of {retirement.createdby}'
                         f' and an email has been also sent to {retirement.createdby} alerting the same\n\n'
-                        f'VOUCHER FORM NUMBER : {retirement.ID} \n\n'
+                        f'VOUCHER FORM NUMBER : CR-00{retirement.ID} \n\n'
                         f'Thank you for your authorisation\n'
                         f'You can check on the dashboard if there are other forms needing your attention on the the link below: \n{dashboard_url} \n\n'
                         f'Regards, \n'
@@ -1041,10 +1041,10 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
             
                 retirementowner = Staff.objects.filter(username=retirement.createdby).first()
                 retirementowner_email = EmailMessage(
-                    subject=f'FINALLY!!! RETIREMENT FORM NUMBER {retirement.ID} AUTHORISED',
+                    subject=f'FINALLY!!! RETIREMENT FORM NUMBER CR-00{retirement.ID} AUTHORISED',
                     body=(
                         f'Hello {retirementowner.username} ,\n\n'
-                        f'Your retirement form number {retirement.ID} has been authorised at the EXECUTIVE DIRECTOR\'S OFFICE\n\n'
+                        f'Your retirement form number CR-00{retirement.ID} has been authorised at the EXECUTIVE DIRECTOR\'S OFFICE\n\n'
                         f'This means a cash tracking for this process has come to an end.\n\n'
                         f'You can be checking for the status of other forms by going on the dashboard following the link below:  \n{dashboard_url} \n\n'
                         f'Regards, \n'
