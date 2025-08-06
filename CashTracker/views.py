@@ -1072,12 +1072,12 @@ class DownloadView(LoginRequiredMixin, TemplateView):
         for voucher in vouchers:
             total_voucher = Item.objects.filter(requisitionid=voucher.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
             voucher.total = total_voucher
-            voucher.dept = Requisition.objects.filter(ID=voucher.requisitionid).first().requestingdept
+            voucher.dept = Requisition.objects.filter(ID=voucher.requisitionid_id).first().requestingdept
             
         for retirement in retirements:
-            total_retirement = Item.objects.filter(requisitionid=retirement.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+            total_retirement = Item.objects.filter(requisitionid=retirement.requisitionid_id).aggregate(total=Sum('totalprice'))['total'] or 0
             retirement.total = total_retirement
-            retirement.dept = Requisition.objects.filter(ID=retirement.requisitionid).first().requestingdept
+            retirement.dept = Requisition.objects.filter(ID=retirement.requisitionid_id).first().requestingdept
  
             
         
@@ -1114,9 +1114,9 @@ class RequisitionDownloadView(LoginRequiredMixin, View):
 class VoucherDownloadView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         voucher = Voucher.objects.get(pk=pk)
-        requisition = Requisition.objects.get(pk=voucher.requisitionid)
-        items = Item.objects.filter(requisitionid=voucher.requisitionid)
-        total_amount = items.filter(requisitionid=voucher.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+        requisition = Requisition.objects.get(pk=voucher.requisitionid_id)
+        items = Item.objects.filter(requisitionid=voucher.requisitionid_id)
+        total_amount = items.filter(requisitionid=voucher.requisitionid_id).aggregate(total=Sum('totalprice'))['total'] or 0
         finance = Staff.objects.filter(role='Finance Officer').first()
         programs = Staff.objects.filter(role='Programs Manager').first()
         ed = Staff.objects.filter(role='ED').first()
@@ -1138,8 +1138,8 @@ class VoucherDownloadView(LoginRequiredMixin, View):
 class RetirementDownloadView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         retirement = Retirement.objects.get(pk=pk)
-        items = Item.objects.filter(requisitionid=retirement.requisitionid)
-        total_amount = items.filter(requisitionid=retirement.requisitionid).aggregate(total=Sum('totalprice'))['total'] or 0
+        items = Item.objects.filter(requisitionid=retirement.requisitionid_id)
+        total_amount = items.filter(requisitionid=retirement.requisitionid_id).aggregate(total=Sum('totalprice'))['total'] or 0
         finance = Staff.objects.filter(role='Finance Officer').first()
         programs = Staff.objects.filter(role='Programs Manager').first()
         ed = Staff.objects.filter(role='ED').first()

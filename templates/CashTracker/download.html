@@ -45,11 +45,11 @@
                 </div>
             </div>
 
-            <div class="mx-3 mt-3 mb-0 py-0">
+            <!-- <div class="mx-3 mt-3 mb-0 py-0">
                 <p class="text-secondary">Showing 4 of 4 completed forms Next & Previous buttons at the end</p>
-            </div>
+            </div> -->
 
-            <div class="d-flex mx-3 bg-white rounded w-100 my-0 py-0">
+            <div class="d-flex mx-3 mt-3 bg-white rounded w-100 my-0 py-0">
                 <table class="table table-striped table-bordered table-hover m-0 p-0" style="width: 97%;">
                     <thead>
                         <tr>
@@ -60,17 +60,17 @@
                           
                             <th>Date Submitted</th>
                             
-                            <th>Actions</th>
+                            <th>Download</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {% for req in requisitions %}
                         <tr class="my-0">
-                            <td>{{ req.ID }}</td>
+                            <td>REQ-00{{ req.ID }}</td>
                             <td>Requisition</td>
                             <td>{{req.requestingdept}}</td>
-                            <td>{{ req.total }}</td>
+                            <td>MK {{ req.total }}</td>
                             
                             <td>{{ req.date }}</td>
                             
@@ -80,10 +80,10 @@
 
                         {% for voucher in vouchers %}
                         <tr class="my-0">
-                            <td>{{ voucher.ID }}</td>
+                            <td>PV-00{{ voucher.ID }}</td>
                             <td>Voucher</td>
                             <td>{{ voucher.dept }}</td>
-                            <td>{{ voucher.total }}</td>
+                            <td>MK {{ voucher.total }}</td>
                             
                             <td>{{ voucher.date }}</td>
                             
@@ -94,10 +94,10 @@
 
                         {% for retirement in retirements %}
                         <tr class="my-0">
-                            <td>{{ retirement.ID }}</td>
+                            <td>CR-00{{ retirement.ID }}</td>
                             <td>Retirement</td>
                             <td>{{ retirement.dept }}</td>
-                            <td>{{ retirement.total }}</td>
+                            <td>MK {{ retirement.total }}</td>
                             
                             <td>{{ retirement.date }}</td>
                             

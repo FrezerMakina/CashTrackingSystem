@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="m-3 w-100 border-start border-4 border-primary rounded shadow">
+    <div class="m-3 w-100 border-start h-100 border-4 border-primary rounded shadow">
         <div class="d-flex justify-content-between">
             <div class="m-3">
                 <p class="m-0 fw-bold text-primary">CCDO CASH PAYMENT VOUCHER</p>
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <form class="bg-white border-primary" method="POST">
+        <form class="bg-white border-primary h-75" method="POST">
             {% csrf_token %}
 
             <!-- <div class="mx-3">

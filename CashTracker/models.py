@@ -56,7 +56,7 @@ class Requisition(models.Model):
     createdby = models.CharField(max_length=50, null=False)
     
     def __str__(self):
-        return str(self.ID)
+        return f'REQ-{self.ID:03d}'
     
 class Item(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -85,7 +85,7 @@ class Voucher(models.Model):
     
     
     def __str__(self):
-        return f'Voucher ID {self.ID}'
+        return f'PV-{self.ID:03d}'
     
 class Retirement(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -102,4 +102,4 @@ class Retirement(models.Model):
     cashpay = models.FileField(upload_to='CashTracker/retirements/', null=True, blank=True)
     
     def __str__(self):
-        return f'Retirement ID {self.ID} for {self.voucherid}'
+        return f'CR-{self.ID:03d}'
