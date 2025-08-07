@@ -63,9 +63,9 @@ class DashboardView(LoginRequiredMixin, View):
         ret_approved = Retirement.objects.filter(status="Approved").count()
         approved_count = req_approved + voucher_approved + ret_approved
         
-        req_authorised = Requisition.objects.filter(status="Authorised").count()
-        voucher_authorised = Voucher.objects.filter(status="Authorised").count()
-        ret_authorised = Retirement.objects.filter(status="Authorised").count()
+        req_authorised = Requisition.objects.filter(status__in=['Authorised', 'Done']).count()
+        voucher_authorised = Voucher.objects.filter(status__in=['Authorised', 'Done']).count()
+        ret_authorised = Retirement.objects.filter(status__in=['Authorised', 'Done']).count()
         authorised_count = req_authorised + voucher_authorised + ret_authorised
         
         req_back_fin = Requisition.objects.filter(status="Sent Back by Finance Officer").count()
