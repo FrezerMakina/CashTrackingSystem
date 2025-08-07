@@ -1071,9 +1071,9 @@ class DownloadView(LoginRequiredMixin, TemplateView):
     template_name = "CashTracker/download.html"
     def get(self, request, *args, **kwargs):
        
-        vouchers = Voucher.objects.filter(status='Authorised')
-        requisitions = Requisition.objects.filter(status='Authorised') 
-        retirements = Retirement.objects.filter(status='Authorised')
+        vouchers = Voucher.objects.filter(status__in=['Authorised', 'Done'])
+        requisitions = Requisition.objects.filter(status__in=['Authorised', 'Done']) 
+        retirements = Retirement.objects.filter(status__in=['Authorised', 'Done'])
         
         for requisition in requisitions:
             total_req = Item.objects.filter(requisitionid=requisition).aggregate(total=Sum('totalprice'))['total'] or 0
