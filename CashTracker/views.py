@@ -28,9 +28,9 @@ class RegisterView(CreateView):
 class DashboardView(LoginRequiredMixin, View):
     template_name = "CashTracker/dashboard.html"
     def get(self, request, *args, **kwargs):
-        req_completed = Requisition.objects.filter(status="Authorised", createdby=request.user.get_username()).count()
-        voucher_completed = Voucher.objects.filter(status="Authorised", createdby=request.user.get_username()).count()
-        ret_completed = Retirement.objects.filter(status="Authorised", createdby=request.user.get_username()).count()
+        req_completed = Requisition.objects.filter(status__in=['Authorised', 'Done'], createdby=request.user.get_username()).count()
+        voucher_completed = Voucher.objects.filter(status__in=['Authorised', 'Done'], createdby=request.user.get_username()).count()
+        ret_completed = Retirement.objects.filter(status__in=['Authorised', 'Done'], createdby=request.user.get_username()).count()
         completed_count = req_completed + voucher_completed + ret_completed
         
         user_req_back = Requisition.objects.filter(status__in=['Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED'], createdby=request.user.get_username()).count()
@@ -43,9 +43,9 @@ class DashboardView(LoginRequiredMixin, View):
         user_ret_rej = Retirement.objects.filter(status__in=['Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED'], createdby=request.user.get_username()).count()
         user_rej_count = user_req_rej + user_voucher_rej + user_ret_rej
         
-        user_req_process = Requisition.objects.filter(createdby=self.request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
-        user_voucher_process = Voucher.objects.filter(createdby=self.request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
-        user_ret_process = Retirement.objects.filter(createdby=self.request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED']).count()
+        user_req_process = Requisition.objects.filter(createdby=self.request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED', 'Done']).count()
+        user_voucher_process = Voucher.objects.filter(createdby=self.request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED', 'Done']).count()
+        user_ret_process = Retirement.objects.filter(createdby=self.request.user.get_username()).exclude(status__in=['Authorised', 'Sent Back by Finance Officer', 'Sent Back by Programs Manager', 'Sent Back by ED', 'Rejected by Finance Officer', 'Rejected by Programs Manager', 'Rejected by ED', 'Done']).count()
         user_process_count = user_req_process + user_voucher_process + user_ret_process
         
         req_submitted = Requisition.objects.filter(status="SUBMIITED").count()
