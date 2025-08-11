@@ -3,92 +3,238 @@
 {% load widget_tweaks %}
 
 {% block voucher %}
-<a href="{% url 'voucher' %}" class="icon btn btn-primary w-100 text-start m-1">
-    <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
-    <p class="d-inline"> New Payment Voucher </p>
-    </a>
+<a href="{% url 'voucher' %}" class="icon btn w-100 text-start m-1" style="background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 50%, #0369A1 100%); border: none; border-radius: 12px; padding: 0.8rem 1rem; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3); text-decoration: none; display: flex; align-items: center; font-weight: 500;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v8"/>
+        <path d="M8 12h8"/>
+    </svg>
+    <p class="d-inline m-0">New Payment Voucher</p>
+</a>
 {% endblock %}
 
 {% block content %}
-    <div class="m-3 w-100 border-start h-100 border-4 border-primary rounded shadow">
-        <div class="d-flex justify-content-between">
-            <div class="m-3">
-                <p class="m-0 fw-bold text-primary">CCDO CASH PAYMENT VOUCHER</p>
-                <P class="m-0">Chipembere Community Development organisation</P>
-                <p class="m-0">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
-                <P class="m-0">Account Number: 10033647388364</P>
+<div class="h-100" style="background: #e7f4fe; min-height: 100vh; padding: 1rem;">
+    <div class="m-3 overflow-y-auto overflow-x-hidden rounded shadow" style="background: rgba(255,255,255,0.25); backdrop-filter: blur(40px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 25px 50px rgba(14, 165, 233, 0.15); border-left: 4px solid #0EA5E9; height: 85%; width: 98%;">
+        
+        <!-- Header Section -->
+        <div class="d-flex justify-content-between" style="padding: 2rem 2rem 1rem 2rem;">
+            <div class="m-0">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.75rem;">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                        <line x1="1" y1="10" x2="23" y2="10"/>
+                        <path d="M7 15h.01"/>
+                        <path d="M11 15h2"/>
+                    </svg>
+                    <p class="m-0 fw-bold" style="color: #0EA5E9; font-size: 1.4rem; font-weight: 700;">CCDO CASH PAYMENT VOUCHER</p>
+                </div>
+                <p class="m-0" style="color: #374151; font-weight: 500; margin-bottom: 0.3rem;">Chipembere Community Development Organisation</p>
+                <p class="m-0" style="color: #64748B; font-size: 0.9rem; margin-bottom: 0.2rem;">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
+                <p class="m-0" style="color: #64748B; font-size: 0.9rem;">Account Number: 10033647388364</p>
             </div>
-
-            <div class="text-end text-primary m-4 rounded">
-                <p class="border border-primary p-1 rounded">Payment Voucher</p>
+            <div class="text-end m-0" style="display: flex; align-items: center;">
+                <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid rgba(14, 165, 233, 0.3); padding: 0.75rem 1.25rem; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="display: flex; align-items: center;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                            <line x1="1" y1="10" x2="23" y2="10"/>
+                        </svg>
+                        <span style="color: #0EA5E9; font-weight: 600; font-size: 0.95rem;">Payment Voucher</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <form class="bg-white border-primary h-75" method="POST">
+        <!-- Form Section -->
+        <form class="border-0" method="POST" style="background: transparent; padding: 0 2rem;">
             {% csrf_token %}
 
-            <!-- <div class="mx-3">
-                <p class="text-end me-3 fw-bold">Voucher No: PV-76560</p>
-            </div> -->
-            
-
-            <div class="d-flex mt-3 justify-content-between">
-                <div class="w-25 mx-3">
-                    <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block">Requisition</label>
-                    {{ voucher_form.requisitionid|add_class:"form-control"|attr:"id:requisitionid" }}
+            <!-- Voucher Details Section -->
+            <div class="d-flex mt-3 justify-content-between" style="margin-bottom: 2rem; gap: 1rem;">
+                <div class="w-25">
+                    <label for="{{ voucher_form.requisitionid.id_for_label }}" class="form-label d-block" style="color: #374151; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem;">Requisition</label>
+                    {{ voucher_form.requisitionid|add_class:"form-control"|attr:"id:requisitionid"|attr:"style:border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05);" }}
                     {{ voucher_form.requisitionid.errors }}
-
                 </div>
-
-                <div class="w-25 mx-3">
-                    <label for="dpt" class="form-label mb-0">Department</label>
-                    <input type="text" id="dpt" class="form-control" readonly>  
- 
+                <div class="w-25">
+                    <label for="dpt" class="form-label" style="color: #374151; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem;">Department</label>
+                    <input type="text" id="dpt" class="form-control" readonly style="border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(248, 250, 252, 0.8); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05);">
                 </div>
-
-                <div class="w-25 mx-3">
-
-                    <label for="amount" class="form-label m-0">Amount (MWK)</label>
-                    <input type="number" id="amount" step="0.001" class="form-control m-0" readonly> 
+                <div class="w-25">
+                    <label for="amount" class="form-label" style="color: #374151; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem;">Amount (MWK)</label>
+                    <input type="number" id="amount" step="0.001" class="form-control" readonly style="border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(248, 250, 252, 0.8); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05);">
                 </div>
             </div>
 
-           
-            
-            <!-- <label for="purpose" class="form-label ms-3 mb-0">Purpose</label>
-            <textarea type="text" id="purpose" class="form-control mx-3" rows="5"></textarea> -->
-
-            <label for="{{ form.purpose.id_for_label }}" class="form-label d-block mx-3">Purpose</label>
-            {{ voucher_form.purpose|add_class:"form-control mx-3" }}
-            {{ voucher_form.purpose.errors }}
-          
-
-            <div class="m-3">
-                <button type="submit" class="d-flex btn btn-primary ms-auto me-3 mb-3">Submit Voucher</button>
+            <!-- Purpose Section -->
+            <div style="margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10,9 9,9 8,9"/>
+                    </svg>
+                    <label for="{{ voucher_form.purpose.id_for_label }}" class="form-label d-block m-0" style="color: #0F172A; font-size: 1.1rem; font-weight: 600;">Purpose</label>
+                </div>
+                <div style="background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1); padding: 1rem;">
+                    {{ voucher_form.purpose|add_class:"form-control"|attr:"rows:0.5"|attr:"style:border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05); resize: vertical; min-height: 120px;" }}
+                    {{ voucher_form.purpose.errors }}
+                </div>
             </div>
-            
+
+            <!-- Summary Card -->
+            <div style="margin-bottom: 2rem;">
+                <div style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(14, 165, 233, 0.3); padding: 1.5rem; box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.75rem;">
+                                <path d="M9 11H5a2 2 0 0 0-2 2v3c0 1.1.9 2 2 2h4m6-6h4a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-4m-6 0V9a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2z"/>
+                            </svg>
+                            <div>
+                                <p style="margin: 0; color: #0EA5E9; font-weight: 600; font-size: 0.9rem;">Voucher Amount</p>
+                                <p style="margin: 0; color: #0EA5E9; font-weight: 700; font-size: 1.5rem;" id="display-amount">MWK 0.00</p>
+                            </div>
+                        </div>
+                        <div style="background: rgba(14, 165, 233, 0.1); padding: 1rem; border-radius: 12px;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                <line x1="1" y1="10" x2="23" y2="10"/>
+                                <path d="M7 15h.01"/>
+                                <path d="M11 15h2"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div style="margin: 0 0 2rem 0; display: flex; justify-content: flex-end;">
+                <button type="submit" class="btn" style="background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 50%, #0369A1 100%); border: none; border-radius: 12px; padding: 0.9rem 2rem; color: white; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3); display: flex; align-items: center; font-size: 1rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                        <polyline points="17,21 17,13 7,13 7,21"/>
+                        <polyline points="7,3 7,8 15,8"/>
+                    </svg>
+                    Submit Voucher
+                </button>
+            </div>
         </form>
     </div>
+</div>
 
+<style>
+    /* Form input focus states */
+    .form-control:focus {
+        border-color: rgba(14, 165, 233, 0.6) !important;
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1), 0 4px 12px rgba(14, 165, 233, 0.1) !important;
+        background: rgba(255,255,255,0.95) !important;
+    }
+    
+    /* Textarea specific styling */
+    textarea.form-control {
+        font-family: inherit;
+        line-height: 1.6;
+    }
+    
+    textarea.form-control:focus {
+        border-color: rgba(14, 165, 233, 0.6) !important;
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1), 0 4px 12px rgba(14, 165, 233, 0.1) !important;
+        background: rgba(255,255,255,0.95) !important;
+    }
+    
+    /* Button hover effects */
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4) !important;
+        background: linear-gradient(135deg, #0284C7 0%, #0369A1 50%, #075985 100%) !important;
+    }
+    
+    /* Summary card hover effect */
+    div[style*="background: rgba(14, 165, 233, 0.1)"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(14, 165, 233, 0.2) !important;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 1200px) {
+        .d-flex.justify-content-between {
+            flex-direction: column;
+        }
+        
+        .w-25 {
+            width: 100% !important;
+            margin-bottom: 1rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .m-3 {
+            margin: 0.5rem !important;
+        }
+        
+        div[style*="padding: 2rem"] {
+            padding: 1rem !important;
+        }
+        
+        .form-control {
+            padding: 0.6rem !important;
+            font-size: 0.9rem !important;
+        }
+        
+        textarea.form-control {
+            min-height: 100px !important;
+        }
+        
+        div[style*="justify-content: space-between"] {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        div[style*="display: flex; align-items: center; justify-content: space-between"] {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 1rem;
+        }
+        
+        .text-end {
+            text-align: left !important;
+        }
+    }
+</style>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function(){
-            const reqselect = document.getElementById('requisitionid');
-            reqselect.addEventListener('change', function(){
-                const reqid = this.value;
-                if (reqid){
-                    fetch(`/voucher/${reqid}/`)
-                        .then(response => response.json())
-                        .then(data =>{
-                            document.getElementById('dpt').value = data.department;
-                            document.getElementById('amount').value = data.amount;
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const reqselect = document.getElementById('requisitionid');
+        const displayAmount = document.getElementById('display-amount');
+        
+        reqselect.addEventListener('change', function(){
+            const reqid = this.value;
+            if (reqid){
+                fetch(`/voucher/${reqid}/`)
+                    .then(response => response.json())
+                    .then(data =>{
+                        document.getElementById('dpt').value = data.department;
+                        document.getElementById('amount').value = data.amount;
+                        
+                        // Update display amount with formatting
+                        const formattedAmount = parseFloat(data.amount || 0).toLocaleString(undefined, {
+                            minimumFractionDigits: 2, 
+                            maximumFractionDigits: 2
                         });
-                }
-                else {
-                    document.getElementById('dpt').value = '';
-                    document.getElementById('amount').value = '';
-                }
-            });
-        })
-    </script>
+                        displayAmount.textContent = `MWK ${formattedAmount}`;
+                    });
+            }
+            else {
+                document.getElementById('dpt').value = '';
+                document.getElementById('amount').value = '';
+                displayAmount.textContent = 'MWK 0.00';
+            }
+        });
+    });
+</script>
 {% endblock %}

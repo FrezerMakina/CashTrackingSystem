@@ -1,91 +1,233 @@
-{% load widget_tweaks %}
-{% load static %}
-<!DOCTYPE html>
+{% load widget_tweaks %}{% load static %}<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cash Tracker</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0&icon_names=verified_user" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="{% static 'CashTracker/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'CashTracker/styles.css' %}">
 </head>
-<body>
-    <img src="./../../static/CashTracker/icons/ccdo logo.png" class="mx-auto my-0 d-block logo" alt="CCDO logo">
-    <h3 class="position-static text-primary text-center my-0">CCDO Cash Tracking System</h3>
-    <h5 class="position-static text-dark text-center my-0">Chipembere Community Development Organisation</h5>
+<body style="font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 25%, #7DD3FC 50%, #38BDF8 75%, #0EA5E9 100%); margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; overflow-y: hidden;">
+    <div class="container-fluid" style="max-width: 1400px; padding: 1rem; margin: 0 auto;">
+        <div class="row g-0" style="min-height: 100vh; align-items: center; margin: 0; display: flex;">
+            <div class="col-12 col-lg-6 order-2 order-lg-1" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; color: white; min-height: 100vh;">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <img src="./../../static/CashTracker/icons/ccdo logo.png" class="mx-auto my-0 d-block logo" alt="CCDO logo" style="max-width: 100px; height: auto; margin-bottom: 1rem; filter: brightness(-1) invert(1);">
+                    <h3 class="position-static text-center my-0" style="color: black; font-weight: 700; font-size: 1.8rem; margin-bottom: 0.5rem; letter-spacing: -0.5px; line-height: 1.2;">CCDO Financial Documents Tracking System</h3>
+                    <h5 class="position-static text-center my-0" style="color: black; font-weight: 400; font-size: 1rem; margin-bottom: 1.5rem;">Chipembere Community Development Organisation</h5>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 class="text-dark" style="color: rgb(26, 25, 25); font-weight:600; font-size: 2.2rem; margin-bottom: 0.8rem; line-height: 1.2;">Streamline Your Financial Operations</h3>
+                    <h5 class="text-dark" style="color: rgb(26, 25, 25); font-weight: 400; font-size: 1.1rem; line-height: 1.5; margin-bottom: 1.5rem;">Efficiently manage requisitions, payment vouchers, and cash retirements with comprehensive tracking.</h5>
+                </div>
 
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-6">
-                <h3 class="grad-text">Streamline Your Financial Operations</h3>
-                <h5 class="grad-text">Efficiently manage requisitions, payment vouchers, and cash retirements with comprehensive tracking.</h5>
-                <div class="row shadow rounded mt-3 loginrow">
-                    <div class="col-1">
-                        <div class="icon">
-                            <img src="./../../static/CashTracker/icons/verified_user_44dp_0000F5_FILL0_wght400_GRAD0_opsz48.svg" alt="secure">
+                <div class="row g-0 shadow rounded mb-2 loginrow" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.8); border-radius: 12px; padding: 0.8rem; margin: 0; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);">
+                    <div class="col-auto" style="display: flex; align-items: center; margin-right: 0.8rem;">
+                        <div class="icon" style="background: rgba(14, 165, 233, 0.1); border-radius: 8px; padding: 8px; display: flex; align-items: center; justify-content: center;">
+                            <img src="{% static 'CashTracker/icons/verified_user_44dp_0000F5_FILL0_wght400_GRAD0_opsz48.svg' %}" alt="secure" style="width: 16px; height: 16px; filter: hue-rotate(200deg) saturate(0.8);">
                         </div>
                     </div>
-                    <div class="col-11">
-                        <p class="mx-0 my-0 fw-bold">Secure and Compliant</p>
-                        <p class="text-secondary mx-0 my-0">Bank-level security with audit trails</p>
+                    <div class="col" style="display: flex; flex-direction: column; justify-content: center;">
+                        <p class="m-0 fw-bold" style="color: #0F172A; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.1rem;">Secure and Compliant</p>
+                        <p class="text-secondary m-0" style="color: #64748B; font-size: 0.8rem; margin: 0;">Bank-level security with audit trails</p>
                     </div>
                 </div>
 
-                <div class="row shadow rounded mt-3 loginrow">
-                    <div class="col-1">
-                        <div class="icon ms-0">
-                            <img src="./../../static/CashTracker/icons/monitoring_44dp_0000F5_FILL1_wght400_GRAD0_opsz48.svg" alt="tracking">
+                <div class="row g-0 shadow rounded mb-2 loginrow" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.8); border-radius: 12px; padding: 0.8rem; margin: 0; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);">
+                    <div class="col-auto" style="display: flex; align-items: center; margin-right: 0.8rem;">
+                        <div class="icon" style="background: rgba(14, 165, 233, 0.1); border-radius: 8px; padding: 8px; display: flex; align-items: center; justify-content: center;">
+                            <img src="{% static 'CashTracker/icons/monitoring_44dp_0000F5_FILL1_wght400_GRAD0_opsz48.svg' %}" alt="tracking" style="width: 16px; height: 16px; filter: hue-rotate(200deg) saturate(0.8);">
                         </div>
                     </div>
-                    <div class="col-11">
-                        <p class="mx-0 my-0 fw-bold">Real-Time Tracking</p>
-                        <p class="text-secondary mx-0 my-0">Monitor Transactions in real-time</p>
+                    <div class="col" style="display: flex; flex-direction: column; justify-content: center;">
+                        <p class="m-0 fw-bold" style="color: #0F172A; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.1rem;">Real-Time Tracking</p>
+                        <p class="text-secondary m-0" style="color: #64748B; font-size: 0.8rem; margin: 0;">Monitor Transactions in real-time</p>
                     </div>
                 </div>
 
-                <div class="row shadow rounded mt-3 loginrow">
-                    <div class="col-1">
-                        <div class="icon">
-                            <img src="./../../static/CashTracker/icons/verified_44dp_0000F5_FILL1_wght400_GRAD0_opsz48.svg" alt="secure">
+                <div class="row g-0 shadow rounded mb-2 loginrow" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.8); border-radius: 12px; padding: 0.8rem; margin: 0; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);">
+                    <div class="col-auto" style="display: flex; align-items: center; margin-right: 0.8rem;">
+                        <div class="icon" style="background: rgba(14, 165, 233, 0.1); border-radius: 8px; padding: 8px; display: flex; align-items: center; justify-content: center;">
+                            <img src="{% static 'CashTracker/icons/verified_44dp_0000F5_FILL1_wght400_GRAD0_opsz48.svg' %}" alt="secure" style="width: 16px; height: 16px; filter: hue-rotate(200deg) saturate(0.8);">
                         </div>
                     </div>
-                    <div class="col-11">
-                        <p class="mx-0 my-0 fw-bold">Multi-level Approval</p>
-                        <p class="text-secondary mx-0 my-0">Strucured approval workflows</p>
+                    <div class="col" style="display: flex; flex-direction: column; justify-content: center;">
+                        <p class="m-0 fw-bold" style="color: #0F172A; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.1rem;">Multi-level Approval</p>
+                        <p class="text-secondary m-0" style="color: #64748B; font-size: 0.8rem; margin: 0;">Structured approval workflows</p>
                     </div>
                 </div>
-
             </div>
-            <div class="col-6 text-center d-block justify-content-end">
 
-                <form class="shadow p-3 mx-auto w-75 h-auto mt-0 rounded" method="POST">
-                    <h4 class="text-primary">Sign Up</h3>
-                    <h6 class="text-secondary">Cash Tracking Simplified</h5>
+            <div class="col-12 col-lg-6 order-1 order-lg-2 d-flex justify-content-center align-items-center" style="padding: 1.5rem; min-height: 100vh;">
+                <form class="shadow p-3 mx-auto rounded" method="POST" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-radius: 20px; box-shadow: 0 25px 50px rgba(59, 130, 246, 0.15), 0 0 0 1px rgba(255,255,255,0.1); max-width: 400px; width: 100%; padding: 2rem; border: 1px solid rgba(255,255,255,0.2); max-height: 90vh; overflow-y: auto;">
+                    <div class="text-center" style="margin-bottom: 1.5rem;">
+                        <h4 style="color: #1E293B; font-weight: 700; font-size: 1.8rem; margin-bottom: 0.3rem; letter-spacing: -0.5px;">Sign Up</h4>
+                        <h6 style="color: #64748B; font-weight: 400; font-size: 0.95rem; margin: 0;">Financial Documents Tracking Simplified</h6>
+                    </div>
+                    
                     {% csrf_token %}
-                    {{ form.username|add_class:"form-control mb-2"|attr:"placeholder:Enter your username" }}
-                    {{ form.username.errors }} 
-
-                    {{ form.email|add_class:"form-control mb-2"|attr:"placeholder:Enter your Email" }}
-                    {{ form.email.errors }}
-
-                    {{ form.role|add_class:"form-control mb-2"|attr:"placeholder:Select role" }}
-                    {{ form.role.errors }}
-
-                    {{ form.password1|add_class:"form-control mb-2"|attr:"placeholder:Enter your password" }}
-                    {{ form.password1.errors }}
-
-                    {{ form.password2|add_class:"form-control mb-2"|attr:"placeholder:Confirm your password" }}
-                    {{ form.password2.errors }}
-                    <!-- {{ form }} -->
-                    <button type="submit" class="btn btn-primary w-100 mt-0">Sign Up</button>
-                    <p class="fs-8 mt-3 mb-0">Already have an account? <a href="{% url 'login' %}" class="text-decoration-none">Sign In</a></p>
+                    
+                    <div class="mb-3">
+                        {{ form.username|add_class:"form-control"|attr:"placeholder:Enter your username"|attr:"style:border: 2px solid #E2E8F0; border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: #F8FAFC; font-weight: 400; outline: none; box-shadow: none;" }}
+                        {{ form.username.errors }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.email|add_class:"form-control"|attr:"placeholder:Enter your Email"|attr:"style:border: 2px solid #E2E8F0; border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: #F8FAFC; font-weight: 400; outline: none; box-shadow: none;" }}
+                        {{ form.email.errors }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.role|add_class:"form-control"|attr:"placeholder:Select role"|attr:"style:border: 2px solid #E2E8F0; border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: #F8FAFC; font-weight: 400; outline: none; box-shadow: none;" }}
+                        {{ form.role.errors }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.password1|add_class:"form-control"|attr:"placeholder:Enter your password"|attr:"style:border: 2px solid #E2E8F0; border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: #F8FAFC; font-weight: 400; outline: none; box-shadow: none;" }}
+                        {{ form.password1.errors }}
+                    </div>
+                    
+                    <div class="mb-4">
+                        {{ form.password2|add_class:"form-control"|attr:"placeholder:Confirm your password"|attr:"style:border: 2px solid #E2E8F0; border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: #F8FAFC; font-weight: 400; outline: none; box-shadow: none;" }}
+                        {{ form.password2.errors }}
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn" style="background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #1D4ED8 100%); border: none; border-radius: 12px; padding: 0.9rem 2rem; font-size: 1rem; font-weight: 600; color: white; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4); cursor: pointer; letter-spacing: 0.3px;">Sign Up</button>
+                    </div>
+                    
+                    <p class="text-center mt-3 mb-0" style="font-size: 0.85rem; color: #64748B;">Already have an account? <a href="{% url 'login' %}" style="color: #3B82F6; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">Sign In</a></p>
                 </form>
             </div>
         </div>
     </div>
 
-    
+    <style>
+        /* Modern form input focus states */
+        .form-control:focus {
+            border-color: #6ca2fa !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important;
+            background: white !important;
+        }
+        
+        /* Modern button hover effect */
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5) !important;
+            background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 50%, #1E40AF 100%) !important;
+        }
+        
+        /* Modern feature card hover effect */
+        .loginrow:hover {
+            background: rgba(255,255,255,0.18) !important;
+            transform: translateX(5px);
+            border-color: rgba(255,255,255,0.3) !important;
+        }
+        
+        /* Modern link hover effect */
+        a:hover {
+            color: #2563EB !important;
+        }
+        
+        /* Scrollbar styling for form */
+        form::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        form::-webkit-scrollbar-track {
+            background: #F1F5F9;
+            border-radius: 10px;
+        }
+        
+        form::-webkit-scrollbar-thumb {
+            background: #3B82F6;
+            border-radius: 10px;
+        }
+        
+        form::-webkit-scrollbar-thumb:hover {
+            background: #2563EB;
+        }
+        
+        /* Enhanced glass effect */
+        form {
+            position: relative;
+        }
+        
+        form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            border-radius: 20px;
+            pointer-events: none;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 991.98px) {
+            body {
+                background: linear-gradient(180deg, #3B82F6 0%, #1D4ED8 50%, #1E40AF 100%);
+            }
+            .container-fluid {
+                padding: 0.5rem;
+                max-width: 100%;
+            }
+            .row {
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .col-12 {
+                width: 100% !important;
+                min-height: auto !important;
+                padding: 1rem !important;
+            }
+            .col-12:first-child {
+                min-height: 40vh;
+            }
+            .col-12:last-child {
+                min-height: 60vh;
+            }
+            form {
+                max-width: 100% !important;
+                padding: 1.5rem !important;
+                max-height: none !important;
+                margin: 1rem 0;
+            }
+            h3 {
+                font-size: 1.5rem !important;
+            }
+            h5 {
+                font-size: 0.9rem !important;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .col-12 {
+                min-height: auto !important;
+            }
+            form {
+                max-height: 85vh !important;
+                padding: 1.5rem !important;
+            }
+            .container-fluid {
+                padding: 0.5rem;
+            }
+        }
+
+        /* Additional alignment improvements */
+        .loginrow .col-auto {
+            flex-shrink: 0;
+        }
+
+        .loginrow .col {
+            min-width: 0;
+        }
+    </style>
 
     <script src="{% static 'CashTracker/bootstrap.bundle.min.js' %}"></script>
 </body>

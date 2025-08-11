@@ -190,7 +190,7 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
                 ),
                 to=[self.request.user.email],
             )
-            user_email.send(fail_silently=False)
+            user_email.send(fail_silently=True)
             
             finance = Staff.objects.filter(role='Finance Officer').first()
             finance_email = EmailMessage(
@@ -206,7 +206,7 @@ class RequisitionView(LoginRequiredMixin, TemplateView):
                 ),
                 to=[finance.email],
             )
-            finance_email.send(fail_silently=False)
+            finance_email.send(fail_silently=True)
                 
             return redirect(self.success_url)
         
@@ -260,7 +260,7 @@ class VoucherView(LoginRequiredMixin, View):
                 ),
                 to=[self.request.user.email],
             )
-            user_email.send(fail_silently=False)
+            user_email.send(fail_silently=True)
             
             finance = Staff.objects.filter(role='Finance Officer').first()
             finance_email = EmailMessage(
@@ -276,7 +276,7 @@ class VoucherView(LoginRequiredMixin, View):
                 ),
                 to=[finance.email],
             )
-            finance_email.send(fail_silently=False)
+            finance_email.send(fail_silently=True)
                 
             return redirect('dashboard')
         
@@ -348,7 +348,7 @@ class RetirementView(LoginRequiredMixin, View):
                 ),
                 to=[self.request.user.email],
             )
-            user_email.send(fail_silently=False)
+            user_email.send(fail_silently=True)
             
             finance = Staff.objects.filter(role='Finance Officer').first()
             finance_email = EmailMessage(
@@ -364,7 +364,7 @@ class RetirementView(LoginRequiredMixin, View):
                 ),
                 to=[finance.email],
             )
-            finance_email.send(fail_silently=False)
+            finance_email.send(fail_silently=True)
                 
             return redirect('dashboard')
         
@@ -470,7 +470,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     f'Regards,\nCCDO Team'
                 ),
                 to=[requester.email],
-            ).send(fail_silently=False)
+            ).send(fail_silently=True)
 
             return super().form_valid(form)
         
@@ -491,7 +491,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     f'Regards,\nCCDO Team'
                 ),
                 to=[requester.email],
-            ).send(fail_silently=False)
+            ).send(fail_silently=True)
             return super().form_valid(form)
         
         elif action == "accept":
@@ -514,7 +514,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[self.request.user.email],
                 )
-                user_email.send(fail_silently=False)
+                user_email.send(fail_silently=True)
             
                 programs = Staff.objects.filter(role='Programs Manager').first()
                 programs_email = EmailMessage(
@@ -530,7 +530,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[programs.email],
                 )
-                programs_email.send(fail_silently=False)
+                programs_email.send(fail_silently=True)
             
             
             
@@ -547,7 +547,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[reqowner.email],
                 )
-                reqowner_email.send(fail_silently=False)
+                reqowner_email.send(fail_silently=True)
             
                 return super().form_valid(form)
         
@@ -571,7 +571,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[self.request.user.email],
                 )
-                user_email.send(fail_silently=False)
+                user_email.send(fail_silently=True)
             
                 ed = Staff.objects.filter(role='ED').first()
                 ed_email = EmailMessage(
@@ -587,7 +587,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[ed.email],
                 )
-                ed_email.send(fail_silently=False)
+                ed_email.send(fail_silently=True)
             
             
             
@@ -604,7 +604,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[reqowner.email],
                 )
-                reqowner_email.send(fail_silently=False)
+                reqowner_email.send(fail_silently=True)
             
                 return super().form_valid(form)
         
@@ -628,7 +628,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[self.request.user.email],
                 )
-                user_email.send(fail_silently=False)
+                user_email.send(fail_silently=True)
             
             
                 reqowner = Staff.objects.filter(username=requisition.createdby).first()
@@ -644,7 +644,7 @@ class RequisitionReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[reqowner.email],
                 )
-                reqowner_email.send(fail_silently=False)
+                reqowner_email.send(fail_silently=True)
             
                 return super().form_valid(form)
         
@@ -679,7 +679,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     f'Regards,\nCCDO Team'
                 ),
                 to=[requester.email],
-            ).send(fail_silently=False)
+            ).send(fail_silently=True)
 
             return super().form_valid(form)
         
@@ -700,7 +700,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     f'Regards,\nCCDO Team'
                 ),
                 to=[requester.email],
-            ).send(fail_silently=False)
+            ).send(fail_silently=True)
             return super().form_valid(form)
         
         elif action == "accept":
@@ -723,7 +723,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[self.request.user.email],
                 )
-                user_email.send(fail_silently=False)
+                user_email.send(fail_silently=True)
             
                 programs = Staff.objects.filter(role='Programs Manager').first()
                 programs_email = EmailMessage(
@@ -739,7 +739,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[programs.email],
                 )
-                programs_email.send(fail_silently=False)
+                programs_email.send(fail_silently=True)
             
             
             
@@ -756,7 +756,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[voucherowner.email],
                 )
-                voucherowner_email.send(fail_silently=False)
+                voucherowner_email.send(fail_silently=True)
             
                 return super().form_valid(form)
         
@@ -780,7 +780,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[self.request.user.email],
                 )
-                user_email.send(fail_silently=False)
+                user_email.send(fail_silently=True)
             
                 ed = Staff.objects.filter(role='ED').first()
                 ed_email = EmailMessage(
@@ -796,7 +796,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[ed.email],
                 )
-                ed_email.send(fail_silently=False)
+                ed_email.send(fail_silently=True)
             
             
             
@@ -813,7 +813,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[voucherowner.email],
                 )
-                voucherowner_email.send(fail_silently=False)
+                voucherowner_email.send(fail_silently=True)
             
                 return super().form_valid(form)
         
@@ -837,7 +837,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[self.request.user.email],
                 )
-                user_email.send(fail_silently=False)
+                user_email.send(fail_silently=True)
             
             
                 voucherowner = Staff.objects.filter(username=voucher.createdby).first()
@@ -853,7 +853,7 @@ class VoucherReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[voucherowner.email],
                 )
-                voucherowner_email.send(fail_silently=False)
+                voucherowner_email.send(fail_silently=True)
             
                 return super().form_valid(form)
         
@@ -909,7 +909,7 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
                     f'Regards,\nCCDO Team'
                 ),
                 to=[requester.email],
-            ).send(fail_silently=False)
+            ).send(fail_silently=True)
             return super().form_valid(form)
         
         elif action == "accept":
@@ -932,7 +932,7 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[self.request.user.email],
                 )
-                user_email.send(fail_silently=False)
+                user_email.send(fail_silently=True)
             
                 programs = Staff.objects.filter(role='Programs Manager').first()
                 programs_email = EmailMessage(
@@ -948,7 +948,7 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[programs.email],
                 )
-                programs_email.send(fail_silently=False)
+                programs_email.send(fail_silently=True)
             
             
             
@@ -965,7 +965,7 @@ class RetirementReviewView(LoginRequiredMixin, UpdateView):
                     ),
                     to=[retirementowner.email],
                 )
-                retirementowner_email.send(fail_silently=False)
+                retirementowner_email.send(fail_silently=True)
             
                 return super().form_valid(form)
         
@@ -1118,7 +1118,7 @@ class RequisitionDownloadView(LoginRequiredMixin, View):
         })
         pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="requisition_{requisition.ID}.pdf"'
+        response['Content-Disposition'] = f'inline; filename="requisition_{requisition.ID}.pdf"'
         return response
     
 class VoucherDownloadView(LoginRequiredMixin, View):
@@ -1141,7 +1141,7 @@ class VoucherDownloadView(LoginRequiredMixin, View):
         })
         pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="voucher_{voucher.ID}.pdf"'
+        response['Content-Disposition'] = f'inline; filename="voucher_{voucher.ID}.pdf"'
         return response
     
     
@@ -1163,5 +1163,5 @@ class RetirementDownloadView(LoginRequiredMixin, View):
         })
         pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
         response = HttpResponse(pdf_file, content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="retirement_{retirement.ID}.pdf"'
+        response['Content-Disposition'] = f'inline; filename="retirement_{retirement.ID}.pdf"'
         return response
