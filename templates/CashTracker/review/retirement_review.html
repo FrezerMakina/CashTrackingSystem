@@ -1,253 +1,378 @@
-{% load static %}
-{% load widget_tweaks %}
-
+{% load static %}{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cash Tracker</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0&icon_names=verified_user" />
-    <link rel="stylesheet" href="{% static 'CashTracker/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'CashTracker/styles.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cash Tracker</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0&icon_names=verified_user" />
+  <link rel="stylesheet" href="{% static 'CashTracker/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'CashTracker/styles.css' %}">
 </head>
 <body>
-     <div class="m-3 overflow-y-auto overflow-x-hidden  border-start border-4 border-primary rounded shadow" style="height: 85%; width: 98%;">
-        <div class="d-flex justify-content-between">
-            <div class="m-3">
-                <p class="m-0 fw-bold text-primary">CCDO CASH RETIREMENT FORM</p>
-                <P class="m-0">Chipembere Community Development organisation</P>
-                <p class="m-0">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
-                <P class="m-0">Account Number: 10033647388364</P>
+  <div class="h-100" style="background: #e7f4fe; min-height: 100vh; padding: 1rem;">
+    <div class="m-3 overflow-y-auto overflow-x-hidden rounded shadow"
+         style="background: rgba(255,255,255,0.25); backdrop-filter: blur(40px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 25px 50px rgba(14, 165, 233, 0.15); border-left: 4px solid #0EA5E9; height: 85%; width: 98%;">
+       
+      <div class="d-flex justify-content-between" style="padding: 2rem 2rem 1rem 2rem;">
+        <div class="m-0">
+          <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.75rem;">
+              <path d="M12 2v20m8-10H4"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <p class="m-0 fw-bold" style="color: #0EA5E9; font-size: 1.4rem; font-weight: 700;">CCDO CASH RETIREMENT FORM</p>
+          </div>
+          <p class="m-0" style="color: #374151; font-weight: 500; margin-bottom: 0.3rem;">Chipembere Community Development organisation</p>
+          <p class="m-0" style="color: #64748B; font-size: 0.9rem; margin-bottom: 0.2rem;">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
+          <p class="m-0" style="color: #64748B; font-size: 0.9rem;">Account Number: 10033647388364</p>
+        </div>
+        <div class="text-end m-0" style="display: flex; align-items: center;">
+          <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid rgba(14, 165, 233, 0.3); padding: 0.75rem 1.25rem; border-radius: 12px; backdrop-filter: blur(10px);">
+            <div style="display: flex; align-items: center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                <path d="M12 2v20m8-10H4"/>
+              </svg>
+              <span style="color: #0EA5E9; font-weight: 600; font-size: 0.95rem;">Cash Retirement</span>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="text-end text-primary m-4 rounded">
-                <p class="border border-primary p-1 rounded">Cash Retirement</p>
-            </div>
+      <form class="border-0" method="POST" style="background: transparent; padding: 0 2rem;">
+        {% csrf_token %}
+
+        <div class="mx-3">
+          <p class="text-end me-3 fw-bold" style="color: #0F172A;">Retirement No: CR-00{{ retirement.ID }}</p>
         </div>
 
-        <form class="bg-white border-primary" method="POST">
-            {% csrf_token %}
-            <div class="mx-3">
-                <p class="text-end me-3 fw-bold">Retirement No: CR-00{{ retirement.ID }}</p>
-            </div>
-
-            <div class="d-flex justify-content-between">
-                <div class="w-50 mx-3">
-                    <!-- <label for="voucher" class="form-label">Voucher</label>
-                    <input type="text" id="voucher" class="form-control"> -->
-
-                    <label for="{{ form.voucherid.id_for_label }}" class="form-label d-block">Voucher</label>
-                    {{ form.voucherid|add_class:"form-control"|attr:"id:voucherid" }}
-                    {{ form.voucherid.errors }}
-
-                    <label for="date" class="form-label">Date</label>
-                    <input type="date" id="date" name="date" class="form-control" value="{{ retirement.date|date:'Y-m-d' }}" readonly>   
-                </div>
-
-                <div class="w-50 mx-3">
-                    <!-- <label for="requisition" class="form-label">Requesition</label>
-                    <input type="text" id="requisition" class="form-control"> -->
-
-                    <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block">Requisition</label>
-                    {{ form.requisitionid|add_class:"form-control"|attr:"id:requisitionid"|attr:"readonly:readonly" }}
-                    {{ form.requisitionid.errors }}
-
-                    <label for="amount" class="form-label">Amount</label>
-                    <input type="number" id="amount" class="form-control" readonly>
-                    
-                </div>
+         
+        <div class="d-flex mt-3 justify-content-between" style="margin-bottom: 2rem; gap: 1rem;">
+          <div class="w-25">
+            <label for="{{ form.voucherid.id_for_label }}" class="form-label d-block" style="color: #374151; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem;">Voucher</label>
+            {{ form.voucherid|add_class:"form-control"|attr:"id:voucherid"|attr:"style:border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05);" }}
+            {{ form.voucherid.errors }}
 
             </div>
 
-            <div class="d-flex justify-content-between mx-3 mt-3 py-0">
-                <div class="fw-bold">Cash Used For</div>
-                <!-- <div class="btn btn-primary me-3">Add Expense</div> -->
+          <div class="w-25">
+            <label for="date" class="form-label" style="color: #374151; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem 0 0.5rem;">Date</label>
+            <input type="date" id="date" name="date" class="form-control" value="{{ retirement.date|date:'Y-m-d' }}" readonly
+                   style="border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(248, 250, 252, 0.8); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05);">
+          
+          </div>
+
+          <div class="w-25">
+            <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block" style="color: #374151; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem;">Requisition</label>
+            {{ form.requisitionid|add_class:"form-control"|attr:"id:requisitionid"|attr:"readonly:readonly"|attr:"style:border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(248, 250, 252, 0.8); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05);" }}
+            {{ form.requisitionid.errors }}
+          </div>
+
+          <div class="w-25">
+            <label for="amount" class="form-label" style="color: #374151; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem;">Amount</label>
+            <input type="number" id="amount" class="form-control" readonly
+                   style="border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(248, 250, 252, 0.8); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05);">
+          </div>
+        </div>
+
+         
+        <div class="d-flex justify-content-between mx-3 mt-3 py-0">
+          <div style="display: flex; align-items: center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+              <line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+            <div class="fw-bold" style="color: #0F172A; font-size: 1.1rem; font-weight: 600;">Cash Used For</div>
+          </div>
+        </div>
+
+         
+        <div class="d-flex rounded w-100" style="margin: 0 0 2rem 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1); overflow: hidden;">
+          <table class="table table-hover p-0 m-0" style="width: 100%; border-collapse: separate; border-spacing: 0; margin: 0;">
+            <thead style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px);">
+              <tr>
+                <th style="padding: 1rem 0.8rem; color: #0F172A; font-weight: 600; border: none; font-size: 0.9rem;">Description</th>
+                <th style="padding: 1rem 0.8rem; color: #0F172A; font-weight: 600; border: none; font-size: 0.9rem;">Reason</th>
+                <th style="padding: 1rem 0.8rem; color: #0F172A; font-weight: 600; border: none; font-size: 0.9rem;">Unit Price</th>
+                <th style="padding: 1rem 0.8rem; color: #0F172A; font-weight: 600; border: none; font-size: 0.9rem;">Quantity</th>
+                <th style="padding: 1rem 0.8rem; color: #0F172A; font-weight: 600; border: none; font-size: 0.9rem;">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="tablebody">
+               
+            </tbody>
+          </table>
+        </div>
+
+         
+        <div class="d-flex justify-content-between" style="margin: 2rem 0; gap: 1rem;">
+          <div class="w-25 rounded" style="background: rgba(34, 197, 94, 0.1); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(34, 197, 94, 0.3); padding: 1.5rem; box-shadow: 0 8px 32px rgba(34, 197, 94, 0.1);">
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+              </svg>
+              <p class="text-center m-0" style="color: #10B981; font-weight: 600; font-size: 0.9rem;">Total Used</p>
+            </div>
+            <p class="fw-bold text-center m-0" id="used" style="color: #10B981; font-size: 1.5rem; font-weight: 700;">MWK 0.00</p>
+          </div>
+
+          <div class="w-25 rounded" style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(14, 165, 233, 0.3); padding: 1.5rem; box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);">
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14,2 14,8 20,8"/>
+              </svg>
+              <p class="text-center m-0" style="color: #0EA5E9; font-weight: 600; font-size: 0.9rem;">Amount Requested</p>
+            </div>
+            <p class="fw-bold text-center m-0" id="requested" style="color: #0EA5E9; font-size: 1.5rem; font-weight: 700;">MWK 0.00</p>
+          </div>
+
+          <div class="w-25 rounded" style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(239, 68, 68, 0.3); padding: 1.5rem; box-shadow: 0 8px 32px rgba(239, 68, 68, 0.1);">
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                <circle cx="8" cy="8" r="6"/>
+                <path d="M18.09 10.37A6 6 0 1 1 10.37 18.09"/>
+                <path d="M7 6h1v4"/>
+                <path d="M16.71 13.88L18.09 10.37"/>
+              </svg>
+              <p class="text-center m-0" style="color: #EF4444; font-weight: 600; font-size: 0.9rem;">Balance</p>
+            </div>
+            <p class="fw-bold text-center m-0" id="balance" style="color: #EF4444; font-size: 1.5rem; font-weight: 700;">MWK 0.00</p>
+          </div>
+        </div>
+
+         
+        <div style="margin: 2rem 0 1rem 0;">
+          <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+              <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66L9.64 16.2a2 2 0 0 1-2.83-2.83l8.49-8.49"/>
+            </svg>
+            <div class="fw-bold fs-5" style="color: #0F172A; font-size: 1.2rem; font-weight: 600;">Required Attachments</div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between" style="margin: 0 0 2rem 0; gap: 1rem;">
+          <div class="w-50">
+            <div class="w-100 rounded" style="background: rgba(34, 197, 94, 0.1); backdrop-filter: blur(20px); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3); padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);">
+              <div style="display: flex; align-items: center; margin-bottom: 0.8rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14,2 14,8 20,8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                <p style="margin: 0; color: #10B981; font-weight: 600; font-size: 0.95rem;">Proof of Payment</p>
+              </div>
+              <div style="background: rgba(255,255,255,0.8); border-radius: 8px; padding: 0.5rem;">
+                {% if form.instance.proofofpay %}
+                  <a href="{{ form.instance.proofofpay.url }}" target="_blank" class="btn btn-outline-primary">View Proof of Payment</a>
+                {% else %}
+                  <p class="text-muted m-0">No proof of payment uploaded.</p>
+                {% endif %}
+              </div>
             </div>
 
-            <div class="d-flex m-3 bg-white rounded w-100 my-0 py-0">
-                <table class="table table-striped table-bordered table-hover p-0" style="width: 97%;">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Reason</th>
-                            <th>Unit Price</th>
-                            <th>Quantity</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
+            <div class="w-100 rounded" style="background: rgba(34, 197, 94, 0.1); backdrop-filter: blur(20px); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3); padding: 1.2rem; box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);">
+              <div style="display: flex; align-items: center; margin-bottom: 0.8rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                <p style="margin: 0; color: #10B981; font-weight: 600; font-size: 0.95rem;">Participarts Payment Form</p>
+              </div>
+              <div style="background: rgba(255,255,255,0.8); border-radius: 8px; padding: 0.5rem;">
+                {% if form.instance.participantspay %}
+                  <a href="{{ form.instance.participantspay.url }}" target="_blank" class="btn btn-outline-primary">View Partcipants Payment Form</a>
+                {% else %}
+                  <p class="text-muted m-0">No Participants Payment Form uploaded.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
 
-                    <tbody id="tablebody">
-                        <!-- <tr id="tablerow">
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="number" step="0.001" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                        </tr> -->
-                    </tbody>
-                </table>
+          <div class="w-50">
+            <div class="w-100 rounded" style="background: rgba(34, 197, 94, 0.1); backdrop-filter: blur(20px); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3); padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);">
+              <div style="display: flex; align-items: center; margin-bottom: 0.8rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14,2 14,8 20,8"/>
+                  <line x1="9" y1="9" x2="15" y2="15"/>
+                  <line x1="15" y1="9" x2="9" y2="15"/>
+                </svg>
+                <p style="margin: 0; color: #10B981; font-weight: 600; font-size: 0.95rem;">Receipts</p>
+              </div>
+              <div style="background: rgba(255,255,255,0.8); border-radius: 8px; padding: 0.5rem;">
+                {% if form.instance.receipt %}
+                  <a href="{{ form.instance.receipt.url }}" target="_blank" class="btn btn-outline-primary">View Receipt</a>
+                {% else %}
+                  <p class="text-muted m-0">No receipt uploaded.</p>
+                {% endif %}
+              </div>
             </div>
 
-            <div class="d-flex justify-content-between m-3">
-                <div class="w-25 bg-success rounded">
-                    <p class="text-center">Total Used</p>
-                    <p class="fw-bold text-center" id="used">MWK 0.00</p>
-                </div>
-
-                <div class="w-25 bg-primary rounded">
-                    <p class="text-center">Amount Requested</p>
-                    <p class="fw-bold text-center" id="requested">MWK 0.00</p>
-                </div>
-
-                <div class="w-25 bg-danger rounded">
-                    <p class="text-center">Balance</p>
-                    <p class="fw-bold text-center" id="balance">MWK 0.00</p>
-                </div>
+            <div class="w-100 rounded" style="background: rgba(34, 197, 94, 0.1); backdrop-filter: blur(20px); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3); padding: 1.2rem; box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);">
+              <div style="display: flex; align-items: center; margin-bottom: 0.8rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                  <line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
+                <p style="margin: 0; color: #10B981; font-weight: 600; font-size: 0.95rem;">Cash Payment Form</p>
+              </div>
+              <div style="background: rgba(255,255,255,0.8); border-radius: 8px; padding: 0.5rem;">
+                {% if form.instance.cashpay %}
+                  <a href="{{ form.instance.cashpay.url }}" target="_blank" class="btn btn-outline-primary">View Cash Payment Form</a>
+                {% else %}
+                  <p class="text-muted m-0">No cash payment form uploaded.</p>
+                {% endif %}
+              </div>
             </div>
+          </div>
+        </div>
 
-            <div class="m-3 fw-bold fs-5">Required Attachments</div>
+        <textarea type="text" id="comments" name="comments" placeholder="Comments" class="form-control mx-3 my-0" rows="3" style="width: 98%; border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);"></textarea>
 
-            <div class="d-flex justify-content-between m-3">
-                <div class="w-50 me-3 my-3">
-                    <div class="bg-success w-100 rounded">
-                        <p>Proof of Payment</p>
-                        {% if form.instance.proofofpay %}
-                            <a href="{{ form.instance.proofofpay.url }}" target="_blank" class="btn btn-outline-primary">
-                                View Proof of Payment
-                            </a>
-                        {% else %}
-                            <p class="text-muted">No proof of payment uploaded.</p>
-                        {% endif %}
-                    </div>
-
-                    <div class="bg-success w-100 rounded my-3">
-                        <p>Participarts Payment Form</p>
-                        {% if form.instance.participantspay %}
-                            <a href="{{ form.instance.participantspay.url }}" target="_blank" class="btn btn-outline-primary">
-                                View Partcipants Payment Form
-                            </a>
-                        {% else %}
-                            <p class="text-muted">No Participants Payment Form uploaded.</p>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div class="w-50">
-                    <div class="bg-success w-100 rounded my-3">
-                        <p>Receipts</p>
-                        {% if form.instance.receipt %}
-                            <a href="{{ form.instance.receipt.url }}" target="_blank" class="btn btn-outline-primary">
-                                View Receipt
-                            </a>
-                        {% else %}
-                            <p class="text-muted">No receipt uploaded.</p>
-                        {% endif %}
-                    </div>
-
-                    <div class="bg-success w-100 rounded my-3">
-                        <p>Cash Payment Form</p>
-                        {% if form.instance.cashpay %}
-                            <a href="{{ form.instance.cashpay.url }}" target="_blank" class="btn btn-outline-primary">
-                                View Cash Payment Form
-                            </a>
-                        {% else %}
-                            <p class="text-muted">No cash payment form uploaded.</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
+        
+        <div class="mx-3 my-3 d-flex ms-auto w-50" style="gap: 0.5rem; justify-content: flex-end;">
           
 
-             <textarea type="text" id="comments" name="comments" placeholder="Comments" class="form-control mx-3 my-0" rows="3" style="width: 98%;"></textarea>
+          <button type="submit" class="d-inline btn btn-primary ms-auto" name="action" value="send_back"
+                  style="background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 50%, #0369A1 100%); border: none; border-radius: 12px; padding: 0.8rem 1.2rem; color: white; font-weight: 600; box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3); display: inline-flex; align-items: center; gap: 0.5rem;">
+            <img src="{% static 'CashTracker/icons/back.svg' %}" alt="send back">Send Back Retirement
+          </button>
 
-            <div class="mx-3 my-1 d-flex ms-auto w-50">
-                <button type="submit" class="d-inline btn btn-danger ms-auto" name="action" value="reject"><img src="{% static 'CashTracker/icons/close.svg' %}" alt="reject">Reject Requisition</button>
-                <button type="submit" class="d-inline btn btn-primary ms-auto" name="action" value="send_back"><img src="{% static 'CashTracker/icons/back.svg' %}" alt="send back">Send Back Requisition</button>
-                <button type="submit" class="d-inline btn btn-success ms-auto" name="action" value="accept"><img src="{% static 'CashTracker/icons/check.svg' %}" alt="save">Accept Requisition</button>
-            </div>
-            
-        </form>
-        <!-- <div class="h-25"></div> -->
+          <button type="submit" class="d-inline btn btn-success ms-auto" name="action" value="accept"
+                  style="background: linear-gradient(135deg, #22C55E 0%, #16A34A 50%, #15803D 100%); border: none; border-radius: 12px; padding: 0.8rem 1.2rem; color: white; font-weight: 600; box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3); display: inline-flex; align-items: center; gap: 0.5rem;">
+            <img src="{% static 'CashTracker/icons/check.svg' %}" alt="save">Accept Retirement
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 
+  <style>
+    /* Form input focus states */
+    .form-control:focus {
+      border-color: rgba(14, 165, 233, 0.6) !important;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1), 0 4px 12px rgba(14, 165, 233, 0.1) !important;
+      background: rgba(255,255,255,0.95) !important;
+    }
 
-<script>
-        document.addEventListener('DOMContentLoaded', function(){
-            
-                    const reqid = document.getElementById('requisitionid').value;
-                    fetch(`/items/${reqid}/`)
-                        .then(response => response.json())
-                        .then(data =>{
-                            document.getElementById('tablebody').innerHTML = "";
-                            
-                            // document.getElementById('amount').value = data.amount;
-                            
-                            const items = data.item_list;
-                            for (const item of items){
-                                const row = `
-                                    <tr id="tablerow">
-                                        <td><input type="text" class="form-control" value="${item.itemname || ''}" readonly></td>
-                                        <td><input type="text" class="form-control reason" value="${item.reason || ''}" readonly></td>
-                                        <td><input type="number" step="0.001" class="form-control unitprice" value="${item.unitprice || ''}" readonly></td>
-                                        <td><input type="number" step="0.001" class="form-control quantity" value="${item.quantity || ''}" readonly></td>
-                                        <td><input type="number" step="0.001" class="form-control totalprice" value="${item.totalprice || ''}" readonly></td>
-                                        
-                                    </tr>`
-                                document.getElementById('tablebody').insertAdjacentHTML('beforeend', row);
-                                
-                            }
-                            document.getElementById('requested').textContent = `MK ${data.amount}`;
-                            document.getElementById('used').textContent = `MK ${data.amount}`;
-                            document.getElementById('amount').value = data.amount;
-                        })});
-                
-            
+    /* Button hover effects */
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4) !important;
+      background: linear-gradient(135deg, #0284C7 0%, #0369A1 50%, #075985 100%) !important;
+    }
 
+    /* Table row hover effects */
+    tbody tr:hover {
+      background: #e7f4fe !important;
+    }
 
-        document.getElementById('tablebody').addEventListener( 'input', function(e){
-        if(e.target.classList.contains('quantity') || e.target.classList.contains('unitprice')){
-            const row = e.target.closest('tr');
-            const price = parseFloat(row.querySelector('.unitprice').value) || 0;
-            const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
-            const total = price * quantity;
+    /* Summary cards hover effects */
+    .w-25:hover, .w-50:hover {
+      transform: translateY(-4px);
+      background: #e7f4fe !important;
+      box-shadow: 0 12px 40px rgba(14, 165, 233, 0.2) !important;
+    }
 
-            const totalfield = row.querySelector('.totalprice');
-            if(totalfield){
-                totalfield.value = total.toFixed(2)
-            }
-            updateGrandTotal();
+    /* Responsive design */
+    @media (max-width: 1200px) {
+      .d-flex.justify-content-between {
+        flex-direction: column;
+      }
+      .w-25, .w-50 {
+        width: 100% !important;
+        margin-bottom: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .m-3 {
+        margin: 0.5rem !important;
+      }
+      div[style*="padding: 2rem"] {
+        padding: 1rem !important;
+      }
+      .table {
+        font-size: 0.85rem;
+      }
+      th, td {
+        padding: 0.5rem !important;
+      }
+      .form-control {
+        padding: 0.5rem !important;
+        font-size: 0.85rem !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .text-end {
+        text-align: left !important;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const reqid = document.getElementById('requisitionid').value;
+      fetch(`/items/${reqid}/`)
+        .then(response => response.json())
+        .then(data =>{
+          document.getElementById('tablebody').innerHTML = "";
+          const items = data.item_list;
+          for (const item of items){
+            const row = `
+              <tr id="tablerow" style="transition: all 0.3s ease;">
+                <td style="padding: 0.8rem; border: none;"><input type="text" class="form-control" value="${item.itemname || ''}" readonly style="border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 8px; padding: 0.6rem; font-size: 0.9rem; background: rgba(248, 250, 252, 0.9); outline: none;"></td>
+                <td style="padding: 0.8rem; border: none;"><input type="text" class="form-control reason" value="${item.reason || ''}" readonly style="border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 8px; padding: 0.6rem; font-size: 0.9rem; background: rgba(248, 250, 252, 0.9); outline: none;"></td>
+                <td style="padding: 0.8rem; border: none;"><input type="number" step="0.001" class="form-control unitprice" value="${item.unitprice || ''}" readonly style="border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 8px; padding: 0.6rem; font-size: 0.9rem; background: rgba(255,255,255,0.9); outline: none;"></td>
+                <td style="padding: 0.8rem; border: none;"><input type="number" step="0.001" class="form-control quantity" value="${item.quantity || ''}" readonly style="border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 8px; padding: 0.6rem; font-size: 0.9rem; background: rgba(255,255,255,0.9); outline: none;"></td>
+                <td style="padding: 0.8rem; border: none;"><input type="number" step="0.001" class="form-control totalprice" value="${item.totalprice || ''}" readonly style="border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 8px; padding: 0.6rem; font-size: 0.9rem; background: rgba(248, 250, 252, 0.9); outline: none; font-weight: 600;"></td>
+              </tr>`;
+            document.getElementById('tablebody').insertAdjacentHTML('beforeend', row);
+          }
+          document.getElementById('requested').textContent = `MK ${data.amount}`;
+          document.getElementById('used').textContent = `MK ${data.amount}`;
+          document.getElementById('amount').value = data.amount;
+        })
+    });
+
+    document.getElementById('tablebody').addEventListener( 'input', function(e){
+      if(e.target.classList.contains('quantity') || e.target.classList.contains('unitprice')){
+        const row = e.target.closest('tr');
+        const price = parseFloat(row.querySelector('.unitprice').value) || 0;
+        const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+        const total = price * quantity;
+        const totalfield = row.querySelector('.totalprice');
+        if(totalfield){
+          totalfield.value = total.toFixed(2)
         }
+        updateGrandTotal();
+      }
     })
 
-    // const usedstr = document.getElementById('used').value;
-    // const usednumber = parseFloat(usedstr.replace(/[^\d.]/g, '')); 
-
-    // const requestedstr = document.getElementById('used').value;
-    // const requestednumber = parseFloat(usedstr.replace(/[^\d.]/g, '')); 
-
-    // const balance = requestednumber - usednumber;
-
-    // document.getElementById('balance').textContent = `MWK ${balance}`;
-
     function updateGrandTotal(){
-        let sum = 0;
-        document.querySelectorAll('.totalprice').forEach(function(input){
-            let val = parseFloat(input.value) || 0;
-            sum += val;
-        })
-        document.getElementById('used').textContent = 'MWK ' + sum.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-        const usednumber = sum;
-        const requestedstr = document.getElementById('requested').textContent;
-        const requestednumber = parseFloat(requestedstr.replace(/[^\d.]/g, '')) || 0;
-        const balance = requestednumber - usednumber;
-        document.getElementById('balance').textContent = `MWK ${balance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+      let sum = 0;
+      document.querySelectorAll('.totalprice').forEach(function(input){
+        let val = parseFloat(input.value) || 0;
+        sum += val;
+      })
+      document.getElementById('used').textContent = 'MWK ' + sum.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      const usednumber = sum;
+      const requestedstr = document.getElementById('requested').textContent;
+      const requestednumber = parseFloat(requestedstr.replace(/[^\d.]/g, '')) || 0;
+      const balance = requestednumber - usednumber;
+      document.getElementById('balance').textContent = `MWK ${balance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
     }
-</script>
-
-
-<script src="{% static 'CashTracker/bootstrap.bundle.min.js' %}"></script>
-
-
+  </script>
+  <script src="{% static 'CashTracker/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

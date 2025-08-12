@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cash Tracker</title>
+    <title>Cash Documents Tracker</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0&icon_names=verified_user" />
     <link rel="stylesheet" href="{% static 'CashTracker/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'CashTracker/styles.css' %}">
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-8 mx-0">
                     <p class="my-0 fw-bold">CCDO</p>
-                    <p class="my-0 fs-6 text-dark">Cash Tracking</p>
+                    <p class="my-0 fs-6 text-dark">Documents Tracking</p>
                 </div>
             </div>
 
@@ -82,7 +82,7 @@
                     <form method="POST", action="{% url 'logout'%}" class="icon btn btn-link text-decoration-none text-dark w-100 text-start m-1">
                         {% csrf_token %}
                         <img src="{% static 'CashTracker/icons/logout.svg' %}" alt="logout">
-                        <button class="border-0">Logout</button>
+                        <button class="border-0 bg-white">Logout</button>
                     </form>
                 
             </div>
@@ -91,13 +91,162 @@
         </div>
 
         <div class="container-fluid col-10 h-100 m-0 p-0" style="background-color: rgba(126, 184, 179, 0.534);">
-            <div class="d-flex justify-content-between container-fluid border-bottom border-4 border-primary bg-white w-100 mx-0 p-0">
-                <h3 class="w-100 pt-3">CCDO Cash Tracking</h3>
-                <div class="border border-dark w-25 d-flex justify-content-center rounded m-1">
-                    <img src="{% static 'CashTracker/icons/person.svg' %}" alt="person">
-                    <p class="d-inline pt-3">{{ request.user.username }}</p>
-                </div>
+            <div class="header-container">
+    <div class="header-content">
+        <div class="brand-section">
+            <h2 class="brand-title">CCDO Financial Documents Tracking</h2>
+            <div class="brand-accent"></div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">
+                <img src="{% static 'CashTracker/icons/person.svg' %}" alt="User Profile" class="avatar-icon">
             </div>
+            <div class="user-info">
+                <span class="user-name">{{ request.user.username }}</span>
+                <span class="user-label">Account</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.header-container {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
+    border-bottom: 3px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.header-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 2rem;
+    max-width: 100%;
+    margin: 0;
+}
+
+.brand-section {
+    position: relative;
+}
+
+.brand-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+    letter-spacing: -0.025em;
+}
+
+.brand-accent {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    border-radius: 2px;
+    margin-top: 0.5rem;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e1e5f1;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.user-profile:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(13, 110, 253, 0.15);
+    border-color: #0d6efd;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.2);
+}
+
+.avatar-icon {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #1a1d29;
+    font-size: 0.95rem;
+    line-height: 1.2;
+}
+
+.user-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .header-content {
+        padding: 1rem 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .brand-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    
+    .user-profile {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand-title {
+        font-size: 1.25rem;
+    }
+    
+    .user-info {
+        display: none;
+    }
+    
+    .user-profile {
+        padding: 0.5rem;
+        width: auto;
+    }
+}
+</style>
 
             {% block content %}
             {% endblock %}

@@ -3,190 +3,359 @@
 {% load widget_tweaks %}
 
 {% block retirement %}
-    <a href="{% url 'retirement' %}" class="icon btn btn-primary w-100 text-start m-1">
-        <img src="{% static 'CashTracker/icons/add.svg' %}" alt="dashboard">
-        <p class="d-inline"> New Cash Retirement </p>
-    </a>
+<a href="{% url 'retirement' %}" class="icon btn w-100 text-start m-1" style="background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 50%, #0369A1 100%); border: none; border-radius: 12px; padding: 0.8rem 1rem; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3); text-decoration: none; display: flex; align-items: center; font-weight: 500;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v8"/>
+        <path d="M8 12h8"/>
+    </svg>
+    <p class="d-inline m-0">New Cash Retirement</p>
+</a>
 {% endblock %}
 
 {% block content %}
-    <div class="m-3 overflow-y-auto overflow-x-hidden  border-start border-4 border-primary rounded shadow" style="height: 85%; width: 98%;">
-        <div class="d-flex justify-content-between">
-            <div class="m-3">
-                <p class="m-0 fw-bold text-primary">CCDO CASH RETIREMENT FORM</p>
-                <P class="m-0">Chipembere Community Development organisation</P>
-                <p class="m-0">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
-                <P class="m-0">Account Number: 10033647388364</P>
+<div class="h-100" style="background: #e7f4fe; min-height: 100vh; padding: 1rem;">
+    <div class="m-3 overflow-y-auto overflow-x-hidden rounded shadow" style="background: rgba(255,255,255,0.25); backdrop-filter: blur(40px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 25px 50px rgba(14, 165, 233, 0.15); border-left: 4px solid #0EA5E9; height: 85%; width: 98%;">
+        
+        <!-- Header Section -->
+        <div class="d-flex justify-content-between" style="padding: 2rem 2rem 1rem 2rem;">
+            <div class="m-0">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.75rem;">
+                        <path d="M12 2v20m8-10H4"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <p class="m-0 fw-bold" style="color: #0EA5E9; font-size: 1.4rem; font-weight: 700;">CCDO CASH RETIREMENT FORM</p>
+                </div>
+                <p class="m-0" style="color: #374151; font-weight: 500; margin-bottom: 0.3rem;">Chipembere Community Development Organisation</p>
+                <p class="m-0" style="color: #64748B; font-size: 0.9rem; margin-bottom: 0.2rem;">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
+                <p class="m-0" style="color: #64748B; font-size: 0.9rem;">Account Number: 10033647388364</p>
             </div>
-
-            <div class="text-end text-primary m-4 rounded">
-                <p class="border border-primary p-1 rounded">Cash Retirement</p>
+            <div class="text-end m-0" style="display: flex; align-items: center;">
+                <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid rgba(14, 165, 233, 0.3); padding: 0.75rem 1.25rem; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="display: flex; align-items: center;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                            <path d="M12 2v20m8-10H4"/>
+                        </svg>
+                        <span style="color: #0EA5E9; font-weight: 600; font-size: 0.95rem;">Cash Retirement</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <form class="bg-white border-primary" method="POST" enctype="multipart/form-data">
+        <!-- Form Section -->
+        <form class="border-0" method="POST" enctype="multipart/form-data" style="background: transparent; padding: 0 2rem;">
             {% csrf_token %}
-            <!-- <div class="mx-3">
-                <p class="text-end me-3 fw-bold">Retirement No: CR-76560</p>
-            </div> -->
             {{ retirement_form.errors }}
-            <div class="d-flex mt-3 justify-content-between">
-                <div class="w-25 mx-3">
-                    <!-- <label for="voucher" class="form-label">Voucher</label>
-                    <input type="text" id="voucher" class="form-control"> -->
 
-                    <label for="{{ form.voucherid.id_for_label }}" class="form-label d-block">Voucher</label>
-                    {{ retirement_form.voucherid|add_class:"form-control"|attr:"id:voucherid" }}
+            <!-- Voucher Details Section -->
+            <div class="d-flex mt-3 justify-content-between" style="margin-bottom: 2rem; gap: 1rem;">
+                <div class="w-25">
+                    <label for="{{ retirement_form.voucherid.id_for_label }}" class="form-label d-block" style="color: #374151; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem;">Voucher</label>
+                    {{ retirement_form.voucherid|add_class:"form-control"|attr:"id:voucherid"|attr:"style:border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05);" }}
                     {{ retirement_form.voucherid.errors }}
-
-                    <!-- <label for="date" class="form-label">Date</label>
-                    <input type="date" id="date" class="form-control">     -->
                 </div>
-
-                <div class="w-25 mx-3">
-                    <!-- <label for="requisition" class="form-label">Requesition</label>
-                    <input type="text" id="requisition" class="form-control"> -->
-
-                    <label for="{{ form.requisitionid.id_for_label }}" class="form-label d-block">Requisition</label>
-                    {{ retirement_form.requisitionid|add_class:"form-control"|attr:"id:requisitionid"|attr:"readonly:readonly" }}
+                <div class="w-25">
+                    <label for="{{ retirement_form.requisitionid.id_for_label }}" class="form-label d-block" style="color: #374151; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem;">Requisition</label>
+                    {{ retirement_form.requisitionid|add_class:"form-control"|attr:"id:requisitionid"|attr:"readonly:readonly"|attr:"style:border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(248, 250, 252, 0.8); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05);" }}
                     {{ retirement_form.requisitionid.errors }}
-                    <!-- <label for="requisitionid" class="form-label">Requisition</label>
-                    <input type="text" id="requisitionid" class="form-control" readonly> -->
-                    
                 </div>
-
-                <div class="w-25 mx-3">
-                    <label for="amount" class="form-label">Amount (MK)</label>
-                    <input type="number" id="amount" class="form-control" readonly>
+                <div class="w-25">
+                    <label for="amount" class="form-label" style="color: #374151; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem;">Amount (MK)</label>
+                    <input type="number" id="amount" class="form-control" readonly style="border: 2px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem; transition: all 0.3s ease; background: rgba(248, 250, 252, 0.8); backdrop-filter: blur(10px); font-weight: 400; outline: none; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.05);">
                 </div>
-
             </div>
 
-            <div class="d-flex justify-content-between mx-3 mt-3 mb-1 py-0">
-                <div class="fw-bold">Cash Used For</div>
-                <!-- <div class="btn btn-primary me-3">Add Expense</div> -->
+            <!-- Cash Used Section Header -->
+            <div class="d-flex justify-content-between align-items-center" style="margin: 2rem 0 1rem 0;">
+                <div style="display: flex; align-items: center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                        <line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                    <div class="fw-bold" style="color: #0F172A; font-size: 1.1rem; font-weight: 600;">Cash Used For</div>
+                </div>
             </div>
 
-            <div class="d-flex m-3 bg-white rounded w-100 my-0 py-0">
-                <table class="table table-striped table-bordered table-hover p-0" style="width: 97%;">
-                    <thead>
+            <!-- Cash Used Table -->
+            <div class="d-flex rounded w-100" style="margin: 0 0 2rem 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1); overflow: hidden;">
+                <table class="table table-hover p-0 m-0" style="width: 100%; border-collapse: separate; border-spacing: 0; margin: 0;">
+                    <thead style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(10px);">
                         <tr>
-                            <th>Description</th>
-                            <th>Unit Price (MK)</th>
-                            <th>Quantity</th>
-                            <th>Amount (MK)</th>
-                            <th>Actions</th>
+                            <th style="padding: 1rem 0.8rem; color: #0F172A; font-weight: 600; border: none; font-size: 0.9rem;">Description</th>
+                            <th style="padding: 1rem 0.8rem; color: #0F172A; font-weight: 600; border: none; font-size: 0.9rem;">Unit Price (MK)</th>
+                            <th style="padding: 1rem 0.8rem; color: #0F172A; font-weight: 600; border: none; font-size: 0.9rem;">Quantity</th>
+                            <th style="padding: 1rem 0.8rem; color: #0F172A; font-weight: 600; border: none; font-size: 0.9rem;">Amount (MK)</th>
+                            <th style="padding: 1rem 0.8rem; color: #0F172A; font-weight: 600; border: none; font-size: 0.9rem; text-align: center;">Actions</th>
                         </tr>
                     </thead>
-
                     <tbody id="tablebody">
-                        <!-- <tr id="tablerow">
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="number" step="0.001" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                        </tr> -->
+                        <!-- Dynamic content will be inserted here -->
                     </tbody>
                 </table>
             </div>
 
-            <div class="d-flex justify-content-between m-3">
-                <div class="w-25 bg-success rounded">
-                    <p class="text-center">Total Used</p>
-                    <p class="fw-bold text-center" id="used">MWK 0.00</p>
-                </div>
-
-                <div class="w-25 bg-primary rounded">
-                    <p class="text-center">Amount Requested</p>
-                    <p class="fw-bold text-center" id="requested">MWK 0.00</p>
-                </div>
-
-                <div class="w-25 bg-danger rounded">
-                    <p class="text-center">Balance</p>
-                    <p class="fw-bold text-center" id="balance">MWK 0.00</p>
-                </div>
-            </div>
-
-            <div class="m-3 fw-bold fs-5">Required Attachments</div>
-
-            <div class="d-flex justify-content-between m-3">
-                <div class="w-50 me-3">
-                    <div class="bg-success w-100 rounded">
-                        <p>Proof of Payment</p>
-                        <p>{{ retirement_form.proofofpay }}</p>
+            <!-- Summary Cards -->
+            <div class="d-flex justify-content-between" style="margin: 2rem 0; gap: 1rem;">
+                <div class="w-25 rounded" style="background: rgba(34, 197, 94, 0.1); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(34, 197, 94, 0.3); padding: 1.5rem; box-shadow: 0 8px 32px rgba(34, 197, 94, 0.1);">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                            <path d="M9 12l2 2 4-4"/>
+                            <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+                        </svg>
+                        <p class="text-center m-0" style="color: #10B981; font-weight: 600; font-size: 0.9rem;">Total Used</p>
                     </div>
-
-                    <div class="bg-success w-100 rounded">
-                        <p>Participarts Payment Form</p>
-                        <p>{{ retirement_form.participantspay }}</p>
-                    </div>
+                    <p class="fw-bold text-center m-0" id="used" style="color: #10B981; font-size: 1.5rem; font-weight: 700;">MK 0.00</p>
                 </div>
-
-                <div class="w-50">
-                    <div class="bg-success w-100 rounded">
-                        <p>Receipts</p>
-                        <p>{{ retirement_form.receipt }}</p>
+                
+                <div class="w-25 rounded" style="background: rgba(14, 165, 233, 0.1); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(14, 165, 233, 0.3); padding: 1.5rem; box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                        </svg>
+                        <p class="text-center m-0" style="color: #0EA5E9; font-weight: 600; font-size: 0.9rem;">Amount Requested</p>
                     </div>
-
-                    <div class="bg-success w-100 rounded">
-                        <p>Cash Payment Form</p>
-                        <p>{{ retirement_form.cashpay }}</p>
-                    </div>
+                    <p class="fw-bold text-center m-0" id="requested" style="color: #0EA5E9; font-size: 1.5rem; font-weight: 700;">MK 0.00</p>
                 </div>
-            </div>
-
-            <div class="m-3">
-                <button type="submit" class="d-flex btn text-white bg-danger ms-auto">Submit Retirement</button>
-            </div>
-            
-        </form>
-        <!-- <div class="h-25"></div> -->
+                
+                <div class="w-25 rounded" style="background: rgba(239, 68, 68, 0.1); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(239, 68, 68, 0.3); padding: 1.5rem; box-shadow: 0 8px 32px rgba(239, 68, 68, 0.1);">
+    <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+            <circle cx="8" cy="8" r="6"/>
+            <path d="M18.09 10.37A6 6 0 1 1 10.37 18.09"/>
+            <path d="M7 6h1v4"/>
+            <path d="M16.71 13.88L18.09 10.37"/>
+        </svg>
+        <p class="text-center m-0" style="color: #EF4444; font-weight: 600; font-size: 0.9rem;">Balance</p>
     </div>
+    <p class="fw-bold text-center m-0" id="balance" style="color: #EF4444; font-size: 1.5rem; font-weight: 700;">MK 0.00</p>
+    </div>
+            </div>
 
+            <!-- Required Attachments Section -->
+            <div style="margin: 2rem 0 1rem 0;">
+                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66L9.64 16.2a2 2 0 0 1-2.83-2.83l8.49-8.49"/>
+                    </svg>
+                    <div class="fw-bold fs-5" style="color: #0F172A; font-size: 1.2rem; font-weight: 600;">Required Attachments</div>
+                </div>
+            </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function(){
-            const voucherselect = document.getElementById('voucherid');
-            voucherselect.addEventListener('change', function(){
-                const voucherid = this.value;
-                if (voucherid){
-                    fetch(`/retirement/${voucherid}/`)
-                        .then(response => response.json())
-                        .then(data =>{
-                            document.getElementById('tablebody').innerHTML = "";
-                            document.getElementById('requisitionid').value = data.requisitionid;
-                            document.getElementById('amount').value = data.amount;
-                            document.getElementById('requested').textContent = 'MWK ' + data.amount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-                            const items = data.item_list;
-                            for (const item of items){
-                                const row = `
-                                    <tr id="tablerow">
-                                        <td><input type="text" class="form-control" value="${item.itemname || ''}" readonly></td>
-                                        <td><input type="number" step="0.001" class="form-control unitprice" value="${item.unitprice || ''}"></td>
-                                        <td><input type="number" step="0.001" class="form-control quantity" value="${item.quantity || ''}"></td>
-                                        <td><input type="number" step="0.001" class="form-control totalprice" value="${item.totalprice || ''}" readonly></td>
-                                        <td><button type="button" class="btn btn-outline-none" onclick="this.closest('tr').remove(); updateGrandTotal()"><img src="{% static 'CashTracker/icons/delete.svg' %}" alt="delete"></button></td>
-                                    </tr>`
-                                document.getElementById('tablebody').insertAdjacentHTML('beforeend', row);
-                                updateGrandTotal();
-                            }
-                        });
-                }
-                else {
-                    document.getElementById('requisitionid').value = '';
-                    document.getElementById('amount').value = '';
-                    document.getElementById('requested').textContent = 'MWK 0.00';
-                }
-            });
+            <div class="d-flex justify-content-between" style="margin: 0 0 2rem 0; gap: 1rem;">
+                <div class="w-50">
+                    <div class="w-100 rounded" style="background: rgba(34, 197, 94, 0.1); backdrop-filter: blur(20px); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3); padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);">
+                        <div style="display: flex; align-items: center; margin-bottom: 0.8rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14,2 14,8 20,8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                            </svg>
+                            <p style="margin: 0; color: #10B981; font-weight: 600; font-size: 0.95rem;">Proof of Payment</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.8); border-radius: 8px; padding: 0.5rem;">
+                            {{ retirement_form.proofofpay }}
+                        </div>
+                    </div>
+                    <div class="w-100 rounded" style="background: rgba(34, 197, 94, 0.1); backdrop-filter: blur(20px); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3); padding: 1.2rem; box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);">
+                        <div style="display: flex; align-items: center; margin-bottom: 0.8rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                            <p style="margin: 0; color: #10B981; font-weight: 600; font-size: 0.95rem;">Participants Payment Form</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.8); border-radius: 8px; padding: 0.5rem;">
+                            {{ retirement_form.participantspay }}
+                        </div>
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="w-100 rounded" style="background: rgba(34, 197, 94, 0.1); backdrop-filter: blur(20px); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3); padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);">
+                        <div style="display: flex; align-items: center; margin-bottom: 0.8rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14,2 14,8 20,8"/>
+                                <line x1="9" y1="9" x2="15" y2="15"/>
+                                <line x1="15" y1="9" x2="9" y2="15"/>
+                            </svg>
+                            <p style="margin: 0; color: #10B981; font-weight: 600; font-size: 0.95rem;">Receipts</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.8); border-radius: 8px; padding: 0.5rem;">
+                            {{ retirement_form.receipt }}
+                        </div>
+                    </div>
+                    <div class="w-100 rounded" style="background: rgba(34, 197, 94, 0.1); backdrop-filter: blur(20px); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3); padding: 1.2rem; box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);">
+                        <div style="display: flex; align-items: center; margin-bottom: 0.8rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                <line x1="1" y1="10" x2="23" y2="10"/>
+                            </svg>
+                            <p style="margin: 0; color: #10B981; font-weight: 600; font-size: 0.95rem;">Cash Payment Form</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.8); border-radius: 8px; padding: 0.5rem;">
+                            {{ retirement_form.cashpay }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div style="margin: 0 0 2rem 0; display: flex; justify-content: flex-end;">
+                <button type="submit" class="btn" style="background: linear-gradient(135deg, #EF4444 0%, #DC2626 50%, #B91C1C 100%); border: none; border-radius: 12px; padding: 0.9rem 2rem; color: white; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3); display: flex; align-items: center; font-size: 1rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                        <polyline points="17,21 17,13 7,13 7,21"/>
+                        <polyline points="7,3 7,8 15,8"/>
+                    </svg>
+                    Submit Retirement
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Form input focus states */
+    .form-control:focus {
+        border-color: rgba(14, 165, 233, 0.6) !important;
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1), 0 4px 12px rgba(14, 165, 233, 0.1) !important;
+        background: rgba(255,255,255,0.95) !important;
+    }
+    
+    /* Button hover effects */
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4) !important;
+        background: linear-gradient(135deg, #0284C7 0%, #0369A1 50%, #075985 100%) !important;
+    }
+    
+    /* Table row hover effects */
+    tbody tr:hover {
+        background: #e7f4fe !important;
+    }
+    
+    /* Summary cards hover effects */
+    .w-25:hover, .w-50:hover {
+        transform: translateY(-4px);
+        background: #e7f4fe !important;
+        box-shadow: 0 12px 40px rgba(14, 165, 233, 0.2) !important;
+    }
+    
+    /* File input styling */
+    input[type="file"] {
+        border: 2px dashed rgba(14, 165, 233, 0.3) !important;
+        border-radius: 8px !important;
+        padding: 0.8rem !important;
+        background: rgba(255,255,255,0.8) !important;
+       
+    }
+    
+    input[type="file"]:hover {
+        border-color: rgba(14, 165, 233, 0.5) !important;
+        background: #e7f4fe !important;
+    }
+    
+    /* Delete button hover */
+    button[onclick*="remove"]:hover {
+        background: #e7f4fe !important;
+        border-color: rgba(239, 68, 68, 0.5) !important;
+        transform: scale(1.05);
+    }
+    
+    /* Responsive design */
+    @media (max-width: 1200px) {
+        .d-flex.justify-content-between {
+            flex-direction: column;
+        }
+        
+        .w-25, .w-50 {
+            width: 100% !important;
+            margin-bottom: 1rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .m-3 {
+            margin: 0.5rem !important;
+        }
+        
+        div[style*="padding: 2rem"] {
+            padding: 1rem !important;
+        }
+        
+        .table {
+            font-size: 0.85rem;
+        }
+        
+        th, td {
+            padding: 0.5rem !important;
+        }
+        
+        .form-control {
+            padding: 0.5rem !important;
+            font-size: 0.85rem !important;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .d-flex.justify-content-between {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .text-end {
+            text-align: left !important;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const voucherselect = document.getElementById('voucherid');
+        voucherselect.addEventListener('change', function(){
+            const voucherid = this.value;
+            if (voucherid){
+                fetch(`/retirement/${voucherid}/`)
+                    .then(response => response.json())
+                    .then(data =>{
+                        document.getElementById('tablebody').innerHTML = "";
+                        document.getElementById('requisitionid').value = data.requisitionid;
+                        document.getElementById('amount').value = data.amount;
+                        document.getElementById('requested').textContent = 'K ' + data.amount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        const items = data.item_list;
+                        for (const item of items){
+                            const row = `
+                                <tr id="tablerow" style="transition: all 0.3s ease;">
+                                    <td style="padding: 0.8rem; border: none;"><input type="text" class="form-control" value="${item.itemname || ''}" readonly style="border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 8px; padding: 0.6rem; font-size: 0.9rem; background: rgba(248, 250, 252, 0.9); outline: none;"></td>
+                                    <td style="padding: 0.8rem; border: none;"><input type="number" step="0.001" class="form-control unitprice" value="${item.unitprice || ''}" style="border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 8px; padding: 0.6rem; font-size: 0.9rem; background: rgba(255,255,255,0.9); outline: none;"></td>
+                                    <td style="padding: 0.8rem; border: none;"><input type="number" step="0.001" class="form-control quantity" value="${item.quantity || ''}" style="border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 8px; padding: 0.6rem; font-size: 0.9rem; background: rgba(255,255,255,0.9); outline: none;"></td>
+                                    <td style="padding: 0.8rem; border: none;"><input type="number" step="0.001" class="form-control totalprice" value="${item.totalprice || ''}" readonly style="border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 8px; padding: 0.6rem; font-size: 0.9rem; background: rgba(248, 250, 252, 0.9); outline: none; font-weight: 600;"></td>
+                                    <td style="padding: 0.8rem; border: none; text-align: center;"><button type="button" class="btn" onclick="this.closest('tr').remove(); updateGrandTotal()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 0.4rem 0.6rem; transition: all 0.3s ease;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button></td>
+                                </tr>`
+                            document.getElementById('tablebody').insertAdjacentHTML('beforeend', row);
+                            updateGrandTotal();
+                        }
+                    });
+            }
+            else {
+                document.getElementById('requisitionid').value = '';
+                document.getElementById('amount').value = '';
+                document.getElementById('requested').textContent = 'K 0.00';
+            }
         });
+    });
 
-
-        document.getElementById('tablebody').addEventListener( 'input', function(e){
+    document.getElementById('tablebody').addEventListener('input', function(e){
         if(e.target.classList.contains('quantity') || e.target.classList.contains('unitprice')){
             const row = e.target.closest('tr');
             const price = parseFloat(row.querySelector('.unitprice').value) || 0;
             const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
             const total = price * quantity;
-
             const totalfield = row.querySelector('.totalprice');
             if(totalfield){
                 totalfield.value = total.toFixed(2)
@@ -195,29 +364,18 @@
         }
     })
 
-    // const usedstr = document.getElementById('used').value;
-    // const usednumber = parseFloat(usedstr.replace(/[^\d.]/g, '')); 
-
-    // const requestedstr = document.getElementById('used').value;
-    // const requestednumber = parseFloat(usedstr.replace(/[^\d.]/g, '')); 
-
-    // const balance = requestednumber - usednumber;
-
-    // document.getElementById('balance').textContent = `MWK ${balance}`;
-
     function updateGrandTotal(){
         let sum = 0;
         document.querySelectorAll('.totalprice').forEach(function(input){
             let val = parseFloat(input.value) || 0;
             sum += val;
         })
-        document.getElementById('used').textContent = 'MWK ' + sum.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
+        document.getElementById('used').textContent = 'K ' + sum.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
         const usednumber = sum;
         const requestedstr = document.getElementById('requested').textContent;
         const requestednumber = parseFloat(requestedstr.replace(/[^\d.]/g, '')) || 0;
         const balance = requestednumber - usednumber;
-        document.getElementById('balance').textContent = `MWK ${balance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        document.getElementById('balance').textContent = `K ${balance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
     }
-    </script>
+</script>
 {% endblock %}

@@ -7,72 +7,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cash Tracker</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0&icon_names=verified_user" />
-    <link rel="stylesheet" href="{% static 'CashTracker/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'CashTracker/styles.css' %}">
+    <style>
+        /* Inline critical CSS for faster loading */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: white;
+        }
+        
+        .w-100 { width: 100%; }
+        .w-50 { width: 50%; }
+        .m-0 { margin: 0; }
+        .my-3 { margin-top: 1rem; margin-bottom: 1rem; }
+        .me-3 { margin-right: 1rem; }
+        .mx-3 { margin-left: 1rem; margin-right: 1rem; }
+        .mb-0 { margin-bottom: 0; }
+        .fw-bold { font-weight: bold; }
+        .text-primary { color: #0d6efd; }
+        .text-white { color: white; }
+        .text-dark { color: #212529; }
+        .text-end { text-align: right; }
+        .bg-white { background-color: white; }
+        .bg-secondary { background-color: #6c757d; }
+        .border-primary { border: 1px solid #0d6efd; }
+        .rounded { border-radius: 0.375rem; }
+        .d-flex { display: flex; }
+        .d-block { display: block; }
+        .justify-content-between { justify-content: space-between; }
+        .fs-5 { font-size: 1.25rem; }
+        
+        .form-label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #212529;
+        }
+        
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ced4da;
+            border-radius: 0.375rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .form-control:focus {
+            color: #212529;
+            background-color: #fff;
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+        }
+        
+        /* Custom styling for paragraph elements used as display fields */
+        p.bg-secondary {
+            padding: 0.375rem 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.375rem;
+            min-height: calc(1.5em + 0.75rem + 2px);
+            display: flex;
+            align-items: center;
+        }
+        
+        /* PDF-specific optimizations */
+        @media print {
+            body { 
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+            .bg-secondary { 
+                background-color: #6c757d !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .text-white { 
+                color: white !important;
+            }
+            .border-primary {
+                border-color: #0d6efd !important;
+            }
+            .text-primary {
+                color: #0d6efd !important;
+            }
+        }
+        
+        /* Performance optimizations */
+        * { 
+            box-sizing: border-box; 
+        }
+        
+        img { 
+            max-width: 100%; 
+            height: auto; 
+        }
+        
+        /* Prevent page breaks within important sections */
+        .voucher-header,
+        .voucher-content,
+        .signatures {
+            page-break-inside: avoid;
+        }
+    </style>
 </head>
 <body>
-    <div class="w-100 rounded ">
-
-        <div class="my-3">
+    <div class="w-100 rounded">
+        <div class="my-3 voucher-header">
             <p class="m-0 fw-bold text-primary">CCDO CASH PAYMENT VOUCHER</p>
-            <P class="m-0">Chipembere Community Development organisation</P>
+            <p class="m-0">Chipembere Community Development organisation</p>
             <p class="m-0">Account: CHIPEMBERE COMMUNITY DEVELOPMENT ORGANISATION</p>
-            <P class="m-0">Account Number: 10033647388364</P>
+            <p class="m-0">Account Number: 10033647388364</p>
         </div>
 
-
-        <div class="bg-white border-primary">
+        <div class="bg-white voucher-content">
             {% csrf_token %}
 
             <div class="mx-3">
                 <p class="text-end fw-bold">Voucher No: PV-00{{ voucher.ID }}</p>
             </div>
-            
 
             <div class="d-flex justify-content-between">
                 <div class="w-50">
                     <label for="requisitionid" class="form-label d-block">Requisition</label>
-                    <p id="requisitionid" class=" bg-secondary text-white me-3">{{ voucher.requisitionid }}</p>
-
-                    <!-- <label for="requisition" class="form-label mb-0">Requisition</label>
-                    <input type="text" id="requisition" class="form-control"> -->
+                    <p id="requisitionid" class="bg-secondary text-white me-3">{{ voucher.requisitionid }}</p>
 
                     <label for="date" class="form-label mb-0 d-block">Date</label>
-                    <p id="requisitionid" class=" bg-secondary text-white me-3">{{ voucher.date }}</p>
-                    
+                    <p class="bg-secondary text-white me-3">{{ voucher.date }}</p>
                 </div>
 
                 <div class="w-50">
                     <label for="dept" class="form-label">Department</label>
-                    <p id="dept" class=" bg-secondary text-white">{{ requisition.requestingdept }}</p>  
+                    <p id="dept" class="bg-secondary text-white">{{ requisition.requestingdept }}</p>  
                     
                     <label for="amount" class="form-label m-0">Amount (MWK)</label>
-                    <p id="amount" class=" bg-secondary text-white">{{ total_amount }}</p> 
+                    <p id="amount" class="bg-secondary text-white">{{ total_amount }}</p> 
                 </div>
             </div>
 
-           
-            
-            <!-- <label for="purpose" class="form-label ms-3 mb-0">Purpose</label>
-            <textarea type="text" id="purpose" class="form-control mx-3" rows="5"></textarea> -->
-        <div>
-            <label for="purpose" class="form-label d-block">Purpose</label>
-            <textarea type="text" id="comments" placeholder="Comments" class="form-control my-3" rows="3">{{ voucher.purpose }}</textarea>
-
-            
-            
+            <div>
+                <label for="purpose" class="form-label d-block">Purpose</label>
+                <textarea type="text" id="comments" placeholder="Comments" class="form-control my-3" rows="3">{{ voucher.purpose }}</textarea>
+            </div>
         </div>
+
+        <div class="signatures">
+            <p>PREPARED BY:         {{ voucher.createdby }}</p>
+            <p>CHECKED BY:          {{ finance.username }}</p>
+            <p>APPROVED BY:         {{ programs.username }}</p>
+            <p>AUTHORISED BY:       {{ ed.username }}</p>
+        </div>
+        
+        <p class="fw-bold text-dark fs-5"><strong>NB: This form is supposed to always be correct. If you are not sure if it's legit download a new copy in the system or let it be downloaded while you are there</strong></p>
     </div>
-
-    <div>
-        <p>PREPARED BY:         {{ voucher.createdby }}</p>
-        <p>CHECKED BY:          {{ finance.username }}</p>
-        <p>APPROVED BY:         {{ programs.username }}</p>
-        <p>AUTHORISED BY:       {{ ed.username }}</p>
-    </div>
-    <p class="fw-bold text-dark fs-5"><strong>NB: This form is supposed to always be correct. If you are not sure if it's legit download a new copy in the system or let it be downloaded while you are there</strong></p>
-
-
 </body>
 </html>
