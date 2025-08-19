@@ -86,8 +86,8 @@ WSGI_APPLICATION = 'CashTrackingSystem.wsgi.application'
 # }
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}", 
+    "default": dj_database_url.parse(
+        "postgresql://cashtrackingdb_user:fuoTz8g3ebcgbuHPyOYjqf6kPbvGnqz2@dpg-d2i52pmmcj7s73e0s8gg-a.oregon-postgres.render.com/cashtrackingdb",
         conn_max_age=600
     )
 }
