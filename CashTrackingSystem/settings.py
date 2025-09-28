@@ -78,19 +78,19 @@ WSGI_APPLICATION = 'CashTrackingSystem.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
-    "default": dj_database_url.parse(
-        "postgresql://cashtrackingdb_user:fuoTz8g3ebcgbuHPyOYjqf6kPbvGnqz2@dpg-d2i52pmmcj7s73e0s8gg-a.oregon-postgres.render.com/cashtrackingdb",
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+# DATABASES = {
+#     "default": dj_database_url.parse(
+#         "postgresql://cashtrackingdb_user:fuoTz8g3ebcgbuHPyOYjqf6kPbvGnqz2@dpg-d2i52pmmcj7s73e0s8gg-a.oregon-postgres.render.com/cashtrackingdb",
+#         conn_max_age=600
+#     )
+# }
 
 
 # Password validation
